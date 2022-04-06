@@ -1,0 +1,5 @@
+<launch>
+  <arg name="bagpath" default="/home/barinale/Documents/thesis/simtoreal2d/data/bagfiles/_2022-04-01-10-34-57.bag"/>
+  <node pkg="rosbag" type="play" args="$(arg bagpath)" name="play" output="screen"/>
+  <node name="readernode" pkg="datareader" type="buggyreader.py" output="screen" />
+</launch>
