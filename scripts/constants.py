@@ -53,13 +53,12 @@ class Dirs:
     source = os.path.dirname(os.path.abspath(__file__))
     root = os.path.abspath(os.path.join(source, os.pardir))
     data = root + "/data"
-    datasets = data + "/sensors/datasets"
+    realdata = data + "/real"
+    datasets = data + "/datasets"
     agent = data + "/agent"
-    gail = agent + "/gail"
     engine = data + "/engine"
     model = data + "/model"
-    simulation = data + "/simulation"
-    configs = root + "/configurations"
+    configs = root + "/configs"
     env = data + "/environment"
     trajectories = data + "/trajectories"
     urdf = root + "/pybulletmodel/urdf"

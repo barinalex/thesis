@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18a7d627-6fa0-4aae-9874-33993ce2790d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/catkin_ws/src/datareader/src/buggyreader.py" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/datareader/src/buggyreader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/datamanagement/trajectories_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/trajectories_generator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/utils/episodehistory.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/utils/evaluation.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,10 +28,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/scripts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/scripts/engine" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/scripts/engine" />
+      <recent name="$PROJECT_DIR$/scripts/simulation" />
       <recent name="$PROJECT_DIR$/scripts" />
     </key>
   </component>
@@ -71,5 +75,16 @@
       <updated>1649328702441</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

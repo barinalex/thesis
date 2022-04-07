@@ -3,9 +3,9 @@ import time
 
 import numpy as np
 import quaternion
-from scripts.engine.state import State2D
+from scripts.engine.state import State
 
-state = State2D(timestep=0.01)
+state = State(timestep=0.01)
 
 
 def compute_velocities(points_distance: float, radius: float):
