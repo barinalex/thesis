@@ -11,7 +11,7 @@ class IdentityEng(ModelBased):
         :param datadir: relative directory with ground truth data
         """
         super().__init__()
-        path = f"{Dirs.realdata}/2022_04_07_14_02_27_284065"
+        path = f"{Dirs.realdata}/2022_04_07_15_52_42_186072"
         self.linear = load_raw_data(path=f"{path}/linear.npy")
         self.angular = load_raw_data(path=f"{path}/angular.npy")
         self.counter = 1
@@ -33,18 +33,19 @@ class IdentityEng(ModelBased):
 
 if __name__ == "__main__":
     eng = IdentityEng(datadir="")
-    n = 1000
+    n = 4000
     pos = np.zeros((n, 3))
     for i in range(n):
         pos[i] = eng.getpos()
         eng.step(throttle=0, turn=0)
 
-    path = f"{Dirs.realdata}/2022_04_07_14_02_27_284065"
+    path = f"{Dirs.realdata}/2022_04_07_15_52_42_186072"
     gtpos = load_raw_data(path=f"{path}/positions.npy")
     import matplotlib.pyplot as plt
     plt.figure()
+    plt.title("computed")
     plt.plot(pos[:, 0], pos[:, 1])
     plt.figure()
+    plt.title("gt")
     plt.plot(gtpos[:n, 0], gtpos[:n, 1])
     plt.show()
-
