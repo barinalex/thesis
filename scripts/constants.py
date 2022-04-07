@@ -28,7 +28,7 @@ class DT:
     labels = "labels"
     typeslist = [pos, orn, vel, ang, jact]
     traintesttypes = [vel, ang, jact]
-    model = "model"
+    model = "models"
     data = "data"
     params = "p"
     cnn = "cnn"
@@ -57,7 +57,7 @@ class Dirs:
     datasets = data + "/datasets"
     agent = data + "/agent"
     engine = data + "/engine"
-    model = data + "/model"
+    model = data + "/models"
     configs = root + "/configs"
     env = data + "/environment"
     trajectories = data + "/trajectories"

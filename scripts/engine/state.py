@@ -13,7 +13,6 @@ class State:
         self.orn = quaternion.quaternion(1, 0, 0, 0)
         self.vel = np.zeros(3)
         self.ang = np.zeros(3)
-        self.vellimit = None
 
     def reset(self):
         """set all to zero"""
@@ -77,25 +76,26 @@ class State:
         R[:3, 3] = -translation
         return R
 
-    def toselfframe(self, vec):
+    def toselfframe(self, v: np.ndarray):
         """
-        :param vec: vector or vectors in a world frame
+        :param v: vector or vectors in a world frame
         :return: vector or vectors mapped from world to agent frame
         """
         R = self.matrix2self()
-        if len(vec.shape) == 1:
-            vec = np.hstack((vec, 1))
-            return R @ vec
-        vec = np.hstack((vec, np.ones((vec.shape[0], 1))))
-        return (R @ vec.T).T
+        if len(v.shape) == 1:
+            v = np.hstack((v, 1))
+            return R @ v
+        v = np.hstack((v, np.ones((v.shape[0], 1))))
+        return (R @ v.T).T
 
-    def increment_velocities(self, dvel, dang):
+    def update_velocities(self, dvel, dang):
         """
-        change velocities from t to t+1 timestep
+        update velocities from t to t+1 timestep
+
+        :param dvel: linear velocity change between t+1 and t timesteps, shape (3,)
+        :param dang: angular velocity change between t+1 and t timesteps, shape (3,)
         """
         self.vel += dvel
-        if self.vellimit:
-            self.vel[0] = min(self.vel[0], self.vellimit)
         self.ang += dang
 
     def set(self, pos=None, orn=None, vel=None, ang=None):
@@ -153,5 +153,5 @@ if __name__ == '__main__':
     # point = np.zeros((4, 3))
     point = np.array([1, 0, 0])
     print("map point", point)
-    robot_frame_point = state.toselfframe(vec=point)[:3]
+    robot_frame_point = state.toselfframe(v=point)[:3]
     print("robot frame point", robot_frame_point)

@@ -5,15 +5,15 @@ import numpy as np
 from
 
 mj_path = mujoco_py.utils.discover_mujoco()
-xml_path = os.path.join(mj_path, 'model', 'one_car.xml')
+xml_path = os.path.join(mj_path, 'models', 'one_car.xml')
 
 
 class MujocoVizualizer:
     def __init__(self, agent: BasicAgent):
         self.agent = agent
-        # self.model = mujoco_py.load_model_from_path(xml_path)
-        self.bodyid = agent.env.engine.bodyid # self.model.body_name2id('buddy')
-        self.sim = agent.env.engine.sim #mujoco_py.MjSim(self.model, nsubsteps=1)
+        # self.models = mujoco_py.load_model_from_path(xml_path)
+        self.bodyid = agent.env.engine.bodyid # self.models.body_name2id('buddy')
+        self.sim = agent.env.engine.sim #mujoco_py.MjSim(self.models, nsubsteps=1)
         self.viewer = mujoco_py.MjViewerBasic(self.sim)
         self.firstwaypoint = 0
         self.n_waypoints = 10

@@ -15,6 +15,8 @@ class Engine(ABC):
     @abstractmethod
     def step(self, throttle: float, turn: float):
         """
+        update agent's state
+
         :param throttle: forward action
         :param turn: sideways action
         """
@@ -60,9 +62,9 @@ class Engine(ABC):
         :param vector: vector or vectors in a world frame
         :return: vector in an agent frame
         """
-        return self.state.toselfframe(vec=vector)[:, :3]
+        return self.state.toselfframe(v=vector)[:, :3]
 
-    def set_initial_state(self, pos=None, orn=None, vel=None, ang=None):
+    def setstate(self, pos=None, orn=None, vel=None, ang=None):
         """
         :param pos: position vector
         :param orn: orientation as a quaternion in a format [w x y z]
