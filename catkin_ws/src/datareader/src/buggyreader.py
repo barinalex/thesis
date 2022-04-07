@@ -6,7 +6,7 @@ import message_filters as mf
 from sensor_msgs.msg import Imu
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point, Quaternion, Vector3
-from datareader.msg import ActionsStamped, Actions
+from buggycontrol.msg import Actions
 import numpy as np
 import tf
 import tf2_ros
@@ -126,6 +126,7 @@ class BuggyReader:
         print("MESSAGE: ", self.counter)
         self.counter += 1
         print(odom.twist.twist.linear.x, odom.twist.twist.linear.y, odom.twist.twist.linear.z)
+        print(odom.twist.twist.angular.x, odom.twist.twist.angular.y, odom.twist.twist.angular.z)
         self.gt_odom_list.append(odom)
         with self.act_lock:
             self.act_list.append(copy.deepcopy(self.act_msg))
