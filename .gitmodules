@@ -1,0 +1,3 @@
+[submodule "catkin_ws/src/buggycontrol"]
+	path = catkin_ws/src/buggycontrol
+	url = git@github.com:barinalex/buggycontrol.git
