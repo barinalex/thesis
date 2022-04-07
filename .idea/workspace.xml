@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="18a7d627-6fa0-4aae-9874-33993ce2790d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catkin_ws/src/datareader/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/datareader/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catkin_ws/src/datareader/msg/Actions.msg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/catkin_ws/src/datareader/msg/ActionsStamped.msg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/catkin_ws/src/datareader/package.xml" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/datareader/package.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/datareader/src/buggyreader.py" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/datareader/src/buggyreader.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

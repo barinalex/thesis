@@ -12,6 +12,7 @@ import tf
 import tf2_ros
 from threading import Lock
 import time
+import copy
 
 
 DATA_DIR = "/home/barinale/Documents/thesis/thesis/data/real"
@@ -114,22 +115,26 @@ class BuggyReader:
         self.act_msg = None
 
         rospy.init_node("buggyreader")
-        odom = mf.Subscriber("/camera/odom/sample", Odometry)
-        actions = mf.Subscriber("/actions", Actions)
-        ts = mf.ApproximateTimeSynchronizer([odom, actions], 1, 1)
-        ts.registerCallback(self.callback)
-        # self.bl2rs = get_static_tf("odom", "camera_odom_frame")
+        rospy.Subscriber("/camera/odom/sample", Odometry, self.callback)
+        rospy.Subscriber("/actions", Actions, self.actcallback)
         self.path = f"{DATA_DIR}/{gettimestamp()}"
 
-    def callback(self, odom: Odometry, act: Actions):
+    def callback(self, odom: Odometry):
         """
         :param odom: message containing odometry data
-        :param act: message containing actions data
         """
         print("MESSAGE: ", self.counter)
         self.counter += 1
         self.gt_odom_list.append(odom)
-        self.act_list.append(act)
+        with self.act_lock:
+            self.act_list.append(copy.deepcopy(self.act_msg))
+
+    def actcallback(self, act: Actions):
+        """
+        :param act: message containing actions data
+        """
+        with self.act_lock:
+            self.act_msg = act
 
     def rotate_twist(self, odom_msg):
         """
@@ -162,17 +167,17 @@ class BuggyReader:
         :param messages: list of dictionaries with act and odom messages
         """
         n = len(messages)
-        positions = np.zeros((n, 2))
+        positions = np.zeros((n, 3))
         actions = np.zeros((n, 2))
-        linvels = np.zeros((n, 2))
-        angvels = np.zeros((n, 1))
+        linvels = np.zeros((n, 3))
+        angvels = np.zeros((n, 3))
         for i in range(n):
             act = messages[i]["act_msg"]
             odom = messages[i]["odom_msg"]
-            positions[i] = [odom.pose.pose.point.x, odom.pose.pose.point.y]
+            positions[i] = [odom.pose.pose.position.x, odom.pose.pose.position.y, odom.pose.pose.position.z]
             actions[i] = [act.throttle, act.turn]
-            linvels[i] = [odom.twist.twist.linear.x, odom.twist.twist.linear.y]
-            angvels[i] = [odom.twist.twist.angular.z]
+            linvels[i] = [odom.twist.twist.linear.x, odom.twist.twist.linear.y, odom.twist.twist.linear.z]
+            angvels[i] = [odom.twist.twist.angular.x, odom.twist.twist.angular.y, odom.twist.twist.angular.z]
         create_directories(self.path)
         np.save(f"{self.path}/positions.npy", positions)
         np.save(f"{self.path}/actions.npy", actions)
