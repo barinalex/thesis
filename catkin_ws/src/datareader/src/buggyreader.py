@@ -125,6 +125,7 @@ class BuggyReader:
         """
         print("MESSAGE: ", self.counter)
         self.counter += 1
+        print(odom.twist.twist.linear.x, odom.twist.twist.linear.y, odom.twist.twist.linear.z)
         self.gt_odom_list.append(odom)
         with self.act_lock:
             self.act_list.append(copy.deepcopy(self.act_msg))
@@ -160,7 +161,7 @@ class BuggyReader:
         # self.gt_odom_list = [self.rotate_twist(msg) for msg in self.gt_odom_list]
         n = np.minimum(len(self.act_list), len(self.gt_odom_list))
         messages = [{"act_msg": self.act_list[i], "odom_msg": self.gt_odom_list[i]} for i in range(n)]
-        self.extract_data(messages)
+        # self.extract_data(messages)
 
     def extract_data(self, messages):
         """
