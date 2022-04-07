@@ -6,7 +6,7 @@ import message_filters as mf
 from sensor_msgs.msg import Imu
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point, Quaternion, Vector3
-from datareader.msg import ActionsStamped
+from datareader.msg import ActionsStamped, Actions
 import numpy as np
 import tf
 import tf2_ros
@@ -78,6 +78,7 @@ def get_static_tf(source_frame, target_frame):
     tfbuffer = tf2_ros.Buffer()
     tf2_ros.TransformListener(tfbuffer)
     for i in range(100):
+        print("lookup", i)
         try:
             trans = tfbuffer.lookup_transform(target_frame,
                                               source_frame,
@@ -86,6 +87,8 @@ def get_static_tf(source_frame, target_frame):
             return trans
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException) as err:
             rospy.logwarn_throttle(1, "ros_utils tf lookup could not lookup tf: {}".format(err))
+            time.sleep(0.2)
+            continue
 
 
 def rotate_vector_by_quat(v: Vector3, q: Quaternion):
@@ -112,13 +115,13 @@ class BuggyReader:
 
         rospy.init_node("buggyreader")
         odom = mf.Subscriber("/camera/odom/sample", Odometry)
-        actions = mf.Subscriber("/actions_stamped", ActionsStamped)
+        actions = mf.Subscriber("/actions", Actions)
         ts = mf.ApproximateTimeSynchronizer([odom, actions], 1, 1)
         ts.registerCallback(self.callback)
-        self.bl2rs = get_static_tf("odom", "camera_odom_frame")
+        # self.bl2rs = get_static_tf("odom", "camera_odom_frame")
         self.path = f"{DATA_DIR}/{gettimestamp()}"
 
-    def callback(self, odom: Odometry, act: ActionsStamped):
+    def callback(self, odom: Odometry, act: Actions):
         """
         :param odom: message containing odometry data
         :param act: message containing actions data
@@ -149,7 +152,7 @@ class BuggyReader:
         """
         rospy.spin()
         print("Gathered: {} action and {} odom messages".format(len(self.act_list), len(self.gt_odom_list)))
-        self.gt_odom_list = [self.rotate_twist(msg) for msg in self.gt_odom_list]
+        # self.gt_odom_list = [self.rotate_twist(msg) for msg in self.gt_odom_list]
         n = np.minimum(len(self.act_list), len(self.gt_odom_list))
         messages = [{"act_msg": self.act_list[i], "odom_msg": self.gt_odom_list[i]} for i in range(n)]
         self.extract_data(messages)
@@ -159,16 +162,19 @@ class BuggyReader:
         :param messages: list of dictionaries with act and odom messages
         """
         n = len(messages)
+        positions = np.zeros((n, 2))
         actions = np.zeros((n, 2))
         linvels = np.zeros((n, 2))
         angvels = np.zeros((n, 1))
         for i in range(n):
             act = messages[i]["act_msg"]
             odom = messages[i]["odom_msg"]
+            positions[i] = [odom.pose.pose.point.x, odom.pose.pose.point.y]
             actions[i] = [act.throttle, act.turn]
             linvels[i] = [odom.twist.twist.linear.x, odom.twist.twist.linear.y]
             angvels[i] = [odom.twist.twist.angular.z]
         create_directories(self.path)
+        np.save(f"{self.path}/positions.npy", positions)
         np.save(f"{self.path}/actions.npy", actions)
         np.save(f"{self.path}/linear.npy", linvels)
         np.save(f"{self.path}/angular.npy", angvels)
