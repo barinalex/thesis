@@ -23,11 +23,11 @@ def balance_left_right_turn(data: dict) -> dict:
     :param data: dictionary with data of types vel, ang, jact at least
     :return: dictionary with symmetrical copy of data
     """
-    data[DT.vel] = add_symmetrical_copy(data=data[DT.vel], index=1)
+    data[DT.lin] = add_symmetrical_copy(data=data[DT.lin], index=1)
     data[DT.ang] = add_symmetrical_copy(data=data[DT.ang], index=2)
-    data[DT.jact] = add_symmetrical_copy(data=data[DT.jact], index=1)
+    data[DT.act] = add_symmetrical_copy(data=data[DT.act], index=1)
     for key in data.keys():
-        if key not in [DT.vel, DT.ang, DT.jact]:
+        if key not in [DT.lin, DT.ang, DT.act]:
             data[key] = np.concatenate((data[key], np.copy(data[key])))
     return data
 

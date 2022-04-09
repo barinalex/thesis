@@ -1,49 +1,20 @@
 import os
 
-SRC_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = os.path.abspath(os.path.join(SRC_DIR, os.pardir))
-DATA_DIR = f"{ROOT_DIR}/data"
-
-datatypes = {"pos": "position_rob",
-             "orn": "rotation_rob",
-             "vel": "velocity_glob",
-             "ang": "angular_velocity_rob",
-             "jact": "throttleturn",
-             "mact": "action",
-             "ts": "timestamp"}
-
 
 class DT:
     """
     string data types container
     """
-    pos = "position_rob"
-    orn = "rotation_rob"
-    vel = "velocity_glob"
-    ang = "angular_velocity_rob"
-    jact = "throttleturn"
-    mact = "action"
+    pos = "positions"
+    orn = "orientation"
+    lin = "linear"
+    ang = "angular"
+    act = "actions"
     ts = "timestamp"
     obs = "obs"
     labels = "labels"
-    typeslist = [pos, orn, vel, ang, jact]
-    traintesttypes = [vel, ang, jact]
-    model = "models"
-    data = "data"
-    params = "p"
-    cnn = "cnn"
-    rnn = "rnn"
-    nn = "nn"
-    imitator = "imitator"
-    ecnn = "cnnengine"
-    ernn = "rnnengine"
-    enn = "nnengine"
-    epb = "pbengine"
-    emj = "mjengine"
-    predictor = "predictor"
-    basicenv = "basicenvironment"
-    basicppo = "basicppo"
-    basicsac = "basicsac"
+    typeslist = [pos, orn, lin, ang, act]
+    traintesttypes = [lin, ang, act]
 
 
 class Dirs:
@@ -57,7 +28,7 @@ class Dirs:
     datasets = data + "/datasets"
     agent = data + "/agent"
     engine = data + "/engine"
-    model = data + "/models"
+    models = data + "/models"
     configs = root + "/configs"
     env = data + "/environment"
     trajectories = data + "/trajectories"

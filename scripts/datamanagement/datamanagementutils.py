@@ -1,9 +1,11 @@
+import os.path
+
 import sys
 import glob
 import numpy as np
 import quaternion
 from scripts.utils.linalg_utils import torobotframe
-from scripts.constants import datatypes, DT, Dirs
+from scripts.constants import DT, Dirs
 from scripts.datamanagement.pathmanagement import create_directories
 
 
@@ -73,9 +75,8 @@ def load_data_type(datadir: str, datatype: str) -> np.ndarray:
     :return: numpy array. exit on fail
     """
     try:
-        paths = glob.glob(f"{datadir}/*{datatype}*.npy")
-        data = [reshapeto2d(load_raw_data(path)) for path in paths]
-        return np.concatenate(data, axis=0)
+        path = os.path.join(datadir, f"{datatype}.npy")
+        return reshapeto2d(load_raw_data(path))
     except Exception as e:
         sys.exit(f"ERROR WHILE LOADING DATA: {e}")
 
@@ -167,7 +168,7 @@ def load_episode(path) -> dict:
     :param path: path to a directory with saved episode
     :return: dictionary with all episode observations along with trajectory
     """
-    dts = list(datatypes.values())
+    dts = DT.typeslist
     dts.append("trajectory")
     return load_dataset(datadir=path, dts=dts)
 
@@ -251,90 +252,3 @@ def concatenate_dicts(d1: dict, d2: dict) -> dict:
     for key in d1.keys():
         d1[key] = np.concatenate((d1[key], d2[key]))
     return d1
-
-
-def loadexpertepisode(datatypes: list, path: str) -> dict:
-    """
-    :param datatypes: types of data to load
-    :param path: directory with data
-    :return: episode data as a dictionary
-    """
-    return {key: load_raw_data(path=f"{path}/{key}.npy") for key in datatypes}
-
-
-def loadexpertepisodes(directory: str, datatypes: list, limit: int = 100) -> list:
-    """
-    :param directory: location of episodes to load
-    :param datatypes: types of data to load
-    :param limit: maximum amount of episodes to load
-    :return: concatenated episodes data as a dictionary
-    """
-    paths = glob.glob(f"{directory}/*")
-    return [loadexpertepisode(datatypes=datatypes, path=path) for path in paths[:limit]]
-
-
-def makeexpertobservations(data: dict, everywp: int, n_waypoints: int) -> np.ndarray:
-    """
-    :param data: dictionary with episode data
-    :param everywp: take every nth pos as a waypoint
-    :param n_waypoints: amount of waypoints agent see
-    :return: observations for imitation learning
-        [velocity, angular vel, n waypoints in a robot frame]
-    """
-    n = data[DT.pos].shape[0]
-    data[DT.pos][:, 2] = 0
-    size = n - (n_waypoints * everywp)
-    vel = data[DT.vel][:size, :2]
-    ang = data[DT.ang][:size, 2][:, np.newaxis]
-    wps = np.zeros((size, n_waypoints * 2))
-    for i in range(size):
-        q = quaternion.from_float_array(data[DT.orn][i])
-        shift = np.random.choice(np.arange(1, everywp)) if everywp > 1 else 0
-        wpsmap = data[DT.pos][i+shift:][::everywp]
-        wps[i] = torobotframe(X=wpsmap[:n_waypoints], q=q, pos=data[DT.pos][i])[:, :2].flatten()
-    return np.hstack((vel, ang, wps))
-
-
-def loadwaypoints(directory: str, everyn: int, everywp: int, limit: int = 10) -> np.ndarray:
-    """
-    :param directory: location of episodes to load
-    :param everyn: take every nth data point
-    :param everywp: take every nth pos as a waypoint
-    :param limit: maximum amount of episodes to load
-    :return: m trajectories with k waypoints. shape (m, k, 2)
-    """
-    episodes = loadexpertepisodes(directory=directory, datatypes=[DT.pos], limit=limit)
-    every = everyn * everywp
-    m = len(episodes)
-    k = episodes[0][DT.pos][1::every].shape[0]
-    wps = np.zeros((m, k, 2))
-    for i in range(m):
-        wps[i] = episodes[i][DT.pos][1::every, :2]
-    return wps
-
-
-def loadexpertdata(directory: str, datatypes: list, everyn: int, everywp: int,
-                   n_waypoints: int, obsdim: int, labeldim: int, limit: int = 10) -> (np.ndarray, np.ndarray):
-    """
-    :param directory: location of episodes to load
-    :param datatypes: types of data to load
-    :param everyn: take every nth data point
-    :param everywp: take every nth pos as a waypoint
-    :param n_waypoints: amount of waypoints agent see
-    :param obsdim: dimensionality of an observation vector
-    :param labeldim: dimensionality of a label vector
-    :param limit: maximum amount of episodes to load
-    :return: (array of observations, shape: (k episodes, m observations, obs shape...),
-        array of labels, shape: (k episodes, m labels, label shape...))
-    """
-    episodes = loadexpertepisodes(directory=directory, datatypes=datatypes, limit=limit)
-    size = episodes[0][DT.pos].shape[0] - (n_waypoints * everywp) - 1
-    observations = np.zeros((len(episodes), size, obsdim))
-    labels = np.zeros((len(episodes), size, labeldim))
-    for i in range(len(episodes)):
-        episode = {key: episodes[i][key][1:][::everyn] for key in episodes[i].keys()}
-        observations[i] = makeexpertobservations(data=episode, everywp=everywp, n_waypoints=n_waypoints)
-        labels[i] = episode[DT.jact][:size]
-        print(f"episode {i} converted to observations")
-    return observations, labels
-

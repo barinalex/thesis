@@ -1,5 +1,4 @@
 import numpy as np
-
 from scripts.models.model import Model
 
 

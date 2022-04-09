@@ -1,3 +1,5 @@
+import os.path
+
 import numpy as np
 import torch
 import yaml
@@ -21,16 +23,6 @@ def loadconfig(path: str) -> dict:
             sys.exit(f"FAILED TO LOAD CONFIG {path}: {e}")
 
 
-def loadconfigs(paths: dict) -> dict:
-    """
-    :param paths: dict with paths to a configuration files
-    where keys are dict types
-    :return: dict of dicts configurations where
-    keys are dict types
-    """
-    return {key: loadconfig(path=path) for key, path in paths.items()}
-
-
 def saveconfig(path: str, config: dict):
     """
     :param path: path to store configuration file
@@ -43,15 +35,6 @@ def saveconfig(path: str, config: dict):
             sys.exit(f"FAILED TO SAVE CONFIG {path}: {e}")
 
 
-def saveconfigs(data: dict):
-    """
-    :param data: dict, where keys: paths to
-    configuration files; values: configuration dicts
-    """
-    for path, config in data.items():
-        saveconfig(path=path, config=config)
-
-
 def preprocess_raw_data(params: dict, data: dict) -> dict:
     """
     do filtering, balancing and everything that might help to train NN
@@ -60,37 +43,37 @@ def preprocess_raw_data(params: dict, data: dict) -> dict:
     :param data: dictionary with a full dataset
     :return: dictionary with preprocessed dataset
     """
-    data[DT.vel] = applyfilter(params=params, data=data[DT.vel])
+    data[DT.lin] = applyfilter(params=params, data=data[DT.lin])
     data[DT.ang] = applyfilter(params=params, data=data[DT.ang])
     return dobalance(params=params, data=data)
 
 
-def make_labels(vel: np.ndarray, ang: np.ndarray) -> np.ndarray:
+def make_labels(lin: np.ndarray, ang: np.ndarray) -> np.ndarray:
     """
     difference between velocity/angular at time t+1 and t: v(t+1) - v(t)
 
-    :param vel: velocity data
+    :param lin: velocity data
     :param ang: angular velocity data
     :return: labels for observations
     """
-    vel_delta = calculate_deltas(vel)
+    lin_delta = calculate_deltas(lin)
     ang_delta = calculate_deltas(ang)
-    return np.concatenate((vel_delta, ang_delta), axis=1)
+    return np.concatenate((lin_delta, ang_delta), axis=1)
 
 
 def make_observations(data: dict) -> np.ndarray:
     """
     correct raw data,
-    create set of input vectors [vel x, y, angular, throttle, turn]
+    create set of input vectors [lin x, y, angular, throttle, turn]
 
     :param data: dictionary with a full dataset
     :return: numpy array of observations. concatenation of input arrays
     """
-    vel = reshapeto2d(data[DT.vel][:, 0:2])
+    lin = reshapeto2d(data[DT.lin][:, 0:2])
     ang = reshapeto2d(data[DT.ang][:, 2])
-    act = data[DT.jact]
+    act = data[DT.act]
     act[:, 0] = correct_throttle(act[:, 0])
-    return np.concatenate((vel, ang, act), axis=1)
+    return np.concatenate((lin, ang, act), axis=1)
 
 
 def label_observations(obs: np.ndarray) -> np.ndarray:
@@ -104,7 +87,7 @@ def label_observations(obs: np.ndarray) -> np.ndarray:
     """
     vel = reshapeto2d(obs[:, 0:2])
     ang = reshapeto2d(obs[:, 2])
-    return make_labels(vel=vel, ang=ang)
+    return make_labels(lin=vel, ang=ang)
 
 
 def make_sequential(obs: np.ndarray, length: int) -> (np.ndarray, np.ndarray):
@@ -156,17 +139,10 @@ def get_labeled_obs(data: dict, params: dict) -> (np.ndarray, np.ndarray):
     :return: tuple of numpy arrays (observations, labels)
     """
     obs = make_observations(data=data)
-    obs = preprocess_observations(params=params, obs=obs)
+    # obs = preprocess_observations(params=params, obs=obs)
     labels = label_observations(obs=obs)
-    labels = preprocess_labels(params=params, labels=labels)
-    sobs = None
-    if params["sequence_length"] > 1:
-        sobs = make_sequential(obs=obs, length=params["sequence_length"])
-    if params["balance"]:
-        obs, labels = balance_data(obs=obs, labels=labels, dim=params["dimbalance"], sobs=sobs)
-    else:
-        obs = obs if sobs is None else sobs
-    return obs, labels
+    # labels = preprocess_labels(params=params, labels=labels)
+    return obs[:-1], labels[1:]
 
 
 def get_test_subset(obs: np.ndarray, labels: np.ndarray, interval: (int, int)) -> dict:
@@ -218,35 +194,10 @@ def get_data(params: dict) -> (dict, dict):
     :param params: parameters of data preprocessing
     :return: tuple of dicts (train data, test data)
     """
-    path = f"{Dirs.datasets}/{params['datadir']}"
     train, test = {}, {}
-    for edir in glob.glob(pathname=f"{path}/*"):
+    for edir in glob.glob(pathname=os.path.join(Dirs.realdata, "*")):
         tr, ts = get_gathering_data_episode(params=params, edir=edir)
         train = concatenate_dicts(d1=train, d2=tr)
         test = concatenate_dicts(d1=test, d2=ts)
     train[DT.obs], train[DT.labels] = reshape_batch_first(train[DT.obs], train[DT.labels], params["batchsize"])
-    return train, test
-
-
-def get_data_separate_episodes(params: dict) -> (dict, dict):
-    """
-    manually gathered data divided into episodes
-
-    :param params: parameters of data preprocessing
-    :return: tuple of dicts (train data, test data);
-        obs shape(n_episodes, n_steps, 5);
-    labels shape(n_episodes, n_steps, 3)
-    """
-    path = f"{Dirs.datasets}/{params['datadir']}"
-    train, test = {DT.obs: [], DT.labels: []}, {DT.obs: [], DT.labels: []}
-    for edir in glob.glob(pathname=f"{path}/*"):
-        tr, ts = get_gathering_data_episode(params=params, edir=edir)
-        train[DT.obs].append(tr[DT.obs])
-        train[DT.labels].append(tr[DT.labels])
-        test[DT.obs].append(ts[DT.obs])
-        test[DT.labels].append(ts[DT.labels])
-    train[DT.obs] = np.asarray(train[DT.obs])
-    train[DT.labels] = np.asarray(train[DT.labels])
-    test[DT.obs] = np.asarray(test[DT.obs])
-    test[DT.labels] = np.asarray(test[DT.labels])
     return train, test

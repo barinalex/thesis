@@ -1,7 +1,9 @@
+import os.path
+
 from scripts.engine.modelbased import ModelBased
 from scripts.models.identitymodel import IdentityModel
 from scripts.datamanagement.datamanagementutils import load_raw_data
-from scripts.constants import Dirs
+from scripts.constants import Dirs, DT
 import numpy as np
 
 
@@ -11,9 +13,11 @@ class IdentityEng(ModelBased):
         :param datadir: relative directory with ground truth data
         """
         super().__init__()
-        path = f"{Dirs.realdata}/2022_04_07_15_52_42_186072"
-        self.linear = load_raw_data(path=f"{path}/linear.npy")
-        self.angular = load_raw_data(path=f"{path}/angular.npy")
+        path = os.path.join(Dirs.realdata, datadir)
+        lpath = os.path.join(path, f"{DT.lin}.npy")
+        apath = os.path.join(path, f"{DT.ang}.npy")
+        self.linear = load_raw_data(path=lpath)
+        self.angular = load_raw_data(path=apath)
         self.counter = 1
 
     def initializemodel(self) -> IdentityModel:
@@ -32,15 +36,17 @@ class IdentityEng(ModelBased):
 
 
 if __name__ == "__main__":
-    eng = IdentityEng(datadir="")
+    datadir = "2022_04_07_15_52_42_186072"
+    eng = IdentityEng(datadir=datadir)
     n = 4000
     pos = np.zeros((n, 3))
     for i in range(n):
         pos[i] = eng.getpos()
         eng.step(throttle=0, turn=0)
 
-    path = f"{Dirs.realdata}/2022_04_07_15_52_42_186072"
-    gtpos = load_raw_data(path=f"{path}/positions.npy")
+    path = os.path.join(Dirs.realdata, datadir)
+    pospath = os.path.join(path, f"{DT.pos}.npy")
+    gtpos = load_raw_data(path=pospath)
     import matplotlib.pyplot as plt
     plt.figure()
     plt.title("computed")
