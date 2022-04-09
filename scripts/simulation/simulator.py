@@ -55,6 +55,6 @@ if __name__ == "__main__":
     from scripts.engine.mlpbased import MLPBased
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "mlp_2022_04_09_17_00_57_178774")
+    path = os.path.join(Dirs.models, "mlp_2022_04_09_20_04_52_223493")
     sim = Simulator(iw=JoystickInputWrapper(), engine=MLPBased(path=path))
     sim.simulate()

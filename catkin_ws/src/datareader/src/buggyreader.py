@@ -162,7 +162,7 @@ class BuggyReader:
         # self.gt_odom_list = [self.rotate_twist(msg) for msg in self.gt_odom_list]
         n = np.minimum(len(self.act_list), len(self.gt_odom_list))
         messages = [{"act_msg": self.act_list[i], "odom_msg": self.gt_odom_list[i]} for i in range(n)]
-        # self.extract_data(messages)
+        self.extract_data(messages)
 
     def extract_data(self, messages):
         """
