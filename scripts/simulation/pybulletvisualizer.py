@@ -5,6 +5,7 @@ import pybullet_data
 from scripts.constants import Dirs
 from scripts.engine.modelbased import ModelBased
 from scripts.datamanagement.datamanagement import loadconfig
+from scripts.utils.linalg_utils import get_pybullet_quaternion
 import time
 
 
@@ -24,9 +25,10 @@ class Visualizer:
 
     def step(self):
         """move robot models to its new position"""
+        orn = get_pybullet_quaternion(q=self.engine.getorn())
         p.resetBasePositionAndOrientation(self.modelid,
                                           self.engine.getpos(),
-                                          self.engine.getorn(),
+                                          orn,
                                           physicsClientId=self.pcId)
         time.sleep(max(0, self.timeinterval - (time.time() - self.last_step)))
         self.last_step = time.time()
