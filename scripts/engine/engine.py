@@ -34,11 +34,11 @@ class Engine(ABC):
         """
         return self.state.getorn()
 
-    def getvel(self):
+    def getlin(self):
         """
         :return: linear velocity
         """
-        return self.state.getvel()
+        return self.state.getlin()
 
     def getang(self):
         """
@@ -50,12 +50,12 @@ class Engine(ABC):
         """
         :return: state observation: position, velocity, orientation quaternion, angular velocity
         """
-        return self.state.getpos(), self.state.getvel(), self.state.getorn(), self.state.getang()
+        return self.state.getpos(), self.state.getlin(), self.state.getorn(), self.state.getang()
 
     def get_state_vector(self):
         """
         :return: flat vector: position x y, velocity x y, orientation yaw, angular velocity yaw"""
-        return np.hstack((self.getvel()[:2], self.getang()[2]))
+        return np.hstack((self.getlin()[:2], self.getang()[2]))
 
     def toselfframe(self, vector: np.ndarray) -> np.ndarray:
         """

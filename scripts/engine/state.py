@@ -33,7 +33,7 @@ class State:
         """
         return quaternion.as_float_array(self.orn)
 
-    def getvel(self):
+    def getlin(self):
         """
         :return: linear velocity
         """

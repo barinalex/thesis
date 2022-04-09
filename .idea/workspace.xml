@@ -3,13 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="18a7d627-6fa0-4aae-9874-33993ce2790d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/datamanagement/databalancing.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/databalancing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/datamanagement/datamanagement.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/datamanagement.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/datamanagement/datamanagementutils.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/datamanagementutils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/engine/engine.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/engine.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/engine/identityeng.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/identityeng.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/models/identitymodel.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/models/identitymodel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/engine/modelbased.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/modelbased.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/engine/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/simulation/mujocovisualizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simulation/mujocovisualizer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,18 +38,18 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/configs" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/scripts/simulation" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/scripts/simulation" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/configs" />
       <recent name="$PROJECT_DIR$/scripts/models" />
       <recent name="$PROJECT_DIR$/scripts/engine" />
-      <recent name="$PROJECT_DIR$/scripts/simulation" />
-      <recent name="$PROJECT_DIR$/scripts" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.mlpmodel">
+  <component name="RunManager" selected="Python.simulator">
     <configuration name="datamanagement" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -63,27 +63,6 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/datamanagement/datamanagement.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="dataplotter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="thesis" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/datamanagement" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -134,6 +113,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="simulator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="thesis" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/simulation" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/simulation/simulator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="training" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -157,11 +157,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.simulator" />
         <item itemvalue="Python.mlpmodel" />
         <item itemvalue="Python.training" />
         <item itemvalue="Python.datamanagement" />
         <item itemvalue="Python.identityeng" />
-        <item itemvalue="Python.dataplotter" />
       </list>
     </recent_temporary>
   </component>

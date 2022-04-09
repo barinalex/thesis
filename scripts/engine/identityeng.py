@@ -23,7 +23,7 @@ class IdentityEng(ModelBased):
     def initializemodel(self) -> IdentityModel:
         return IdentityModel()
 
-    def makeobs(self) -> np.ndarray:
+    def makeobs(self, throttle: float, turn: float) -> np.ndarray:
         i = self.counter
         dvel = self.linear[i, :2] - self.linear[i-1, :2]
         dang = self.angular[i, 2] - self.angular[i-1, 2]

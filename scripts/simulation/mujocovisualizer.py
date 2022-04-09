@@ -2,24 +2,23 @@ import mujoco_py
 import time
 import os
 import numpy as np
-from
+from scripts.engine.modelbased import ModelBased
 
 mj_path = mujoco_py.utils.discover_mujoco()
 xml_path = os.path.join(mj_path, 'models', 'one_car.xml')
 
 
 class MujocoVizualizer:
-    def __init__(self, agent: BasicAgent):
-        self.agent = agent
-        # self.models = mujoco_py.load_model_from_path(xml_path)
-        self.bodyid = agent.env.engine.bodyid # self.models.body_name2id('buddy')
-        self.sim = agent.env.engine.sim #mujoco_py.MjSim(self.models, nsubsteps=1)
+    def __init__(self, engine: ModelBased):
+        self.engine = engine
+        self.model = mujoco_py.load_model_from_path(xml_path)
+        self.bodyid = self.model.body_name2id('buddy')
+        self.sim = mujoco_py.MjSim(self.model, nsubsteps=1)
         self.viewer = mujoco_py.MjViewerBasic(self.sim)
         self.firstwaypoint = 0
         self.n_waypoints = 10
         self.joy = None
         # self.joy = JoystickInputWrapper()
-        self.agent.env.waypointer.enable_mujoco_visualization(mujocovisualizer=self)
 
     def movewaypoint(self, pos: np.ndarray):
         """
@@ -66,18 +65,14 @@ class MujocoVizualizer:
         """
         return self.sim.data.body_xvelr[self.bodyid].copy()
 
-    def step(self) -> (np.ndarray, bool):
-        """update agent's state"""
-        if self.joy:
-            action, x = self.joy.getinput()
-            action = np.array([action['throttle'], action['turn']])
-        else:
-            action = self.agent.act_on_observation(readstate=agent.env.readstate)
-        _, _, done, _ = self.agent.env.step(action)
+    def step(self):
+        """update engine's state"""
+        action, x = self.joy.getinput()
+        action = np.array([action['throttle'], action['turn']])
+        _, _, done, _ = self.engine.step(throttle=action[0], turn=action[1])
         # self.sim.data.ctrl[:] = [action[1], (action[0] + 1) / 2]
         # self.sim.forward()
         # self.sim.step()
-        return action, done
         # simtime = time.time() - self.start
         # engtime = self.agent.env.engine.simtime
         # if simtime < engtime:

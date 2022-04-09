@@ -17,14 +17,16 @@ class ModelBased(Engine):
         pass
 
     @abstractmethod
-    def makeobs(self) -> np.ndarray:
+    def makeobs(self, throttle: float, turn: float) -> np.ndarray:
         """
+        :param throttle: forward action
+        :param turn: sideways action
         :return: observation vector
         """
         pass
 
     def step(self, throttle: float, turn: float):
-        obs = self.makeobs()
+        obs = self.makeobs(throttle=throttle, turn=turn)
         dvel, dang = self.model.predict(obs=obs)
         dvel = np.hstack((dvel, 0))
         dang = np.hstack((np.zeros(2), dang))
