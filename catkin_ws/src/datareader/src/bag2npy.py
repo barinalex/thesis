@@ -117,6 +117,7 @@ class BuggyReader:
         rospy.init_node("buggyreader")
         rospy.Subscriber("/camera/odom/sample", Odometry, self.callback)
         rospy.Subscriber("/actions", Actions, self.actcallback)
+        self.bl2rs = get_static_tf("odom", "camera_odom_frame")
         self.path = f"{DATA_DIR}/{gettimestamp()}"
 
     def callback(self, odom: Odometry):
@@ -125,8 +126,7 @@ class BuggyReader:
         """
         print("MESSAGE: ", self.counter)
         self.counter += 1
-        print(odom.twist.twist.linear.x, odom.twist.twist.linear.y, odom.twist.twist.linear.z)
-        print(odom.twist.twist.angular.x, odom.twist.twist.angular.y, odom.twist.twist.angular.z)
+        print(odom.twist.twist.linear.x, odom.twist.twist.linear.y, odom.twist.twist.angular.z)
         self.gt_odom_list.append(odom)
         with self.act_lock:
             self.act_list.append(copy.deepcopy(self.act_msg))
@@ -159,7 +159,7 @@ class BuggyReader:
         """
         rospy.spin()
         print("Gathered: {} action and {} odom messages".format(len(self.act_list), len(self.gt_odom_list)))
-        # self.gt_odom_list = [self.rotate_twist(msg) for msg in self.gt_odom_list]
+        self.gt_odom_list = [self.rotate_twist(msg) for msg in self.gt_odom_list]
         n = np.minimum(len(self.act_list), len(self.gt_odom_list))
         messages = [{"act_msg": self.act_list[i], "odom_msg": self.gt_odom_list[i]} for i in range(n)]
         self.extract_data(messages)
