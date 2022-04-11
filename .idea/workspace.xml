@@ -5,11 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/mlp.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/mlp.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/engine/modelbased.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/modelbased.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/engine/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/models/mlpmodel.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/models/mlpmodel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/simulation/simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simulation/simulator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -58,7 +54,7 @@
       <recent name="$PROJECT_DIR$/scripts/engine" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.dataplotter">
+  <component name="RunManager" selected="Python.simulator">
     <configuration name="dataplotter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -166,8 +162,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.dataplotter" />
         <item itemvalue="Python.simulator" />
+        <item itemvalue="Python.dataplotter" />
         <item itemvalue="Python.training" />
         <item itemvalue="Python.pybulletvisualizer" />
         <item itemvalue="Python.mlpmodel" />

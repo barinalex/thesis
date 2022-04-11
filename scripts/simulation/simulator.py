@@ -42,6 +42,7 @@ class Simulator:
             throttle, turn, terminate = self.iw.getinput()
             start = time.time()
             self.step(throttle=throttle, turn=turn)
+            print(self.engine.getlin())
             total = time.time() - start
             if total < self.timestep:
                 time.sleep(self.timestep - total)
@@ -62,8 +63,9 @@ if __name__ == "__main__":
     import os
     path = os.path.join(Dirs.models, "mlp_2022_04_11_17_48_46_820014")
     engine = MLPBased(path=path)
-    # sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
-    # sim.simulate()
+    sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
+    sim.simulate()
+    exit()
 
     from scripts.simulation.datainputwrapper import DataWrapper
     from scripts.datamanagement.datamanagement import loadconfig

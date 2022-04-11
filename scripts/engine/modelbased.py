@@ -28,7 +28,6 @@ class ModelBased(Engine):
     def step(self, throttle: float, turn: float):
         obs = self.makeobs(throttle=throttle, turn=turn)
         dvel, dang = self.model.predict(obs=obs)
-        print(dvel, dang)
         dvel = np.hstack((dvel, 0))
         dang = np.hstack((np.zeros(2), dang))
         self.state.update_velocities(dvel=dvel, dang=dang)
