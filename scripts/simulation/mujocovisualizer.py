@@ -103,7 +103,7 @@ class MujocoVizualizer:
             # if done: break
             # actions[i, ] = action
 
-            print(i, self.agent.env.episode_rewards[i], self.agent.env.engine.get_vel())
+            print(i, self.agent.env.episode_rewards[i], self.agent.env.engine.get_lin())
             if time.time() - start < self.agent.env.engine.simtime:
                 self.viewer.render()
         # path = f"{Dirs.simulation}/{gettimestamp()}"

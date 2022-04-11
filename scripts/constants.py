@@ -25,6 +25,7 @@ class Dirs:
     root = os.path.abspath(os.path.join(source, os.pardir))
     data = root + "/data"
     realdata = data + "/real"
+    simdata = data + "/sim"
     datasets = data + "/datasets"
     agent = data + "/agent"
     engine = data + "/engine"
