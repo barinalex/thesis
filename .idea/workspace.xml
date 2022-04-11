@@ -6,7 +6,6 @@
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/mlp.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/mlp.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/datamanagement/datafilters.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/datafilters.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/datamanagement/datamanagement.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/datamanagement.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" afterDir="false" />
     </list>

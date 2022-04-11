@@ -53,9 +53,10 @@ def plotfeature(data: tuple):
 
 path = os.path.join(Dirs.configs, "mlp.yaml")
 config = loadconfig(path=path)
-config["test_size"] = 0
-train, test = get_data(params=config)
-obs, labels = reshape_no_batches(train[DT.obs], train[DT.labels])
+# config["test_size"] = 0
+train, test, ncnts = get_data(params=config)
+obs, labels = train[DT.obs], train[DT.labels]
+# obs, labels = reshape_no_batches(train[DT.obs], train[DT.labels])
 
 data = [("Delta linear velocity along X axis", labels[:, 0], "time step", "meters per second"),
         ("Delta linear velocity along Y axis", labels[:, 1], "time step", "meters per second"),
@@ -64,10 +65,6 @@ data = [("Delta linear velocity along X axis", labels[:, 0], "time step", "meter
 # data = [("Filtered linear velocity along X axis (forward velocity)", obs[:, 0], "time step", "meters per second"),
 #         ("Filtered linear velocity along Y axis", obs[:, 1], "time step", "meters per second"),
 #         ("Filtered angular velocity around Z axis", obs[:, 2], "time step", "meters per second")]
-
-mean = np.mean(labels[:, 0])
-std = np.std(labels[:, 0])
-print(mean, std)
 
 for d in data:
     plotfeature(data=d)
