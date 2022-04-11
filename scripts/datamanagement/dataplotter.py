@@ -38,11 +38,16 @@ def plotfeature(data: tuple):
     plt.show()
 
 
-# path = os.path.join(Dirs.realdata, "2022_04_10_12_24_10_502246")
-# positions = load_raw_data(path=f"{path}/positions.npy")
-# actions = load_raw_data(path=f"{path}/actions.npy")
-# linear = load_raw_data(path=f"{path}/linear.npy")
-# angular = load_raw_data(path=f"{path}/angular.npy")
+path = os.path.join(Dirs.realdata, "2022_04_10_12_24_10_502246")
+positions = load_raw_data(path=f"{path}/positions.npy")
+actions = load_raw_data(path=f"{path}/actions.npy")
+linear = load_raw_data(path=f"{path}/linear.npy")
+angular = load_raw_data(path=f"{path}/angular.npy")
+
+plt.figure()
+plt.plot(-positions[:, 0], -positions[:, 1])
+plt.show()
+
 #
 # data = [("Raw linear velocity along X axis (forward velocity)", linear[:, 0], "time step", "meters per second"),
 #         ("Raw linear velocity along Y axis", linear[:, 1], "time step", "meters per second"),
@@ -51,20 +56,22 @@ def plotfeature(data: tuple):
 #         ("Action: turn", actions[:, 1], "time step", "")]
 
 
-path = os.path.join(Dirs.configs, "mlp.yaml")
-config = loadconfig(path=path)
-# config["test_size"] = 0
-train, test, ncnts = get_data(params=config)
-obs, labels = train[DT.obs], train[DT.labels]
+# path = os.path.join(Dirs.configs, "mlp.yaml")
+# config = loadconfig(path=path)
+# # config["test_size"] = 0
+# train, test, ncnts = get_data(params=config)
 # obs, labels = reshape_no_batches(train[DT.obs], train[DT.labels])
-
-data = [("Delta linear velocity along X axis", labels[:, 0], "time step", "meters per second"),
-        ("Delta linear velocity along Y axis", labels[:, 1], "time step", "meters per second"),
-        ("Delta angular velocity", labels[:, 2], "time step", "meters per second")]
+#
+# data = [("Action throttle", obs[:, 3], "time step", ""),
+#         ("Action turn", obs[:, 4], "time step", "")]
+#
+# data = [("Delta linear velocity along X axis", labels[:, 0], "time step", "meters per second"),
+#         ("Delta linear velocity along Y axis", labels[:, 1], "time step", "meters per second"),
+#         ("Delta angular velocity", labels[:, 2], "time step", "meters per second")]
 
 # data = [("Filtered linear velocity along X axis (forward velocity)", obs[:, 0], "time step", "meters per second"),
 #         ("Filtered linear velocity along Y axis", obs[:, 1], "time step", "meters per second"),
 #         ("Filtered angular velocity around Z axis", obs[:, 2], "time step", "meters per second")]
 
-for d in data:
-    plotfeature(data=d)
+# for d in data:
+#     plotfeature(data=d)

@@ -13,6 +13,7 @@ class MLPModel(Model):
     def __init__(self):
         super().__init__()
         self.model = None
+        self.config = None
 
     def train(self, config: dict, savepath: str = None):
         """
@@ -35,14 +36,16 @@ class MLPModel(Model):
 
         :param path: path to an existing model parameters and config files.
         """
-        config = loadconfig(f"{path}.yaml")
-        self.model = MLP(config=config)
+        self.config = loadconfig(f"{path}.yaml")
+        self.model = MLP(config=self.config)
         self.model.load_state_dict(state_dict=torch.load(f"{path}.params"))
 
     def predict(self, obs: np.ndarray) -> (np.ndarray, np.ndarray):
         obs = torch.tensor(obs, dtype=torch.float32)
         prediction = self.model.predict(x=obs)
         prediction = prediction.detach().numpy()
+        normcnst = np.asarray(self.config["normcnst"])
+        prediction = np.multiply(prediction, normcnst)
         return prediction[:2], prediction[2]
 
 
