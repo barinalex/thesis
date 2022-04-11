@@ -117,6 +117,10 @@ if __name__ == "__main__":
     from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
     iw = JoystickInputWrapper()
     eng = MujocoEngine()
+    for i in range(5):
+        eng.gatherdata(n_steps=8000)
+        eng.reset()
+    exit()
     interrupt = False
     while not interrupt:
         throttle, turn, interrupt = iw.getinput()
