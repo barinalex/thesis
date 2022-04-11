@@ -15,8 +15,8 @@ def trainmlp():
     timestamp = gettimestamp()
     prmpath = os.path.join(Dirs.models, f"mlp_{timestamp}.params")
     cfgpath = os.path.join(Dirs.models, f"mlp_{timestamp}.yaml")
-    saveconfig(path=cfgpath, config=config)
     model.train(config=config, savepath=prmpath)
+    saveconfig(path=cfgpath, config=config)
 
 
 if __name__ == "__main__":

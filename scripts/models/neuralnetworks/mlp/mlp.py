@@ -23,8 +23,6 @@ class MLP(NeuralNetwork):
         """
         z = self.non_linearity(self.inlinear(x))
         z = self.dropout(z)
-        z = self.non_linearity(self.hl1(z)) # two times (second in for loop)??
-        z = self.dropout(z)
         for i in range(self.nhidden):
             z = self.non_linearity(vars(self)['_modules'][f"hl{i+1}"](z))
             z = self.dropout(z)

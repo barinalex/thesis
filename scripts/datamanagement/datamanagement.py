@@ -171,7 +171,7 @@ def get_gathering_data_episode(params: dict, edir: str) -> (dict, dict):
     return trainset, testset
 
 
-def get_data(params: dict) -> (dict, dict, dict):
+def get_data(params: dict) -> (dict, dict, list):
     """
     combine manually gathered data divided into episodes
     into one complete dataset with train and test subsets
@@ -180,13 +180,12 @@ def get_data(params: dict) -> (dict, dict, dict):
     :return: tuple of dicts (train data, test data, train set normalization constants)
     """
     train, test = {}, {}
-    for edir in glob.glob(pathname=os.path.join(Dirs.realdata, "2022_04_10_12_24_10_502246")):
+    for edir in glob.glob(pathname=os.path.join(Dirs.realdata, "*")):
         tr, ts = get_gathering_data_episode(params=params, edir=edir)
         train = concatenate_dicts(d1=train, d2=tr)
         test = concatenate_dicts(d1=test, d2=ts)
     train[DT.labels], test[DT.labels], normconst = normalizesets(train=train[DT.labels],
-                                                                 test=test[DT.labels],
-                                                                 tag="label")
+                                                                 test=test[DT.labels])
     train[DT.obs], train[DT.labels] = reshape_batch_first(obs=train[DT.obs],
                                                           labels=train[DT.labels],
                                                           batchsize=params["batchsize"])
@@ -202,15 +201,14 @@ def normalize(data: np.ndarray) -> (np.ndarray, float):
     return data / std, std
 
 
-def normalizesets(train: np.ndarray, test: np.ndarray, tag: str) -> (np.ndarray, np.ndarray, dict):
+def normalizesets(train: np.ndarray, test: np.ndarray) -> (np.ndarray, np.ndarray, list):
     """
     :param train: train data to normilize
     :param test: test data to normilize
-    :param tag: normalization tag for dict keys
     :return: normilized train data, normilized test data, normalization constants
     """
-    normconst = {}
+    normcnst = np.zeros(train.shape[1])
     for i in range(train.shape[1]):
-        train[:, i], normconst[f"{tag}{i}"] = normalize(data=train[:, i])
-        test[:, i] /= normconst[f"{tag}{i}"]
-    return train, test, normconst
+        train[:, i], normcnst[i] = normalize(data=train[:, i])
+        test[:, i] /= normcnst[i]
+    return train, test, normcnst.tolist()

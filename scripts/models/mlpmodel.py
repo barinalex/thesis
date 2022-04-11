@@ -22,9 +22,10 @@ class MLPModel(Model):
         :param savepath: path to an existing directory with file name
         """
         self.model = MLP(config=config)
-        train, test = get_data(params=config)
+        train, test, normcnst = get_data(params=config)
+        config["normcnst"] = normcnst
         trainer = Trainer(train=train, test=test, model=self.model)
-        trainer.train()
+        evals, _ = trainer.train()
         if savepath:
             trainer.savemodel(path=savepath)
 
