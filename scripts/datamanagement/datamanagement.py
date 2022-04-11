@@ -139,7 +139,7 @@ def get_labeled_obs(data: dict, params: dict) -> (np.ndarray, np.ndarray):
     :return: tuple of numpy arrays (observations, labels)
     """
     obs = make_observations(data=data)
-    # obs = preprocess_observations(params=params, obs=obs)
+    obs = preprocess_observations(params=params, obs=obs)
     labels = label_observations(obs=obs)
     # labels = preprocess_labels(params=params, labels=labels)
     return obs[:-1], labels[1:]
@@ -195,7 +195,7 @@ def get_data(params: dict) -> (dict, dict):
     :return: tuple of dicts (train data, test data)
     """
     train, test = {}, {}
-    for edir in glob.glob(pathname=os.path.join(Dirs.realdata, "*")):
+    for edir in glob.glob(pathname=os.path.join(Dirs.realdata, "2022_04_10_12_24_10_502246")):
         tr, ts = get_gathering_data_episode(params=params, edir=edir)
         train = concatenate_dicts(d1=train, d2=tr)
         test = concatenate_dicts(d1=test, d2=ts)

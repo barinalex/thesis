@@ -17,6 +17,20 @@ def radius_filter(data: np.ndarray, radius: int) -> np.ndarray:
     return filtered
 
 
+def pastmean(data: np.ndarray, k: int) -> np.ndarray:
+    """
+    compute mean of data in an interval [i-k, i]
+
+    :param data: numpy array
+    :param k: interval to compute a mean
+    :return: filtered numpy array
+    """
+    filtered = np.copy(data)
+    for i in range(k, len(data)):
+        filtered[i] = data[i - k: i].sum(axis=0) / (k + 1)
+    return filtered
+
+
 def butter_lowpass_filtfilt(data: np.ndarray, smoothness: float = 0.02, order: int = 5) -> np.ndarray:
     """
     smooth data
@@ -53,6 +67,8 @@ def applyfilter(params: dict, data: np.ndarray) -> np.ndarray:
     """
     if params['filter'] == "mean":
         data = radius_filter(data=data, radius=params['filter_radius'])
+    elif params['filter'] == "pastmean":
+        data = pastmean(data=data, k=params['pastmean_k'])
     elif params['filter'] == "wiener":
         data = signal.wiener(data, params['wiener_window'])
     elif params['filter'] == "meanwiener":

@@ -13,7 +13,8 @@
 "num_epochs": 5
 "balance": False
 "dimbalance": 2
-"filter": "False" # mean, smooth
+"filter": "pastmean" # mean, smooth
+"pastmean_k": 30
 "filter_radius" : 3
 "smoothness": 0.2 # lower is smoother
 "vel_labels_scale": 1

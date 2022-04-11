@@ -26,33 +26,44 @@ def plotfeatures(data: list, x: int = 2, y: int = 2):
     plt.show()
 
 
-path = os.path.join(Dirs.realdata, "2022_04_10_12_24_10_502246")
-positions = load_raw_data(path=f"{path}/positions.npy")
-actions = load_raw_data(path=f"{path}/actions.npy")
-linear = load_raw_data(path=f"{path}/linear.npy")
-angular = load_raw_data(path=f"{path}/angular.npy")
-
-data = [("Raw linear velocity along X axis (forward velocity)", linear[:, 0], "time step", "meters per second"),
-        ("Raw linear velocity along Y axis", linear[:, 1], "time step", "meters per second"),
-        ("Raw angular velocity around Z axis", angular[:, 2], "time step", "meters per second"),
-        ("Action: throttle", actions[:, 0], "time step", ""),
-        ("Action: turn", actions[:, 1], "time step", "")]
-plotfeatures(data=data, x=3, y=2)
+def plotfeature(data: tuple):
+    """
+    :param data: tuple (title, numpy array shape (n,), x label, y label)
+    """
+    plt.figure()
+    plt.plot(np.arange(data[1].shape[0]), data[1])
+    plt.title(label=data[0])
+    plt.xlabel(data[2])
+    plt.ylabel(data[3])
+    plt.show()
 
 
-# plt.figure()
-# plt.plot(np.arange(linear.shape[0]), angular[:, 2])
-# # plt.plot(np.arange(linear.shape[0]), actions[:, 1])
-# plt.title(label="raw angular velocity around Z axis")
-# plt.xlabel("time step")
-# plt.ylabel("meters per second")
-# plt.show()
+# path = os.path.join(Dirs.realdata, "2022_04_10_12_24_10_502246")
+# positions = load_raw_data(path=f"{path}/positions.npy")
+# actions = load_raw_data(path=f"{path}/actions.npy")
+# linear = load_raw_data(path=f"{path}/linear.npy")
+# angular = load_raw_data(path=f"{path}/angular.npy")
+#
+# data = [("Raw linear velocity along X axis (forward velocity)", linear[:, 0], "time step", "meters per second"),
+#         ("Raw linear velocity along Y axis", linear[:, 1], "time step", "meters per second"),
+#         ("Raw angular velocity around Z axis", angular[:, 2], "time step", "meters per second"),
+#         ("Action: throttle", actions[:, 0], "time step", ""),
+#         ("Action: turn", actions[:, 1], "time step", "")]
 
 
-# path = os.path.join(Dirs.configs, "mlp.yaml")
-# config = loadconfig(path=path)
-# train, test = get_data(params=config)
-# obs, labels = reshape_no_batches(train[DT.obs], train[DT.labels])
-# plt.figure()
-# plt.plot(np.arange(obs.shape[0]), labels[:, 0])
-# plt.show()
+path = os.path.join(Dirs.configs, "mlp.yaml")
+config = loadconfig(path=path)
+config["test_size"] = 0
+train, test = get_data(params=config)
+obs, labels = reshape_no_batches(train[DT.obs], train[DT.labels])
+
+data = [("Delta linear velocity along X axis", labels[:, 0], "time step", "meters per second"),
+        ("Delta linear velocity along Y axis", labels[:, 1], "time step", "meters per second"),
+        ("Delta angular velocity", labels[:, 2], "time step", "meters per second")]
+
+# data = [("Filtered linear velocity along X axis (forward velocity)", obs[:, 0], "time step", "meters per second"),
+#         ("Filtered linear velocity along Y axis", obs[:, 1], "time step", "meters per second"),
+#         ("Filtered angular velocity around Z axis", obs[:, 2], "time step", "meters per second")]
+
+for d in data:
+    plotfeature(data=d)
