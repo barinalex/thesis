@@ -61,7 +61,7 @@ if __name__ == "__main__":
     from scripts.engine.mlpbased import MLPBased
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "mlp_2022_04_11_17_48_46_820014")
+    path = os.path.join(Dirs.models, "mlp_2022_04_11_20_50_31_362568")
     engine = MLPBased(path=path)
     sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
     sim.simulate()
