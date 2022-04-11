@@ -65,5 +65,9 @@ data = [("Delta linear velocity along X axis", labels[:, 0], "time step", "meter
 #         ("Filtered linear velocity along Y axis", obs[:, 1], "time step", "meters per second"),
 #         ("Filtered angular velocity around Z axis", obs[:, 2], "time step", "meters per second")]
 
+mean = np.mean(labels[:, 0])
+std = np.std(labels[:, 0])
+print(mean, std)
+
 for d in data:
     plotfeature(data=d)

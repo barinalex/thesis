@@ -26,8 +26,8 @@ def pastmean(data: np.ndarray, k: int) -> np.ndarray:
     :return: filtered numpy array
     """
     filtered = np.copy(data)
-    for i in range(k, len(data)):
-        filtered[i] = data[i - k: i].sum(axis=0) / (k + 1)
+    for i in range(1, len(data)):
+        filtered[i] = data[np.max((i - k, 0)): i].sum(axis=0) / np.min((k+1, i+1))
     return filtered
 
 

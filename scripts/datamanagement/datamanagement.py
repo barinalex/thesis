@@ -118,20 +118,6 @@ def preprocess_observations(params: dict, obs: np.ndarray) -> np.ndarray:
     return obs
 
 
-def preprocess_labels(params: dict, labels: np.ndarray) -> np.ndarray:
-    """
-    do filtering, balancing and everything that might help to train NN
-
-    :param params: parameters of data preprocessing
-    :param labels: labels. numpy array (n, 3), where second dim
-    contains: deltas vel x, deltas vel y, deltas ang vel
-    :return: filtered labels. numpy array (n, 3)
-    """
-    labels[:, :2] *= params["vel_labels_scale"]
-    labels[:, 2] *= params["ang_labels_scale"]
-    return labels
-
-
 def get_labeled_obs(data: dict, params: dict) -> (np.ndarray, np.ndarray):
     """
     :param data: dictionary with a full dataset
@@ -141,7 +127,6 @@ def get_labeled_obs(data: dict, params: dict) -> (np.ndarray, np.ndarray):
     obs = make_observations(data=data)
     obs = preprocess_observations(params=params, obs=obs)
     labels = label_observations(obs=obs)
-    # labels = preprocess_labels(params=params, labels=labels)
     return obs[:-1], labels[1:]
 
 
