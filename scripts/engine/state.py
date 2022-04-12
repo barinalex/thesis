@@ -13,8 +13,6 @@ class State:
         self.orn = quaternion.quaternion(1, 0, 0, 0)
         self.vel = np.zeros(3)
         self.ang = np.zeros(3)
-        self.vellimit = 6
-        self.anglimit = 8
 
     def reset(self):
         """set all to zero"""

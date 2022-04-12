@@ -96,12 +96,12 @@ def make_sequential(obs: np.ndarray, length: int) -> (np.ndarray, np.ndarray):
     :param length: sequence length
     :return: array of observation sequences. numpy array (n, length, ...)
     """
-    sobs = np.zeros((len(obs), length, *obs.shape[1:]))
+    sobs = np.zeros((obs.shape[0], length, *obs.shape[1:]))
     for i in range(length):
         sobs[i][length - (i + 1): length] = obs[: i + 1]
     for i in range(length, len(obs)):
         sobs[i] = obs[i - length + 1: i + 1]
-    return sobs
+    return np.reshape(sobs, (obs.shape[0], length * obs.shape[1]))
 
 
 def preprocess_observations(params: dict, obs: np.ndarray) -> np.ndarray:
@@ -127,6 +127,8 @@ def get_labeled_obs(data: dict, params: dict) -> (np.ndarray, np.ndarray):
     obs = make_observations(data=data)
     obs = preprocess_observations(params=params, obs=obs)
     labels = label_observations(obs=obs)
+    if params["sequence_length"] > 1:
+        obs = make_sequential(obs=obs, length=params["sequence_length"])
     return obs[:-1], labels[1:]
 
 

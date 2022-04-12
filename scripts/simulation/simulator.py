@@ -66,7 +66,7 @@ if __name__ == "__main__":
     from scripts.engine.identityeng import IdentityEng
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "mlp_2022_04_12_15_11_05_953746")
+    path = os.path.join(Dirs.models, "mlp_2022_04_12_17_15_32_278934")
     engine = MLPBased(path=path)
     # engine = IdentityEng(datadir="2022_04_12_15_09_00_833808")
 

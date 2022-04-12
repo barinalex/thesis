@@ -2,21 +2,20 @@
 "output_dim" : 3
 "hidden_dim" : 32
 "n_hidden": 1
-"sequence_length": 1
+"sequence_length": 3
 "non_linearity" : "nn.ReLU6" #  nn.ReLU, nn.ReLU6, nn.LeakyReLU, nn.ELU, nn.Tanh
-"dropout": 0
+"dropout": 0.
 "datadir": ""
 "learning_rate" : 0.001
 "weight_decay" : 0.001
 "test_size" : 0.2
 "batchsize" : 256
-"num_epochs": 50
+"num_epochs": 100
 "balance": False
 "dimbalance": 2
 "filter": "" # mean, smooth
 "pastmean_k": 30
-"filter_radius" : 3
 "smoothness": 0.2 # lower is smoother
-"normalizelbl": False
+"normalizelbl": True
 "normcnst": []
 "cliplabel": 1
