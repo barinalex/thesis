@@ -66,9 +66,9 @@ if __name__ == "__main__":
     from scripts.engine.identityeng import IdentityEng
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "mlp_2022_04_12_14_10_09_570258")
-    # engine = MLPBased(path=path)
-    engine = IdentityEng(datadir="2022_04_11_20_49_05_784963")
+    path = os.path.join(Dirs.models, "mlp_2022_04_12_15_11_05_953746")
+    engine = MLPBased(path=path)
+    # engine = IdentityEng(datadir="2022_04_12_15_09_00_833808")
 
     # sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
     # sim.simulate()
@@ -79,7 +79,7 @@ if __name__ == "__main__":
     from scripts.datamanagement.datamanagementutils import load_raw_data
     config = loadconfig(f"{path}.yaml")
 
-    path = os.path.join(Dirs.simdata, "2022_04_11_20_49_05_784963")
+    path = os.path.join(Dirs.simdata, "2022_04_12_15_09_00_833808")
     positions = load_raw_data(path=f"{path}/positions.npy")
     actions = load_raw_data(path=f"{path}/actions.npy")
     linear = load_raw_data(path=f"{path}/linear.npy")
@@ -88,11 +88,9 @@ if __name__ == "__main__":
     sim = Simulator(iw=DataWrapper(actions=actions), engine=engine)
     simpositions = sim.simulate()
 
-    print(positions.shape, simpositions.shape, linear.shape)
-
     import matplotlib.pyplot as plt
     plt.figure()
-    plt.plot(-positions[:, 0], -positions[:, 1], color='b')
+    plt.plot(positions[:, 0], positions[:, 1], color='b')
     plt.plot(simpositions[:, 0], simpositions[:, 1], color='r')
     plt.legend(['gt', 'sim'])
     plt.show()
