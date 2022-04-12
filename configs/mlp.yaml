@@ -1,6 +1,6 @@
 "input_dim" : 5
 "output_dim" : 3
-"hidden_dim" : 32
+"hidden_dim" : 64
 "n_hidden": 2
 "sequence_length": 1
 "non_linearity" : "nn.ReLU6" #  nn.ReLU, nn.ReLU6, nn.LeakyReLU, nn.ELU, nn.Tanh
@@ -10,7 +10,7 @@
 "weight_decay" : 0.001
 "test_size" : 0.2
 "batchsize" : 256
-"num_epochs": 100
+"num_epochs": 50
 "balance": False
 "dimbalance": 2
 "filter": "" # mean, smooth

@@ -63,20 +63,26 @@ if __name__ == "__main__":
     import os
     path = os.path.join(Dirs.models, "mlp_2022_04_11_20_50_31_362568")
     engine = MLPBased(path=path)
-    sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
-    sim.simulate()
-    exit()
+    # sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
+    # sim.simulate()
+    # exit()
 
     from scripts.simulation.datainputwrapper import DataWrapper
     from scripts.datamanagement.datamanagement import loadconfig
     from scripts.datamanagement.datamanagementutils import load_raw_data
     config = loadconfig(f"{path}.yaml")
 
-    path = os.path.join(Dirs.realdata, "2022_04_10_12_24_10_502246")
+    path = os.path.join(Dirs.simdata, "2022_04_11_20_49_05_784963")
     positions = load_raw_data(path=f"{path}/positions.npy")
     actions = load_raw_data(path=f"{path}/actions.npy")
     linear = load_raw_data(path=f"{path}/linear.npy")
     angular = load_raw_data(path=f"{path}/angular.npy")
+
+    # import matplotlib.pyplot as plt
+    # plt.figure()
+    # plt.plot(positions[:, 0], positions[:, 1])
+    # plt.show()
+    # exit()
 
     sim = Simulator(iw=DataWrapper(actions=actions), engine=engine)
     sim.simulate()

@@ -5,9 +5,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/datamanagement/datamanagement.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/datamanagement.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/mlp.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/mlp.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/engine/mujocoengine.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/mujocoengine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/models/mlpmodel.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/models/mlpmodel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/models/training.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/models/training.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/simulation/simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simulation/simulator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +57,7 @@
       <recent name="$PROJECT_DIR$/configs" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.simulator">
+  <component name="RunManager" selected="Python.dataplotter">
     <configuration name="dataplotter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -163,9 +165,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.simulator" />
-        <item itemvalue="Python.training" />
         <item itemvalue="Python.dataplotter" />
+        <item itemvalue="Python.training" />
+        <item itemvalue="Python.simulator" />
         <item itemvalue="Python.mujocoengine" />
         <item itemvalue="Python.mujocoengine (1)" />
       </list>
