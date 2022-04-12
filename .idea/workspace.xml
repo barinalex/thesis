@@ -5,7 +5,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/mlp.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/mlp.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/engine/identityeng.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/identityeng.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/engine/mujocoengine.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/mujocoengine.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/engine/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/state.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/simulation/simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simulation/simulator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,27 +80,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="mujocoengine (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="simtoreal2d" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../simtoreal2d/scripts/engine/engines" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../simtoreal2d/scripts/engine/engines/mujocoengine.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="mujocoengine" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -138,6 +122,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="trainer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="thesis" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/models/neuralnetworks" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/models/neuralnetworks/trainer.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="training" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -164,8 +169,8 @@
         <item itemvalue="Python.simulator" />
         <item itemvalue="Python.dataplotter" />
         <item itemvalue="Python.training" />
+        <item itemvalue="Python.trainer" />
         <item itemvalue="Python.mujocoengine" />
-        <item itemvalue="Python.mujocoengine (1)" />
       </list>
     </recent_temporary>
   </component>

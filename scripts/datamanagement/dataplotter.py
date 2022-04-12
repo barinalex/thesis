@@ -39,7 +39,7 @@ def plot2d(data: tuple):
 
 
 def plotevals():
-    path = os.path.join(Dirs.models, "mlp_2022_04_12_13_53_54_494717.evals" + ".npy")
+    path = os.path.join(Dirs.models, "mlp_2022_04_12_14_10_09_570258.evals" + ".npy")
     evals = load_raw_data(path=path)
     plt.figure()
     epochs = np.arange(evals.shape[0])

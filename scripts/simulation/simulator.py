@@ -1,3 +1,5 @@
+import numpy as np
+
 from scripts.simulation.pybulletvisualizer import Visualizer
 from scripts.simulation.inputwrapper import InputWrapper
 from scripts.engine.modelbased import ModelBased
@@ -38,15 +40,17 @@ class Simulator:
     def simulate(self):
         """run a simulation"""
         terminate = False
+        positions = []
         while not terminate:
             throttle, turn, terminate = self.iw.getinput()
             start = time.time()
+            positions.append(self.engine.getpos())
             self.step(throttle=throttle, turn=turn)
-            print(self.engine.getlin())
             total = time.time() - start
             if total < self.timestep:
                 time.sleep(self.timestep - total)
         self.disconnect_visualizer()
+        return np.asarray(positions)
 
     def disconnect_visualizer(self):
         if self.visualizer:
@@ -59,10 +63,13 @@ class Simulator:
 if __name__ == "__main__":
     from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
     from scripts.engine.mlpbased import MLPBased
+    from scripts.engine.identityeng import IdentityEng
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "mlp_2022_04_12_13_53_54_494717")
-    engine = MLPBased(path=path)
+    path = os.path.join(Dirs.models, "mlp_2022_04_12_14_10_09_570258")
+    # engine = MLPBased(path=path)
+    engine = IdentityEng(datadir="2022_04_10_11_57_44_706120")
+
     # sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
     # sim.simulate()
     # exit()
@@ -72,17 +79,20 @@ if __name__ == "__main__":
     from scripts.datamanagement.datamanagementutils import load_raw_data
     config = loadconfig(f"{path}.yaml")
 
-    path = os.path.join(Dirs.simdata, "2022_04_11_20_49_05_784963")
+    path = os.path.join(Dirs.realdata, "2022_04_10_11_57_44_706120")
     positions = load_raw_data(path=f"{path}/positions.npy")
     actions = load_raw_data(path=f"{path}/actions.npy")
     linear = load_raw_data(path=f"{path}/linear.npy")
     angular = load_raw_data(path=f"{path}/angular.npy")
 
-    # import matplotlib.pyplot as plt
-    # plt.figure()
-    # plt.plot(positions[:, 0], positions[:, 1])
-    # plt.show()
-    # exit()
-
     sim = Simulator(iw=DataWrapper(actions=actions), engine=engine)
-    sim.simulate()
+    simpositions = sim.simulate()
+
+    print(positions.shape, simpositions.shape, linear.shape)
+
+    import matplotlib.pyplot as plt
+    plt.figure()
+    plt.plot(-positions[:, 0], -positions[:, 1], color='b')
+    plt.plot(simpositions[:, 0], simpositions[:, 1], color='r')
+    plt.legend(['gt', 'sim'])
+    plt.show()

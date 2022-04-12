@@ -25,8 +25,8 @@ class IdentityEng(ModelBased):
 
     def makeobs(self, throttle: float, turn: float) -> np.ndarray:
         i = self.counter
-        dvel = self.linear[i, :2] - self.linear[i-1, :2]
-        dang = self.angular[i, 2] - self.angular[i-1, 2]
+        dvel = self.linear[i, :2] - self.getlin()[:2]
+        dang = self.angular[i, 2] - self.getang()[2]
         return np.hstack((dvel, dang))
 
     def step(self, throttle: float, turn: float):
