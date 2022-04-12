@@ -1,0 +1,23 @@
+"input_dim" : 5
+"sequence_length": 3 # 16
+"output_dim" : 3
+"n_channels" : 5
+"convlayers": 1 # 2 3
+"kernel": '[3]'
+"stride": '[1]'
+"non_linearity" : "nn.ReLU6" #  nn.ReLU, nn.ReLU6, nn.LeakyReLU, nn.ELU, nn.Tanh
+"datadir": ""
+"learning_rate" : 0.00016
+"optimizer" : adam
+"weight_decay" : 0.00016
+"test_size" : 0.1
+"batchsize" : 256
+"num_epochs": 4
+"balance": False
+"dimbalance": 2
+"filter": "pastmean" # pastmean, smooth
+"pastmean_k": 10
+"smoothness": 0.2 # lower is smoother
+"normalizelbl": True
+"normcnst": []
+"cliplabel": 1
