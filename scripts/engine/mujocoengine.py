@@ -90,7 +90,8 @@ class MujocoEngine(Engine):
         throtlegenerator = SimplexNoise(dim=1, smoothness=300, multiplier=2)
         turngenerator = SimplexNoise(dim=1, smoothness=350, multiplier=2)
         for i in range(n_steps):
-            throttle = float((throtlegenerator() + 1) / 2)
+            throttle = float(throtlegenerator())
+            throttle = np.random.choice([throttle, -1], p=[0.8, 0.2])
             turn = float(turngenerator())
             # action, x = jw.getinput()
             # if x:
@@ -114,10 +115,10 @@ class MujocoEngine(Engine):
 
 
 if __name__ == "__main__":
-    from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
-    iw = JoystickInputWrapper()
+    # from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
+    # iw = JoystickInputWrapper()
     eng = MujocoEngine()
-    for i in range(5):
+    for i in range(2):
         eng.gatherdata(n_steps=8000)
         eng.reset()
     exit()
