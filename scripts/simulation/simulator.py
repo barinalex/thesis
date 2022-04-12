@@ -68,7 +68,7 @@ if __name__ == "__main__":
     import os
     path = os.path.join(Dirs.models, "mlp_2022_04_12_14_10_09_570258")
     # engine = MLPBased(path=path)
-    engine = IdentityEng(datadir="2022_04_10_11_57_44_706120")
+    engine = IdentityEng(datadir="2022_04_11_20_49_05_784963")
 
     # sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
     # sim.simulate()
@@ -79,7 +79,7 @@ if __name__ == "__main__":
     from scripts.datamanagement.datamanagementutils import load_raw_data
     config = loadconfig(f"{path}.yaml")
 
-    path = os.path.join(Dirs.realdata, "2022_04_10_11_57_44_706120")
+    path = os.path.join(Dirs.simdata, "2022_04_11_20_49_05_784963")
     positions = load_raw_data(path=f"{path}/positions.npy")
     actions = load_raw_data(path=f"{path}/actions.npy")
     linear = load_raw_data(path=f"{path}/linear.npy")

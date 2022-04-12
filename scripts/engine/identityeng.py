@@ -13,7 +13,7 @@ class IdentityEng(ModelBased):
         :param datadir: relative directory with ground truth data
         """
         super().__init__()
-        path = os.path.join(Dirs.realdata, datadir)
+        path = os.path.join(Dirs.simdata, datadir)
         lpath = os.path.join(path, f"{DT.lin}.npy")
         apath = os.path.join(path, f"{DT.ang}.npy")
         self.linear = load_raw_data(path=lpath)
