@@ -39,7 +39,7 @@ def plot2d(data: tuple):
 
 
 def plotevals():
-    path = os.path.join(Dirs.models, "mlp_2022_04_12_17_15_32_278934.evals" + ".npy")
+    path = os.path.join(Dirs.models, "mlp_2022_04_12_18_06_34_082909.evals" + ".npy")
     evals = load_raw_data(path=path)
     plt.figure()
     epochs = np.arange(evals.shape[0])
@@ -73,8 +73,7 @@ def plottrainingdata():
     # config["test_size"] = 0
     train, test, ncnts = get_data(params=config)
     obs, labels = reshape_no_batches(train[DT.obs], train[DT.labels])
-    print(obs[:3])
-    exit()
+    print(obs.shape)
     #
     # data = [("Action throttle", obs[:, 3], "time step", ""),
     #         ("Action turn", obs[:, 4], "time step", "")]
@@ -92,6 +91,6 @@ def plottrainingdata():
 
 
 if __name__ == "__main__":
-    plottrainingdata()
-    # plotevals()
+    # plottrainingdata()
+    plotevals()
     pass

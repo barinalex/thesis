@@ -182,7 +182,7 @@ def get_data(params: dict) -> (dict, dict, list):
     :return: tuple of dicts (train data, test data, train set normalization constants)
     """
     train, test = {}, {}
-    for edir in glob.glob(pathname=os.path.join(Dirs.simdata, "*")):
+    for edir in glob.glob(pathname=os.path.join(Dirs.realdata, "*")):
         tr, ts = get_gathering_data_episode(params=params, edir=edir)
         train = concatenate_dicts(d1=train, d2=tr)
         test = concatenate_dicts(d1=test, d2=ts)

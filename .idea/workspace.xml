@@ -8,11 +8,7 @@
       <change beforePath="$PROJECT_DIR$/configs/mlp.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/mlp.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/datamanagement/datamanagement.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/datamanagement.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/engine/mlpbased.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/mlpbased.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/engine/state.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/state.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/models/training.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/models/training.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/simulation/simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simulation/simulator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/utils/queuebuffer.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/utils/queuebuffer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,9 +165,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.simulator" />
-        <item itemvalue="Python.queuebuffer" />
-        <item itemvalue="Python.dataplotter" />
         <item itemvalue="Python.training" />
+        <item itemvalue="Python.dataplotter" />
+        <item itemvalue="Python.queuebuffer" />
         <item itemvalue="Python.nnmodel" />
       </list>
     </recent_temporary>
