@@ -1,16 +1,15 @@
-"input_dim" : 5
-"sequence_length": 3 # 16
-"output_dim" : 3
-"n_channels" : 5
-"convlayers": 1 # 2 3
-"kernel": '[3]'
-"stride": '[1]'
+"n_channels" : '[5, 10, 16, 32]'
+"sequence_length": 10
+"out_dim" : 3
+"kernel": '[3, 3, 3]'
+"stride": '[1, 1, 1]'
+"dilation": '[1, 1, 1]'
 "non_linearity" : "nn.ReLU6" #  nn.ReLU, nn.ReLU6, nn.LeakyReLU, nn.ELU, nn.Tanh
 "datadir": ""
-"learning_rate" : 0.00016
+"learning_rate" : 0.0001
 "optimizer" : adam
-"weight_decay" : 0.00016
-"test_size" : 0.1
+"weight_decay" : 0.0001
+"test_size" : 0.2
 "batchsize" : 256
 "num_epochs": 4
 "balance": False

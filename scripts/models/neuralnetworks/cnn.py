@@ -11,35 +11,40 @@ def compute_out_size(length: int, kernelsize: int, stride: int) -> int:
 class TemporalCNN(NeuralNetwork):
     def __init__(self, config: dict):
         super(TemporalCNN, self).__init__(config=config)
-        self.mtype = "cnn"
-        self.input_dim = self.config["input_dim"]
-        self.output_dim = self.config["output_dim"]
-        n_channels = self.config["n_channels"]
-        sequencelength = self.config["sequence_length"]
+        self.output_dim = self.config["out_dim"]
+        self.sequencelength = self.config["sequence_length"]
+        n_channels = eval(self.config["n_channels"])
         kernel = eval(self.config["kernel"])
         stride = eval(self.config["stride"])
-        self.convlayers = self.config["convlayers"]
+        dilation = eval(self.config["dilation"])
         self.nonlinearity = eval(self.config["non_linearity"])()
-        self.in1 = nn.Linear(self.input_dim, n_channels)
-        # print(sequencelength)
-        for i in range(self.convlayers):
-            vars(self)['_modules'][f"cl{i + 1}"] = nn.Conv1d(in_channels=n_channels, out_channels=n_channels,
-                                                             kernel_size=kernel[i], stride=stride[i])
-            sequencelength = compute_out_size(length=sequencelength, kernelsize=kernel[i], stride=stride[i])
-            # print(sequencelength)
-        self.lin1 = nn.Linear(n_channels*sequencelength, 3)
+        self.conv1 = nn.Conv1d(in_channels=n_channels[0],
+                               out_channels=n_channels[1],
+                               kernel_size=kernel[0],
+                               stride=stride[0])
+        slength = compute_out_size(self.sequencelength, kernel[0], stride[0])
+        self.conv2 = nn.Conv1d(in_channels=n_channels[1],
+                               out_channels=n_channels[2],
+                               kernel_size=kernel[1],
+                               stride=stride[1])
+        slength = compute_out_size(slength, kernel[1], stride[1])
+        self.conv3 = nn.Conv1d(in_channels=n_channels[2],
+                               out_channels=n_channels[3],
+                               kernel_size=kernel[2],
+                               stride=stride[2])
+        slength = compute_out_size(slength, kernel[2], stride[2])
+        self.lin1 = nn.Linear(n_channels[3]*slength, 3)
 
     def forward(self, x):
-        # MLP to map input to 32 dim
-        x = self.nonlinearity(self.in1(x))
-        # transpose to feed data to conv layers
-        x = x.transpose(1, 2)
-        # feed to conv layers
-        for i in range(self.convlayers):
-            x = self.nonlinearity(vars(self)['_modules'][f"cl{i+1}"](x))
-        # flatten conv output and map to environment params
+        print(x.shape)
+        x = self.nonlinearity(self.conv1(x))
+        print(x.shape)
+        x = self.nonlinearity(self.conv2(x))
+        print(x.shape)
+        x = self.nonlinearity(self.conv3(x))
+        print(x.shape)
         out = self.lin1(x.reshape(x.shape[0], x.shape[1] * x.shape[2]))
-        print(x.shape, out.shape)
+        print(out.shape)
         return out
 
     def predict(self, x):
@@ -51,7 +56,7 @@ if __name__ == "__main__":
     from scripts.constants import Dirs
     import os
     cnn = TemporalCNN(loadconfig(path=os.path.join(Dirs.configs, "cnn.yaml")))
-    x = np.random.rand(4, 3, 5)
+    x = np.random.rand(4, 5, 10) # batch, channels, sequence size
     x = torch.tensor(x, dtype=torch.float32)
     x = cnn.forward(x=x)
     print(x)
