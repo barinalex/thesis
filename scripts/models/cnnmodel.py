@@ -75,6 +75,7 @@ class CNNModel(Model):
         prediction = prediction.detach().numpy()
         normcnst = np.asarray(self.config["normcnst"])
         prediction = np.multiply(prediction, normcnst)
+        prediction = prediction.flatten()
         return prediction[:2], prediction[2]
 
 

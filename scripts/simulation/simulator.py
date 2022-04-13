@@ -63,11 +63,13 @@ class Simulator:
 if __name__ == "__main__":
     from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
     from scripts.engine.mlpbased import MLPBased
+    from scripts.engine.tcnnbased import TCNNBased
     from scripts.engine.identityeng import IdentityEng
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "mlp_2022_04_12_17_59_07_738719")
-    engine = MLPBased(path=path)
+    path = os.path.join(Dirs.models, "tcnn_2022_04_13_20_39_18_985948")
+    # engine = MLPBased(path=path)
+    engine = TCNNBased(path=path)
 
     # engine = IdentityEng(datadir="2022_04_12_15_09_00_833808")
 
