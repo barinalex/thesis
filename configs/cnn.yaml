@@ -1,8 +1,8 @@
 "n_channels" : '[5, 10, 16, 32]'
-"sequence_length": 10
+"sequence_length": 100
 "out_dim" : 3
-"kernel": '[3, 3, 3]'
-"stride": '[1, 1, 1]'
+"kernel": '[5, 4, 4]'
+"stride": '[5, 4, 4]'
 "dilation": '[1, 1, 1]'
 "non_linearity" : "nn.ReLU6" #  nn.ReLU, nn.ReLU6, nn.LeakyReLU, nn.ELU, nn.Tanh
 "datadir": ""
