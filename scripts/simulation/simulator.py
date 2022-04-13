@@ -83,7 +83,7 @@ if __name__ == "__main__":
     config = loadconfig(f"{path}.yaml")
 
     limit = 2000
-    path = os.path.join(Dirs.realdata, "2022_04_10_11_57_44_706120")
+    path = os.path.join(Dirs.realdata, "2022_04_10_12_15_29_685585")
     positions = -load_raw_data(path=f"{path}/positions.npy")
     actions = load_raw_data(path=f"{path}/actions.npy")
     linear = load_raw_data(path=f"{path}/linear.npy")
