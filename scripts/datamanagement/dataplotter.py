@@ -91,6 +91,6 @@ def plottrainingdata():
 
 
 if __name__ == "__main__":
-    # plottrainingdata()
-    plotevals()
+    plottrainingdata()
+    # plotevals()
     pass

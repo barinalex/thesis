@@ -1,6 +1,7 @@
 import os
 from scripts.constants import Dirs
 from scripts.models.mlpmodel import MLPModel
+from scripts.models.cnnmodel import CNNModel
 from scripts.datamanagement.datamanagement import loadconfig, saveconfig
 from scripts.datamanagement.pathmanagement import gettimestamp, create_directories
 
@@ -19,5 +20,20 @@ def trainmlp():
     saveconfig(path=cfgpath, config=config)
 
 
+def traincnn():
+    """
+    Train new cnn model
+    """
+    model = CNNModel()
+    path = os.path.join(Dirs.configs, "cnn.yaml")
+    config = loadconfig(path=path)
+    timestamp = gettimestamp()
+    savepath = os.path.join(Dirs.models, f"tcnn_{timestamp}")
+    cfgpath = os.path.join(Dirs.models, f"tcnn_{timestamp}.yaml")
+    model.train(config=config, savepath=savepath)
+    saveconfig(path=cfgpath, config=config)
+
+
 if __name__ == "__main__":
-    trainmlp()
+    # trainmlp()
+    traincnn()

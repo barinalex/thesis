@@ -68,6 +68,7 @@ if __name__ == "__main__":
     import os
     path = os.path.join(Dirs.models, "mlp_2022_04_12_17_59_07_738719")
     engine = MLPBased(path=path)
+
     # engine = IdentityEng(datadir="2022_04_12_15_09_00_833808")
 
     # sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
