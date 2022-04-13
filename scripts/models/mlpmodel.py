@@ -2,7 +2,7 @@ import os.path
 
 import numpy as np
 from scripts.models.model import Model
-from scripts.models.neuralnetworks.mlp.mlp import MLP
+from scripts.models.neuralnetworks.mlp import MLP
 from scripts.models.neuralnetworks.trainer import Trainer
 from scripts.datamanagement.datamanagement import loadconfig, get_data
 from scripts.datamanagement.datamanagementutils import save_raw_data

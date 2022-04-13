@@ -4,8 +4,8 @@
     <list default="true" id="18a7d627-6fa0-4aae-9874-33993ce2790d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/cnn.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/cnn.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/models/neuralnetworks/cnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/models/neuralnetworks/cnn.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/models/mlpmodel.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/models/mlpmodel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/models/neuralnetworks/mlp/mlp.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/models/neuralnetworks/mlp.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
