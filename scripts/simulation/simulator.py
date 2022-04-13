@@ -73,9 +73,9 @@ if __name__ == "__main__":
 
     # engine = IdentityEng(datadir="2022_04_12_15_09_00_833808")
 
-    # sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
-    # sim.simulate()
-    # exit()
+    sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
+    sim.simulate()
+    exit()
 
     from scripts.simulation.datainputwrapper import DataWrapper
     from scripts.datamanagement.datamanagement import loadconfig
