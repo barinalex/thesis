@@ -38,6 +38,44 @@ def plot2d(data: tuple):
     plt.show()
 
 
+def makehistogram(fig, data: np.ndarray):
+    """
+    :param fig: figure to place histogram on
+    :param data: array of floats, shape (n, )
+    """
+    hist, edges = np.histogram(data)
+    widths = abs(edges[1:] - edges[:-1])
+    fig.bar(edges[:len(hist)], hist, width=np.min(widths), color='b', alpha=1, align='edge')
+
+
+def plothistograms(data: np.ndarray):
+    """
+    :param data: array of floats, shape (n, 2)
+    """
+    figure, axis = plt.subplots(1, 2)
+    # makehistogram(axis[0], data[:, 0])
+    # axis[0].set_title("Delta linear velocity along X axis")
+    # axis[0].set_xlabel("meters per second")
+    # axis[0].set_ylabel("samples")
+    # makehistogram(axis[1], data[:, 1])
+    # axis[1].set_title("Delta linear velocity along Y axis")
+    # axis[1].set_xlabel("meters per second")
+    # axis[1].set_ylabel("samples")
+    # makehistogram(axis[0], data[:, 2])
+    # axis[0].set_title("Delta angular velocity")
+    # axis[0].set_xlabel("radians per second")
+    # axis[0].set_ylabel("samples")
+    makehistogram(axis[0], data[:, 3])
+    axis[0].set_title("Throttle")
+    axis[0].set_xlabel("value")
+    axis[0].set_ylabel("samples")
+    makehistogram(axis[1], data[:, 4])
+    axis[1].set_title("Turn")
+    axis[1].set_xlabel("value")
+    axis[1].set_ylabel("samples")
+    plt.show()
+
+
 def plotevals():
     path = os.path.join(Dirs.models, "mlp_2022_04_12_18_06_34_082909.evals" + ".npy")
     evals = load_raw_data(path=path)
@@ -90,7 +128,21 @@ def plottrainingdata():
         plot2d(data=d)
 
 
+def plotobshistogram():
+    path = os.path.join(Dirs.configs, "mlp.yaml")
+    config = loadconfig(path=path)
+    config["test_size"] = 0
+    train, test, ncnts = get_data(params=config)
+    obs, labels = reshape_no_batches(train[DT.obs], train[DT.labels])
+    # plt.figure()
+    # makehistogram(plt, obs[:, 0])
+    # plt.show()
+    plothistograms(data=obs)
+    plt.show()
+
+
 if __name__ == "__main__":
-    plottrainingdata()
+    plotobshistogram()
+    # plottrainingdata()
     # plotevals()
     pass
