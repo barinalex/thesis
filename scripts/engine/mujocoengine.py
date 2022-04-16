@@ -16,12 +16,12 @@ xml_path = os.path.join(mj_path, 'model', 'one_car.xml')
 
 
 class MujocoEngine(Engine):
-    def __init__(self):
+    def __init__(self, visualize: bool = False):
         super().__init__()
         self.model = mujoco_py.load_model_from_path(xml_path)
         self.sim = mujoco_py.MjSim(self.model, nsubsteps=1)
         self.bodyid = self.model.body_name2id('buddy')
-        self.viewer = mujoco_py.MjViewerBasic(self.sim)
+        self.viewer = mujoco_py.MjViewerBasic(self.sim) if visualize else None
         self.start = time.time()
 
     def reset(self):

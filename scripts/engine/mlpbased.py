@@ -13,8 +13,7 @@ class MLPBased(ModelBased):
         self.path = path
         super().__init__()
         bufsize = self.model.config["sequence_length"]
-        initvector = np.zeros(self.model.config["input_dim"])
-        initvector[-2] = -1
+        initvector = np.array([0, 0, 0, -1, 0])
         self.buffer = QueueBuffer(size=bufsize, initvector=initvector)
 
     def initializemodel(self) -> Model:
