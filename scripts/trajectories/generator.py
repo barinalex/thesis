@@ -1,11 +1,43 @@
 import os
 import time
-
 import numpy as np
 import quaternion
 from scripts.engine.state import State
+from scripts.utils.simplexactionnoise import SimplexNoise
+import scripts.utils.linalg_utils as lau
 
 state = State(timestep=0.01)
+
+
+def noise2trajectory(n: int = 1e5, smoothness: int = 100) -> np.ndarray:
+    """
+    :param n: number of waypoints per trajectory
+    :param smoothness: the higher the number the smoother the trajectory
+    :return: numpy array containing waypoints with a shape (n, 2)
+    """
+    noisegenerator = SimplexNoise(dim=2, smoothness=smoothness, multiplier=20, clip=False)
+    waypoints = np.zeros((n + 1, 2))
+    for i in range(n + 1):
+        waypoints[i] = noisegenerator()
+    waypoints -= waypoints[0]
+    angle = lau.angle2x(vector=waypoints[1])
+    q = quaternion.from_euler_angles(angle/2, 0, angle/2)
+    waypoints = np.hstack((waypoints, np.zeros((n + 1, 1))))
+    waypoints = lau.torobotframe(X=waypoints, q=q, pos=np.zeros(3))
+    return waypoints[1:, :2]
+
+
+def generateNtrajectories(n: int, n_wps: int = 1e5, smoothness: int = 100) -> np.ndarray:
+    """
+    :param n: number of trajectories to generate
+    :param n_wps: number of waypoints per trajectory
+    :param smoothness: the higher the number the smoother the trajectory
+    :return: numpy array containing waypoints for several trajectories with a shape (n, n_wps, 2)
+    """
+    trajectories = np.zeros((n, n_wps, 2))
+    for i in range(n):
+        trajectories[i] = noise2trajectory(n=n_wps, smoothness=smoothness)
+    return trajectories
 
 
 def compute_velocities(points_distance: float, radius: float):
@@ -37,7 +69,7 @@ def angular_motion(linear: np.ndarray, angular: np.ndarray, steps: int,
     trajectory = np.zeros((steps, dim))
     for i in range(0, steps):
         state.step()
-        trajectory[i] = state.get_pos()[:dim]
+        trajectory[i] = state.getpos()[:dim]
         if abs(angular[2] * state.timestep * (i+1)) > maxturn:
             if breakonmaxturn:
                 trajectory = trajectory[:i]
@@ -282,35 +314,24 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
     from scripts.constants import Dirs
     from scripts.datamanagement.datamanagementutils import save_raw_data, load_raw_data
-    n=100
-    difficulties = np.random.rand(n) / 2 + 0.25
-    i = 0
-    for i in range(n):
-        # d = difficulties[i]
-        # t = generate_random_double_turn(difficulty=d)
-        # save_raw_data(data=t, path=f"{Dirs.trajectories}/doubleturn_025_075_{i}.npy")
-        t = load_raw_data(path=f"{Dirs.trajectories}/doubleturn_025_075_{i}.npy")
-        plt.plot(t[:, 0], t[:, 1])
-        i += 1
-    plt.show()
-    exit()
-    rs = np.arange(3, 11) / 10
-    print(rs)
-    stls = np.ones(rs.shape[0])
-    ts = generate_n_one_turns(radiuses=rs, straight_lengths=stls)
-    print(ts[0].shape)
-    for t in ts:
-        plt.plot(t[:, 0], t[:, 1])
-    plt.show()
-    exit()
-    n = 10
-    # trajs = generate_random_trajectories(n=n)
-    for i in range(n):
-        # save_raw_data(data=trajs[i],path=f"{Dirs.trajectories}/spagetti{i}.npy")
-        t = load_raw_data(path=f"{Dirs.trajectories}/spagetti{i}.npy")
-        plt.plot(t[:, 0], t[:, 1])
-    plt.show()
-    exit()
-    for t in trajs:
-        plt.plot(t[:, 0], t[:, 1])
+    # wps = noise2trajectory(n=100, smoothness=50)
+    # plt.scatter(wps[:, 0], wps[:, 1])
+    # plt.show()
+    n = 1000
+    n_wps = 500
+    smth = 50
+    path = os.path.join(Dirs.trajectories, f"n{n}_wps{n_wps}_smth{smth}")
+
+    def saveNtrajs():
+        trajs = generateNtrajectories(n=n, n_wps=n_wps, smoothness=smth)
+        save_raw_data(data=trajs, path=path)
+        return trajs
+
+    # trajs = saveNtrajs()
+    trajs = load_raw_data(path=f"{path}.npy")
+
+    for wps in trajs:
+        plt.plot(wps[:, 0], wps[:, 1])
+        plt.xlabel("meters")
+        plt.ylabel("meters")
     plt.show()

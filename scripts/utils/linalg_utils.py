@@ -4,6 +4,14 @@ import quaternion
 import math
 
 
+def angle2x(vector: np.ndarray) -> float:
+    """
+    :param vector: shape (2,)
+    :return: angle in radians
+    """
+    return np.arctan2(vector[1], vector[0])
+
+
 def veltotraj_angle(direction: np.ndarray, vel: np.ndarray):
     """
     :param direction: two next trajectory waypoints in an agent frame
