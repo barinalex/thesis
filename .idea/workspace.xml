@@ -5,6 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/agent/policytrainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/agent/policytrainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/environments/environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/environments/environment.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,13 +43,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "last_opened_file_path": "/home/barinale/Documents/thesis/thesis/scripts/agent"
+    "last_opened_file_path": "/home/barinale/Documents/thesis/thesis/configs"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/scripts/agent" />
       <recent name="$PROJECT_DIR$/configs" />
+      <recent name="$PROJECT_DIR$/scripts/agent" />
       <recent name="$PROJECT_DIR$/scripts/trajectories" />
       <recent name="$PROJECT_DIR$/scripts/environments" />
       <recent name="$PROJECT_DIR$/scripts/engine" />
@@ -55,7 +58,7 @@
       <recent name="$PROJECT_DIR$/scripts/models/neuralnetworks" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.mujocoengine">
+  <component name="RunManager" selected="Python.policytrainer">
     <configuration name="environment" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -119,7 +122,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="simplexactionnoise" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="policytrainer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -127,11 +130,11 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/utils" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/agent" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/utils/simplexactionnoise.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/agent/policytrainer.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -163,11 +166,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.policytrainer" />
         <item itemvalue="Python.mujocoengine" />
         <item itemvalue="Python.environment" />
         <item itemvalue="Python.waypointer" />
         <item itemvalue="Python.generator" />
-        <item itemvalue="Python.simplexactionnoise" />
       </list>
     </recent_temporary>
   </component>

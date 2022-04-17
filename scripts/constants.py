@@ -27,11 +27,9 @@ class Dirs:
     realdata = data + "/real"
     simdata = data + "/sim"
     datasets = data + "/datasets"
-    agent = data + "/agent"
-    engine = data + "/engine"
+    policy = data + "/policy"
     models = data + "/models"
     configs = root + "/configs"
-    env = data + "/environment"
     trajectories = data + "/trajectories"
     urdf = root + "/pybulletmodel/urdf"
 

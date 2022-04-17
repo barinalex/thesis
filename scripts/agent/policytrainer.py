@@ -6,6 +6,7 @@ from stable_baselines3.common.utils import set_random_seed
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3 import PPO, A2C, SAC
 import numpy as np
+import torch.nn as nn
 from typing import Callable, List
 
 
@@ -14,7 +15,7 @@ class PolicyTrainer:
         self.multiprocessing = multiprocessing
         self.config = config
         self.engine = engine
-        self.env = self.makevectorizedenv() if multiprocessing else None
+        self.env = self.makevectorizedenv() if multiprocessing else self.makeenv()
         self.callbacks = []
         self.alg = self.definealgorithm()
 
@@ -30,14 +31,15 @@ class PolicyTrainer:
                    gamma=self.config['gamma'],
                    clip_range=self.config['clip_range'],
                    policy_kwargs=eval(self.config['policy_kwargs']),
-                   device='cpu'
-                   )
+                   device='cpu')
 
-    def save(self):
+    def save(self, path: str):
         """
         Store policy parameters
+
+        :param path: full save path
         """
-        pass
+        self.alg.save(path=path)
 
     def train(self):
         """
@@ -83,3 +85,19 @@ class PolicyTrainer:
         :return: vectorized environment
         """
         return SubprocVecEnv([self.makesubenv(rank=i) for i in range(self.config["n_cpu"])], start_method='fork')
+
+
+if __name__ == "__main__":
+    from scripts.engine.mujocoengine import MujocoEngine
+    from scripts.datamanagement.datamanagement import loadconfig
+    from scripts.datamanagement.pathmanagement import gettimestamp
+    import os
+    path = os.path.join(Dirs.configs, "ppo.yaml")
+    config = loadconfig(path=path)
+    path = os.path.join(Dirs.configs, "env.yaml")
+    config.update(loadconfig(path=path))
+    trainer = PolicyTrainer(engine=MujocoEngine(), config=config)
+    trainer.train()
+    timestamp = gettimestamp()
+    path = os.path.join(Dirs.policy, f"ppo_{timestamp}")
+    trainer.save(path=path)

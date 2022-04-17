@@ -4,6 +4,7 @@ import numpy as np
 from scripts.datamanagement.datamanagementutils import load_raw_data
 from scripts.trajectories.waypointer import Waypointer
 from scripts.utils.queuebuffer import QueueBuffer
+from scripts.engine.mujocoengine import MujocoEngine
 from scripts.engine.engine import Engine
 from scripts.constants import Dirs
 from multiprocessing import Lock
@@ -138,7 +139,9 @@ class Environment(Env):
         ang = self.engine.getang()[2]
         obs = np.hstack((lin, ang, action[0], action[1]))
         self.buffer.add(element=obs)
-        return self.buffer.get_vector()
+        state = self.buffer.get_vector()
+        wps = self.waypointer.get_waypoints_vector()
+        return np.hstack((state, wps.flatten()))
 
     def countsteps(self) -> bool:
         """
@@ -183,7 +186,7 @@ class Environment(Env):
         self.lastdeviation = self.waypointer.distance_to_trajectory(pos=pos)
         self.engine.step(throttle=action[0], turn=action[1])
         self.updatetrajectory()
-        print(self.waypointer.next_unvisited_point(), self.engine.getpos())
+        # print(self.waypointer.next_unvisited_point(), self.engine.getpos())
         observation = self.make_observation(action=action)
         reward = self.compute_reward(action=action)
         done = self.isdone()
@@ -207,7 +210,6 @@ class Environment(Env):
 
 
 if __name__ == "__main__":
-    from scripts.engine.mujocoengine import MujocoEngine
     from scripts.datamanagement.datamanagement import loadconfig
     from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
     iw = JoystickInputWrapper()
