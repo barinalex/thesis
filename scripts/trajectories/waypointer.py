@@ -133,7 +133,7 @@ class Waypointer:
         if self.mjviz is None:
             return
         try:
-            wppos = self.waypoints["points"][self.nextwp + self.mjviz.n_waypoints - 1]
+            wppos = self.waypoints["points"][self.nextwp + self.mjviz.n_wps - 1]
             self.mjviz.movewaypoint(pos=wppos)
         except Exception as e:
             print(f"EXCEPTION {e} OCCURRED")

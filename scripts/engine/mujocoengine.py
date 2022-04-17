@@ -12,7 +12,7 @@ from scripts.datamanagement.datamanagementutils import save_raw_data
 mutex = Lock()
 
 mj_path = mujoco_py.utils.discover_mujoco()
-xml_path = os.path.join(mj_path, 'model', 'one_car.xml')
+xml_path = os.path.join(mj_path, 'model', 'waypointsonecar.xml')
 
 
 class MujocoEngine(Engine):
@@ -23,10 +23,21 @@ class MujocoEngine(Engine):
         self.bodyid = self.model.body_name2id('buddy')
         self.viewer = mujoco_py.MjViewerBasic(self.sim) if visualize else None
         self.start = time.time()
+        self.wpi = 0
+        self.n_wps = 10
 
     def reset(self):
         self.state.reset()
         self.sim.reset()
+
+    def movewaypoint(self, pos: np.ndarray):
+        """
+        move waypoint body to new position
+
+        :param pos: waypoint position shape (2,)
+        """
+        self.sim.data.set_mocap_pos(f"waypoint{self.wpi}", np.hstack((pos, [0])))
+        self.wpi = (self.wpi + 1) % self.n_wps
 
     def get_pos(self) -> np.ndarray:
         """

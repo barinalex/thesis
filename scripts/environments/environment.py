@@ -43,6 +43,24 @@ class Environment(Env):
         self.stepsleft = self.maxsteps
         initvector = np.array([0, 0, 0, -1, 0])
         self.buffer = QueueBuffer(size=self.n_observations, initvector=initvector)
+        self.initialize_waypoints_visualization()
+
+    def initialize_waypoints_visualization(self):
+        """
+        Move mujoco objects to indicate trajectory
+        """
+        if isinstance(self.engine, MujocoEngine):
+            wps = self.waypointer.get_waypoints_vector()
+            for wp in wps:
+                self.engine.movewaypoint(wp)
+
+    def move_waypoint(self):
+        """
+        Move mujoco objects to indicate trajectory
+        """
+        if isinstance(self.engine, MujocoEngine):
+            wp = self.waypointer.next_unvisited_point()
+            self.engine.movewaypoint(wp)
 
     def get_trajectory_direction(self):
         """
@@ -150,6 +168,7 @@ class Environment(Env):
         pos = self.engine.getpos()[:2]
         if self.waypointer.update(pos=pos):
             self.wpclosed = True
+            self.move_waypoint()
             self.lastnorm = self.computenormtothegoal()
             self.lastdeviation = self.waypointer.distance_to_trajectory(pos=pos)
 
@@ -179,6 +198,7 @@ class Environment(Env):
         with mutex:
             self.engine.reset()
             self.waypointer.reset()
+            self.initialize_waypoints_visualization()
         self.stepsleft = self.maxsteps
         self.lastnorm = self.computenormtothegoal()
         self.lastdeviation = 0

@@ -5,9 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/engine/mlpbased.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/mlpbased.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/engine/mujocoengine.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/mujocoengine.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/environments/environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/environments/environment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/trajectories/waypointer.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/trajectories/waypointer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
