@@ -54,7 +54,7 @@ class PolicyTrainer:
         :return: stable-baseline3 callback instance
         """
         eval_freq = int(self.config['callback_freq']) # * self.config['n_cpu'])
-        env = self.makevectorizedenv() if self.multiprocessing else self.makeenv()
+        env = Environment(self.config, MujocoEngine(visualize=True))
         return EvalCallback(env,
                             log_path=Dirs.policy,
                             eval_freq=eval_freq,
