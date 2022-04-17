@@ -6,4 +6,4 @@ learning_rate: 0.0005
 n_cpu: 1
 policy: MlpPolicy
 policy_kwargs: dict(activation_fn=nn.ReLU, net_arch=[dict(pi=[64, 64], vf=[64, 64])])
-timesteps: 50000
+timesteps: 500000
