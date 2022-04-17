@@ -39,6 +39,16 @@ class MujocoEngine(Engine):
         self.sim.data.set_mocap_pos(f"waypoint{self.wpi}", np.hstack((pos, [0])))
         self.wpi = (self.wpi + 1) % self.n_wps
 
+    def movecar(self, pos: np.ndarray, euler: np.ndarray):
+        """
+        move car body to new position and orientation
+
+        :param pos: waypoint position shape (2,)
+        :param euler: orientation in euler angles, shape (3,)
+        """
+        # self.sim.data.set_mocap_pos("buddy", np.hstack((pos, [0])))
+        pass
+
     def get_pos(self) -> np.ndarray:
         """
         :return: position of a center of mass
@@ -127,13 +137,18 @@ class MujocoEngine(Engine):
 
 
 if __name__ == "__main__":
-    # from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
-    # iw = JoystickInputWrapper()
-    eng = MujocoEngine()
-    for i in range(5):
-        eng.gatherdata(n_steps=2000)
-        eng.reset()
-    exit()
+    from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
+    iw = JoystickInputWrapper()
+    eng = MujocoEngine(visualize=True)
+    # for i in range(10):
+    #     eng.movecar(pos=np.array([i, 0]), euler=np.array([0,0,i]))
+    #     print(eng.getpos(), eng.getorn())
+    #     eng.viewer.render()
+    #     time.sleep(1)
+    # for i in range(5):
+    #     eng.gatherdata(n_steps=2000)
+    #     eng.reset()
+    # exit()
     interrupt = False
     while not interrupt:
         throttle, turn, interrupt = iw.getinput()

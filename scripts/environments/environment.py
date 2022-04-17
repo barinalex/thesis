@@ -59,8 +59,9 @@ class Environment(Env):
         Move mujoco objects to indicate trajectory
         """
         if isinstance(self.engine, MujocoEngine):
-            wp = self.waypointer.next_unvisited_point()
-            self.engine.movewaypoint(wp)
+            wps = self.waypointer.get_waypoints_vector()
+            n_wps = self.engine.n_wps
+            self.engine.movewaypoint(wps[n_wps - 1])
 
     def get_trajectory_direction(self):
         """
