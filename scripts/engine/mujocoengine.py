@@ -27,6 +27,7 @@ class MujocoEngine(Engine):
         self.n_wps = 10
 
     def reset(self):
+        self.start = time.time()
         self.state.reset()
         self.sim.reset()
 

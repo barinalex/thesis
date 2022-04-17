@@ -4,6 +4,7 @@ from scripts.engine.engine import Engine
 from stable_baselines3.common.vec_env import SubprocVecEnv
 from stable_baselines3.common.utils import set_random_seed
 from stable_baselines3.common.callbacks import BaseCallback
+from stable_baselines3.common.callbacks import EvalCallback
 from stable_baselines3 import PPO, A2C, SAC
 import numpy as np
 import torch.nn as nn
@@ -16,7 +17,7 @@ class PolicyTrainer:
         self.config = config
         self.engine = engine
         self.env = self.makevectorizedenv() if multiprocessing else self.makeenv()
-        self.callbacks = []
+        self.callbacks = [self.define_evalcallback()]
         self.alg = self.definealgorithm()
 
     def definealgorithm(self):
@@ -48,17 +49,17 @@ class PolicyTrainer:
         self.alg.learn(total_timesteps=self.config['timesteps'],
                        callback=self.callbacks)
 
-    def definecallback(self):
+    def define_evalcallback(self):
         """
         :return: stable-baseline3 callback instance
         """
-        pass
-
-    def initcallbacks(self) -> List[BaseCallback]:
-        """
-        :return: list of callback for policy training
-        """
-        pass
+        eval_freq = int(self.config['callback_freq']) # * self.config['n_cpu'])
+        env = self.makevectorizedenv() if self.multiprocessing else self.makeenv()
+        return EvalCallback(env,
+                            log_path=Dirs.policy,
+                            eval_freq=eval_freq,
+                            deterministic=True,
+                            render=False)
 
     def makeenv(self) -> Environment:
         """

@@ -157,6 +157,8 @@ class Environment(Env):
         pos = self.engine.getpos()[:2]
         deviation = self.waypointer.distance_to_trajectory(pos=pos)
         done = self.countsteps()
+        if self.maxsteps - self.stepsleft < 100:
+            return done
         a, b, g = self.get_driving_angles()
         done = done or g > self.maxangledeviation
         done = done or deviation > self.deviationthreshold
@@ -216,6 +218,10 @@ if __name__ == "__main__":
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
     env = Environment(config=config, engine=MujocoEngine(visualize=True))
     interrupt = False
-    while not interrupt:
+    done = False
+    sumrewards = 0
+    while not interrupt and not done:
         throttle, turn, interrupt = iw.getinput()
-        env.step(action=[throttle, turn])
+        obs, reward, done, _ = env.step(action=[throttle, turn])
+        sumrewards += reward
+        print(sumrewards, env.engine.getlin())
