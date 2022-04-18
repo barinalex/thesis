@@ -9,7 +9,20 @@ class ModelBased(Engine):
     def __init__(self, visualize: bool = False):
         super().__init__()
         self.model: Model = self.initializemodel()
+        self.n_wps = 10
         self.viewer = Visualizer() if visualize else None
+        self.viewer.n_wps = self.n_wps
+        self.lastwaypoint = np.zeros(2)
+
+    def movewaypoint(self, pos: np.ndarray):
+        """
+        add new waypoint line and erase old one
+
+        :param pos: waypoint position shape (2,)
+        """
+        self.viewer.addline(from_=self.lastwaypoint, to_=pos)
+        self.lastwaypoint = np.copy(pos)
+
 
     @abstractmethod
     def initializemodel(self) -> Model:

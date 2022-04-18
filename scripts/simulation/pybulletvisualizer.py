@@ -7,6 +7,7 @@ from scripts.constants import Dirs
 from scripts.datamanagement.datamanagement import loadconfig
 from scripts.utils.linalg_utils import get_pybullet_quaternion
 import time
+from collections import deque
 
 
 class Visualizer:
@@ -21,6 +22,8 @@ class Visualizer:
         config = loadconfig(path=path)
         self.timeinterval = config["timeinterval"]
         self.last_step = time.time()
+        self.linesqueue = deque()
+        self.n_wps = 10
 
     def step(self, pos: np.ndarray, orn: np.ndarray):
         """
@@ -33,6 +36,34 @@ class Visualizer:
         p.resetBasePositionAndOrientation(self.modelid, pos, orn, physicsClientId=self.pcId)
         time.sleep(max(0, self.timeinterval - (time.time() - self.last_step)))
         self.last_step = time.time()
+
+    def addline(self, from_, to_, color=None):
+        """
+        Create debug line between trajectory points
+
+        :param from_: line start, shape (2,)
+        :param to_: line end, shape (2,)
+        :param color: list shape (3,) with rgb values
+        :return: id of a created line
+        """
+        if color is None:
+            color = [0, 1, 0]
+        from_ = np.hstack((from_, 0.005))
+        to_ = np.hstack((to_, 0.005))
+        id = p.addUserDebugLine(lineFromXYZ=from_, lineToXYZ=to_, lineWidth=5,
+                                lineColorRGB=color, physicsClientId=self.pcId)
+        self.linesqueue.append(id)
+        self.n_wps -= 1
+        if self.n_wps <= 0:
+            self.popline()
+            self.n_wps += 1
+
+    def popline(self):
+        """
+        Remove oldest line
+        """
+        id = self.linesqueue.popleft()
+        p.removeUserDebugItem(itemUniqueId=id, physicsClientId=self.pcId)
 
     def disconnect(self):
         """disconnect from physics client"""

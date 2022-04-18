@@ -5,6 +5,7 @@ from scripts.datamanagement.datamanagementutils import load_raw_data
 from scripts.trajectories.waypointer import Waypointer
 from scripts.utils.queuebuffer import QueueBuffer
 from scripts.engine.mujocoengine import MujocoEngine
+from scripts.engine.modelbased import ModelBased
 from scripts.engine.engine import Engine
 from scripts.constants import Dirs
 from multiprocessing import Lock
@@ -50,19 +51,17 @@ class Environment(Env):
         """
         Move mujoco objects to indicate trajectory
         """
-        if isinstance(self.engine, MujocoEngine):
-            wps = self.waypointer.get_waypoints_vector()
-            for wp in wps:
-                self.engine.movewaypoint(wp)
+        wps = self.waypointer.get_waypoints_vector()
+        for wp in wps:
+            self.engine.movewaypoint(wp)
 
     def move_waypoint(self):
         """
         Move mujoco objects to indicate trajectory
         """
-        if isinstance(self.engine, MujocoEngine):
-            wps = self.waypointer.get_waypoints_vector()
-            n_wps = self.engine.n_wps
-            self.engine.movewaypoint(wps[n_wps - 1])
+        wps = self.waypointer.get_waypoints_vector()
+        n_wps = self.engine.n_wps
+        self.engine.movewaypoint(wps[n_wps - 1])
 
     def get_trajectory_direction(self):
         """
@@ -216,9 +215,12 @@ class Environment(Env):
 if __name__ == "__main__":
     from scripts.datamanagement.datamanagement import loadconfig
     from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
+    from scripts.engine.tcnnbased import TCNNBased
     iw = JoystickInputWrapper()
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    env = Environment(config=config, engine=MujocoEngine(visualize=True))
+    path = os.path.join(Dirs.models, "tcnn_2022_04_13_20_39_18_985948")
+    engine = TCNNBased(path=path, visualize=True)
+    env = Environment(config=config, engine=engine)
     interrupt = False
     done = False
     sumrewards = 0
