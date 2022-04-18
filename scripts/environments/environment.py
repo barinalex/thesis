@@ -141,7 +141,9 @@ class Environment(Env):
         self.buffer.add(element=obs)
         state = self.buffer.get_vector()
         wps = self.waypointer.get_waypoints_vector()
-        return np.hstack((state, wps.flatten()))
+        wps = np.hstack((wps, np.zeros((wps.shape[0], 1))))
+        wps = self.engine.toselfframe(vector=wps)
+        return np.hstack((state, wps[:, :2].flatten()))
 
     def countsteps(self) -> bool:
         """
@@ -222,6 +224,5 @@ if __name__ == "__main__":
     sumrewards = 0
     while not interrupt and not done:
         throttle, turn, interrupt = iw.getinput()
-        obs, reward, done, _ = env.step(action=[throttle, turn])
+        obs, reward, done, _ = env.step(action=np.asarray([throttle, turn]))
         sumrewards += reward
-        print(sumrewards, env.engine.getlin())

@@ -25,7 +25,7 @@ class Agent:
 
 if __name__ == "__main__":
     import os
-    path = os.path.join(Dirs.policy, "ppo_2022_04_18_11_10_45_430539.zip")
+    path = os.path.join(Dirs.policy, "ppo_2022_04_18_11_24_01_818807.zip")
     agent = Agent()
     agent.load(path=path)
 
