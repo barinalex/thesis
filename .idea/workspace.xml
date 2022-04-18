@@ -5,8 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/ppo.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/ppo.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/agent/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/agent/agent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/agent/policytrainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/agent/policytrainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/environments/environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/environments/environment.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,8 +167,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.agent" />
-        <item itemvalue="Python.policytrainer" />
         <item itemvalue="Python.environment" />
+        <item itemvalue="Python.policytrainer" />
         <item itemvalue="Python.mujocoengine" />
         <item itemvalue="Python.waypointer" />
       </list>

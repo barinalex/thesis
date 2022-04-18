@@ -5,6 +5,8 @@ from stable_baselines3.common.vec_env import SubprocVecEnv
 from stable_baselines3.common.utils import set_random_seed
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.callbacks import EvalCallback
+from scripts.datamanagement.datamanagement import saveconfig
+from scripts.engine.mujocoengine import MujocoEngine
 from stable_baselines3 import PPO, A2C, SAC
 import numpy as np
 import torch.nn as nn
@@ -40,6 +42,7 @@ class PolicyTrainer:
 
         :param path: full save path
         """
+        saveconfig(path=f"{path}.yaml", config=self.config)
         self.alg.save(path=path)
 
     def train(self):

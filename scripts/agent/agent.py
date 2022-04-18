@@ -14,7 +14,7 @@ class Agent:
         """
         self.policy = PPO.load(path)
 
-    def act(self, observation: np.ndarray) -> list:
+    def act(self, observation: np.ndarray) -> np.ndarray:
         """
         :param observation: numpy array
         :return: action: [throttle, turn]
@@ -25,7 +25,7 @@ class Agent:
 
 if __name__ == "__main__":
     import os
-    path = os.path.join(Dirs.policy, "ppo_2022_04_17_18_25_15_260632.zip")
+    path = os.path.join(Dirs.policy, "ppo_2022_04_18_11_10_45_430539.zip")
     agent = Agent()
     agent.load(path=path)
 
@@ -39,5 +39,5 @@ if __name__ == "__main__":
     obs = env.make_observation(action=[-1, 0])
     while not done:
         action = agent.act(observation=obs)
-        print(action)
         obs, reward, done, _ = env.step(action=action)
+        print(obs)

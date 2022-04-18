@@ -106,7 +106,7 @@ class Environment(Env):
         lin = self.engine.getlin()[:2]
         alpha = np.arctan2(lin[1], lin[0])
         beta = np.arctan2(direction[1], direction[0])
-        gamma = alpha - beta
+        gamma = alpha - beta if np.linalg.norm(lin) > 0.1 else 0
         return abs(alpha), abs(beta), abs(gamma)
 
     def getgoal(self) -> np.ndarray:
@@ -157,8 +157,6 @@ class Environment(Env):
         pos = self.engine.getpos()[:2]
         deviation = self.waypointer.distance_to_trajectory(pos=pos)
         done = self.countsteps()
-        if self.maxsteps - self.stepsleft < 100:
-            return done
         a, b, g = self.get_driving_angles()
         done = done or g > self.maxangledeviation
         done = done or deviation > self.deviationthreshold
@@ -178,10 +176,12 @@ class Environment(Env):
             self.lastnorm = self.computenormtothegoal()
             self.lastdeviation = self.waypointer.distance_to_trajectory(pos=pos)
 
-    def step(self, action: list):
+    def step(self, action: np.ndarray):
         """
         Update engine and trajectory states, compute reward,
         make observation and check episode end condition
+
+        :param action: [throttle, turn]
         """
         self.lastnorm = self.computenormtothegoal()
         pos = self.engine.getpos()[:2]
