@@ -30,10 +30,7 @@ class Visualizer:
         :param orn: new car orientation as a quaternion (w x y z)
         """
         orn = get_pybullet_quaternion(q=orn)
-        p.resetBasePositionAndOrientation(self.modelid,
-                                          pos,
-                                          orn,
-                                          physicsClientId=self.pcId)
+        p.resetBasePositionAndOrientation(self.modelid, pos, orn, physicsClientId=self.pcId)
         time.sleep(max(0, self.timeinterval - (time.time() - self.last_step)))
         self.last_step = time.time()
 
