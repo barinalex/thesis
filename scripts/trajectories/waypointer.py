@@ -33,7 +33,8 @@ class Waypointer:
         """
         :return: dictionary containing waypoints with its state (visited/not)
         """
-        points = self.points[self.next]
+        index = np.random.randint(low=0, high=self.points.shape[0])
+        points = self.points[index]
         visited = np.zeros(self.points.shape[0], dtype=bool)
         return {"points": points, "visited": visited}
 

@@ -106,7 +106,7 @@ class Environment(Env):
         lin = self.engine.getlin()[:2]
         alpha = np.arctan2(lin[1], lin[0])
         beta = np.arctan2(direction[1], direction[0])
-        gamma = alpha - beta if np.linalg.norm(lin) > 0.1 else 0
+        gamma = alpha - beta if np.linalg.norm(lin) > 0.05 else 0
         return abs(alpha), abs(beta), abs(gamma)
 
     def getgoal(self) -> np.ndarray:
@@ -222,7 +222,8 @@ if __name__ == "__main__":
     interrupt = False
     done = False
     sumrewards = 0
-    while not interrupt and not done:
+    while not interrupt:
         throttle, turn, interrupt = iw.getinput()
         obs, reward, done, _ = env.step(action=np.asarray([throttle, turn]))
         sumrewards += reward
+        print(env.engine.getlin())

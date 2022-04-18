@@ -9,13 +9,14 @@ import scripts.utils.linalg_utils as lau
 state = State(timestep=0.01)
 
 
-def noise2trajectory(n: int = 1e5, smoothness: int = 100) -> np.ndarray:
+def noise2trajectory(n: int = 1e5, smoothness: int = 100, multiplier: int = 10) -> np.ndarray:
     """
     :param n: number of waypoints per trajectory
     :param smoothness: the higher the number the smoother the trajectory
+    :param multiplier: scale the trajectory
     :return: numpy array containing waypoints with a shape (n, 2)
     """
-    noisegenerator = SimplexNoise(dim=2, smoothness=smoothness, multiplier=20, clip=False)
+    noisegenerator = SimplexNoise(dim=2, smoothness=smoothness, multiplier=multiplier, clip=False)
     waypoints = np.zeros((n + 1, 2))
     for i in range(n + 1):
         waypoints[i] = noisegenerator()
@@ -27,16 +28,17 @@ def noise2trajectory(n: int = 1e5, smoothness: int = 100) -> np.ndarray:
     return waypoints[1:, :2]
 
 
-def generateNtrajectories(n: int, n_wps: int = 1e5, smoothness: int = 100) -> np.ndarray:
+def generateNtrajectories(n: int, n_wps: int = 1e5, smoothness: int = 100, multiplier: int = 10) -> np.ndarray:
     """
     :param n: number of trajectories to generate
     :param n_wps: number of waypoints per trajectory
     :param smoothness: the higher the number the smoother the trajectory
+    :param multiplier: scale the trajectory
     :return: numpy array containing waypoints for several trajectories with a shape (n, n_wps, 2)
     """
     trajectories = np.zeros((n, n_wps, 2))
     for i in range(n):
-        trajectories[i] = noise2trajectory(n=n_wps, smoothness=smoothness)
+        trajectories[i] = noise2trajectory(n=n_wps, smoothness=smoothness, multiplier=multiplier)
     return trajectories
 
 
@@ -320,15 +322,16 @@ if __name__ == "__main__":
     n = 1000
     n_wps = 500
     smth = 50
-    path = os.path.join(Dirs.trajectories, f"n{n}_wps{n_wps}_smth{smth}")
+    mplr = 10
+    path = os.path.join(Dirs.trajectories, f"n{n}_wps{n_wps}_smth{smth}_mplr{mplr}")
 
     def saveNtrajs():
-        trajs = generateNtrajectories(n=n, n_wps=n_wps, smoothness=smth)
+        trajs = generateNtrajectories(n=n, n_wps=n_wps, smoothness=smth, multiplier=mplr)
         save_raw_data(data=trajs, path=path)
         return trajs
 
-    # trajs = saveNtrajs()
-    trajs = load_raw_data(path=f"{path}.npy")
+    trajs = saveNtrajs()
+    # trajs = load_raw_data(path=f"{path}.npy")
 
     for wps in trajs:
         plt.plot(wps[:, 0], wps[:, 1])
