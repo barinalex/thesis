@@ -25,7 +25,7 @@ class Agent:
 
 if __name__ == "__main__":
     import os
-    path = os.path.join(Dirs.policy, "ppo_2022_04_18_11_24_01_818807.zip")
+    path = os.path.join(Dirs.policy, "ppo_2022_04_18_12_00_09_493536.zip")
     agent = Agent()
     agent.load(path=path)
 
@@ -40,4 +40,3 @@ if __name__ == "__main__":
     while not done:
         action = agent.act(observation=obs)
         obs, reward, done, _ = env.step(action=action)
-        print(obs)

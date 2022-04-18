@@ -5,10 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/buggycontrol/src/configs/default.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/env.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/env.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/environments/environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/environments/environment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/ppo.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/ppo.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/agent/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/agent/agent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/trajectories/generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/trajectories/generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/trajectories/waypointer.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/trajectories/waypointer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +58,7 @@
       <recent name="$PROJECT_DIR$/scripts/models/neuralnetworks" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.environment">
+  <component name="RunManager" selected="Python.generator">
     <configuration name="agent" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -167,10 +166,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.environment" />
         <item itemvalue="Python.generator" />
         <item itemvalue="Python.agent" />
         <item itemvalue="Python.policytrainer" />
+        <item itemvalue="Python.environment" />
         <item itemvalue="Python.mujocoengine" />
       </list>
     </recent_temporary>

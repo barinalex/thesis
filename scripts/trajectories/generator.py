@@ -319,7 +319,7 @@ if __name__ == "__main__":
     # wps = noise2trajectory(n=100, smoothness=50)
     # plt.scatter(wps[:, 0], wps[:, 1])
     # plt.show()
-    n = 1000
+    n = 10
     n_wps = 500
     smth = 50
     mplr = 10
