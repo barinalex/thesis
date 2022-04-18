@@ -57,7 +57,10 @@ class PolicyTrainer:
         :return: stable-baseline3 callback instance
         """
         eval_freq = int(self.config['callback_freq']) # * self.config['n_cpu'])
-        env = Environment(self.config, MujocoEngine(visualize=True))
+        path = os.path.join(Dirs.models, "tcnn_2022_04_13_20_39_18_985948")
+        engine = TCNNBased(path=path, visualize=False)
+        env = Environment(self.config, engine)
+
         return EvalCallback(env,
                             log_path=Dirs.policy,
                             eval_freq=eval_freq,
@@ -101,7 +104,9 @@ if __name__ == "__main__":
     config = loadconfig(path=path)
     path = os.path.join(Dirs.configs, "env.yaml")
     config.update(loadconfig(path=path))
-    trainer = PolicyTrainer(engine=MujocoEngine(), config=config)
+    path = os.path.join(Dirs.models, "tcnn_2022_04_13_20_39_18_985948")
+    engine = TCNNBased(path=path)
+    trainer = PolicyTrainer(engine=engine, config=config)
     trainer.train()
     timestamp = gettimestamp()
     path = os.path.join(Dirs.policy, f"ppo_{timestamp}")
