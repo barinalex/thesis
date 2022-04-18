@@ -6,12 +6,12 @@ from scripts.utils.queuebuffer import QueueBuffer
 
 
 class TCNNBased(ModelBased):
-    def __init__(self, path):
+    def __init__(self, path, visualize: bool = False):
         """
         :param path: path to an existing model parameters and config files.
         """
         self.path = path
-        super().__init__()
+        super().__init__(visualize=visualize)
         self.seqlength = self.model.config["sequence_length"]
         self.inputdim = self.model.config["input_dim"]
         initvector = np.zeros(self.inputdim)

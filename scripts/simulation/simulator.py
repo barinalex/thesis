@@ -15,16 +15,7 @@ class Simulator:
         self.iw = iw
         self.engine = engine
         self.timestep = engine.state.timestep
-        self.visualizer = Visualizer(engine=engine)
         self.counter = 0
-
-    def __enter__(self):
-        return self
-
-    def visualizer_step(self):
-        """visualize step if visualization mode is on"""
-        if self.visualizer:
-            self.visualizer.step()
 
     def step(self, throttle: float, turn: float):
         """
@@ -35,7 +26,6 @@ class Simulator:
         """
         self.engine.step(throttle=throttle, turn=turn)
         self.counter += 1
-        self.visualizer_step()
 
     def simulate(self):
         """run a simulation"""
@@ -43,21 +33,9 @@ class Simulator:
         positions = []
         while not terminate:
             throttle, turn, terminate = self.iw.getinput()
-            start = time.time()
             positions.append(self.engine.getpos())
             self.step(throttle=throttle, turn=turn)
-            total = time.time() - start
-            if total < self.timestep:
-                time.sleep(self.timestep - total)
-        self.disconnect_visualizer()
         return np.asarray(positions)
-
-    def disconnect_visualizer(self):
-        if self.visualizer:
-            self.visualizer.disconnect()
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.disconnect_visualizer()
 
 
 if __name__ == "__main__":
@@ -69,7 +47,7 @@ if __name__ == "__main__":
     import os
     path = os.path.join(Dirs.models, "tcnn_2022_04_13_20_39_18_985948")
     # engine = MLPBased(path=path)
-    engine = TCNNBased(path=path)
+    engine = TCNNBased(path=path, visualize=True)
 
     # engine = IdentityEng(datadir="2022_04_12_15_09_00_833808")
 

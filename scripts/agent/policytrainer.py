@@ -93,6 +93,7 @@ class PolicyTrainer:
 
 if __name__ == "__main__":
     from scripts.engine.mujocoengine import MujocoEngine
+    from scripts.engine.tcnnbased import TCNNBased
     from scripts.datamanagement.datamanagement import loadconfig
     from scripts.datamanagement.pathmanagement import gettimestamp
     import os

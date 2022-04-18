@@ -1,13 +1,15 @@
 import numpy as np
 from scripts.engine.engine import Engine
 from scripts.models.model import Model
+from scripts.simulation.pybulletvisualizer import Visualizer
 from abc import abstractmethod
 
 
 class ModelBased(Engine):
-    def __init__(self):
+    def __init__(self, visualize: bool = False):
         super().__init__()
         self.model: Model = self.initializemodel()
+        self.viewer = Visualizer() if visualize else None
 
     @abstractmethod
     def initializemodel(self) -> Model:
@@ -32,3 +34,12 @@ class ModelBased(Engine):
         dang = np.hstack((np.zeros(2), dang))
         self.state.update_velocities(dvel=dvel, dang=dang)
         self.state.step()
+        if self.viewer:
+            self.viewer.step(pos=self.getpos(), orn=self.getorn())
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if self.viewer:
+            self.viewer.disconnect()

@@ -6,12 +6,12 @@ from scripts.utils.queuebuffer import QueueBuffer
 
 
 class MLPBased(ModelBased):
-    def __init__(self, path):
+    def __init__(self, path, visualize: bool = False):
         """
         :param path: path to an existing model parameters and config files.
         """
         self.path = path
-        super().__init__()
+        super().__init__(visualize=visualize)
         bufsize = self.model.config["sequence_length"]
         initvector = np.array([0, 0, 0, -1, 0])
         self.buffer = QueueBuffer(size=bufsize, initvector=initvector)

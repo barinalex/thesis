@@ -1,9 +1,9 @@
 import os.path
 
+import numpy as np
 import pybullet as p
 import pybullet_data
 from scripts.constants import Dirs
-from scripts.engine.modelbased import ModelBased
 from scripts.datamanagement.datamanagement import loadconfig
 from scripts.utils.linalg_utils import get_pybullet_quaternion
 import time
@@ -11,8 +11,7 @@ import time
 
 class Visualizer:
     """pybullet visualization"""
-    def __init__(self, engine: ModelBased):
-        self.engine = engine
+    def __init__(self):
         self.pcId = p.connect(p.GUI)
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.loadURDF("plane.urdf", physicsClientId=self.pcId)
@@ -23,11 +22,16 @@ class Visualizer:
         self.timeinterval = config["timeinterval"]
         self.last_step = time.time()
 
-    def step(self):
-        """move robot models to its new position"""
-        orn = get_pybullet_quaternion(q=self.engine.getorn())
+    def step(self, pos: np.ndarray, orn: np.ndarray):
+        """
+        Move car model to its new position
+
+        :param pos: new car position, shape (3,)
+        :param orn: new car orientation as a quaternion (w x y z)
+        """
+        orn = get_pybullet_quaternion(q=orn)
         p.resetBasePositionAndOrientation(self.modelid,
-                                          self.engine.getpos(),
+                                          pos,
                                           orn,
                                           physicsClientId=self.pcId)
         time.sleep(max(0, self.timeinterval - (time.time() - self.last_step)))
