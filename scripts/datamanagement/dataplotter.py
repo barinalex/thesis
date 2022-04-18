@@ -141,8 +141,22 @@ def plotobshistogram():
     plt.show()
 
 
+def plot_policy_learning_curve(path: str, maxtimesteps: int = None):
+    """load evaluation callback results and plot as a learning curve"""
+    ev = load_raw_data(path)
+    means = np.mean(ev['results'], axis=1)
+    time = np.arange(maxtimesteps, step=maxtimesteps//means.shape[0]) if maxtimesteps else np.arange(means.shape[0])
+    plt.figure()
+    plt.xlabel("timesteps")
+    plt.ylabel("reward")
+    plt.plot(time[:means.shape[0]], means)
+    plt.show()
+
+
 if __name__ == "__main__":
-    plotobshistogram()
+    # plotobshistogram()
     # plottrainingdata()
     # plotevals()
+    path = os.path.join(Dirs.policy, "evaluations.npz")
+    plot_policy_learning_curve(path=path, maxtimesteps=500000)
     pass
