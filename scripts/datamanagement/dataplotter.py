@@ -157,6 +157,6 @@ if __name__ == "__main__":
     # plotobshistogram()
     # plottrainingdata()
     # plotevals()
-    path = os.path.join(Dirs.policy, "evaluations.npz")
+    path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
     plot_policy_learning_curve(path=path, maxtimesteps=500000)
     pass

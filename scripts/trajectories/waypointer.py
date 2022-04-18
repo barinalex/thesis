@@ -35,7 +35,7 @@ class Waypointer:
         """
         index = np.random.randint(low=0, high=self.points.shape[0])
         points = self.points[index]
-        visited = np.zeros(self.points.shape[0], dtype=bool)
+        visited = np.zeros(points.shape[0], dtype=bool)
         return {"points": points, "visited": visited}
 
     def stack_waypoints(self, wps1: dict, wps2: dict) -> dict:

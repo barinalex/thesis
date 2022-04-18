@@ -25,7 +25,7 @@ class Agent:
 
 if __name__ == "__main__":
     import os
-    path = os.path.join(Dirs.policy, "ppo_2022_04_18_12_00_09_493536.zip")
+    path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.zip")
     agent = Agent()
     agent.load(path=path)
 
@@ -33,8 +33,12 @@ if __name__ == "__main__":
     from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
     from scripts.environments.environment import Environment
     from scripts.engine.mujocoengine import MujocoEngine
+    from scripts.engine.tcnnbased import TCNNBased
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    env = Environment(config=config, engine=MujocoEngine(visualize=True))
+    path = os.path.join(Dirs.models, "tcnn_2022_04_13_20_39_18_985948")
+    engine = TCNNBased(path=path, visualize=True)
+    # engine = MujocoEngine(visualize=True)
+    env = Environment(config=config, engine=engine)
     done = False
     obs = env.make_observation(action=[-1, 0])
     while not done:
