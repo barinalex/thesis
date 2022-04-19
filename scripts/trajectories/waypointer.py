@@ -5,17 +5,20 @@ mutex = Lock()
 
 
 class Waypointer:
-    def __init__(self, n_wps: int, points: np.ndarray, continuous: bool = True):
+    def __init__(self, n_wps: int, points: np.ndarray, continuous: bool = True, random: bool = False):
         """
         :param n_wps: number of waypoints per step
         :param points: shape (m, k, 2) m trajectories, k waypoints per trajectory, 2 dimensions
         :param continuous: if True join trajectory to the end of previous when necessary
+        :param random: if true after reset new trajectory is chosen randomly,
+            if false go sequentially over the list of trajectories
         """
         self.nextwp = 0
         self.next = 0
         self.n_wps = n_wps
         self.points = points
         self.continuous = continuous
+        self.random = random
         self.waypoints = {}
         self.mjviz = None
         self.reset()
@@ -29,12 +32,20 @@ class Waypointer:
             self.next = (self.next + 1) % self.points.shape[0]
             self.waypoints = self.points2trajectory()
 
+    def gettrajectoryindex(self):
+        """
+        :return: index of points to define new trajectory.
+            random or sequential choice
+        """
+        if self.random:
+            return np.random.randint(low=0, high=self.points.shape[0])
+        return self.next
+
     def points2trajectory(self) -> dict:
         """
         :return: dictionary containing waypoints with its state (visited/not)
         """
-        index = np.random.randint(low=0, high=self.points.shape[0])
-        points = self.points[index]
+        points = self.points[self.gettrajectoryindex()]
         visited = np.zeros(points.shape[0], dtype=bool)
         return {"points": points, "visited": visited}
 

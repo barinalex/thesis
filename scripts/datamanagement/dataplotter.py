@@ -157,6 +157,15 @@ if __name__ == "__main__":
     # plotobshistogram()
     # plottrainingdata()
     # plotevals()
-    path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
-    plot_policy_learning_curve(path=path, maxtimesteps=500000)
-    pass
+    # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
+    # plot_policy_learning_curve(path=path, maxtimesteps=500000)
+    # pass
+    points = load_raw_data(os.path.join(Dirs.trajectories, "n10_wps500_smth50_mplr10.npy"))
+    points = points[:, :150, :]
+    print(points.shape)
+    plt.figure()
+    plt.xlabel("X meters")
+    plt.ylabel("Y meters")
+    for traj in points:
+        plt.plot(traj[:, 0], traj[:, 1])
+    plt.show()

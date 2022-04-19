@@ -15,10 +15,12 @@ mutex = Lock()
 
 class Environment(Env):
     """abstract class for an agent following trajectory in 2 dimensions"""
-    def __init__(self, config: dict, engine: Engine):
+    def __init__(self, config: dict, engine: Engine, random: bool = False):
         """
         :param config: environment configuration
         :param engine: engine instance to update agent states
+        :param random: if true after reset new trajectory is chosen randomly,
+            if false go sequentially over the list of trajectories
         """
         self.verbose = False
         self.config = config
@@ -29,7 +31,7 @@ class Environment(Env):
         self.deviationthreshold = self.config["deviationthreshold"]
         self.maxangledeviation = np.pi
         points = load_raw_data(os.path.join(Dirs.trajectories, self.config["trajectories"]))
-        self.waypointer = Waypointer(n_wps=self.n_waypoints, points=points)
+        self.waypointer = Waypointer(n_wps=self.n_waypoints, points=points, random=random)
         self.action_space = Box(low=-np.ones(2, dtype=np.float32),
                                 high=np.ones(2, dtype=np.float32),
                                 dtype=np.float32)
