@@ -1,6 +1,0 @@
-<launch>
-  <arg name="bagpath" default="/home/barinale/Documents/ctu/thesis/trajectories_follower/data/bagfiles/15_11_2021/_2021-11-15-07-36-36.bag"/>
-  <node pkg="rosbag" type="play" args="$(arg bagpath)" name="play" output="screen"/>
-  <node name="odomNode" pkg="buggycontrol" type="learnedodompublisher.py" output="screen" />
-  <include file="$(find hector_slam_launch)/launch/tutorial.launch"/>
-</launch>
