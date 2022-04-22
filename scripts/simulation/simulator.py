@@ -45,23 +45,23 @@ if __name__ == "__main__":
     from scripts.engine.identityeng import IdentityEng
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "tcnn_2022_04_13_20_39_18_985948")
+    path = os.path.join(Dirs.models, "tcnn_2022_04_22_11_27_58_275542")
     # engine = MLPBased(path=path)
     engine = TCNNBased(path=path, visualize=True)
 
     # engine = IdentityEng(datadir="2022_04_12_15_09_00_833808")
 
-    sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
-    sim.simulate()
-    exit()
+    # sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
+    # sim.simulate()
+    # exit()
 
     from scripts.simulation.datainputwrapper import DataWrapper
     from scripts.datamanagement.datamanagement import loadconfig
     from scripts.datamanagement.datamanagementutils import load_raw_data
     config = loadconfig(f"{path}.yaml")
 
-    limit = 2000
-    path = os.path.join(Dirs.realdata, "2022_04_10_12_15_29_685585")
+    limit = 1500
+    path = os.path.join(Dirs.realdata, "2022_04_10_11_57_44_706120")
     positions = -load_raw_data(path=f"{path}/positions.npy")
     actions = load_raw_data(path=f"{path}/actions.npy")
     linear = load_raw_data(path=f"{path}/linear.npy")

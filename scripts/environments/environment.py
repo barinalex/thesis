@@ -220,7 +220,7 @@ if __name__ == "__main__":
     from scripts.engine.tcnnbased import TCNNBased
     iw = JoystickInputWrapper()
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    path = os.path.join(Dirs.models, "tcnn_2022_04_13_20_39_18_985948")
+    path = os.path.join(Dirs.models, "tcnn_2022_04_22_11_27_58_275542")
     engine = TCNNBased(path=path, visualize=True)
     env = Environment(config=config, engine=engine)
     interrupt = False

@@ -24,23 +24,23 @@ class TemporalCNN(NeuralNetwork):
                                stride=stride[0],
                                dilation=dilation[0])
         slength = compute_out_size(self.sequencelength, kernel[0], stride[0], dilation[0])
-        # print(slength)
+        print(slength)
         self.conv2 = nn.Conv1d(in_channels=n_channels[1],
                                out_channels=n_channels[2],
                                kernel_size=kernel[1],
                                stride=stride[1],
                                dilation=dilation[1])
         slength = compute_out_size(slength, kernel[1], stride[1], dilation[1])
-        # print(slength)
+        print(slength)
         self.conv3 = nn.Conv1d(in_channels=n_channels[2],
                                out_channels=n_channels[3],
                                kernel_size=kernel[2],
                                stride=stride[2],
                                dilation=dilation[2])
         slength = compute_out_size(slength, kernel[2], stride[2], dilation[2])
-        # print(slength)
-        self.lin1 = nn.Linear(n_channels[3]*slength, 16)
-        self.lin2 = nn.Linear(16, 3)
+        print(slength)
+        self.lin1 = nn.Linear(n_channels[3]*slength, 32)
+        self.lin2 = nn.Linear(32, 3)
 
     def forward(self, x):
         x = self.nonlinearity(self.conv1(x))

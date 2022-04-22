@@ -88,15 +88,16 @@ def plotevals():
 
 
 def plottrainingdata():
-    # path = os.path.join(Dirs.simdata, "2022_04_11_20_42_08_312119")
-    # positions = load_raw_data(path=f"{path}/positions.npy")
-    # actions = load_raw_data(path=f"{path}/actions.npy")
-    # linear = load_raw_data(path=f"{path}/linear.npy")
-    # angular = load_raw_data(path=f"{path}/angular.npy")
-    #
-    # plt.figure()
-    # plt.plot(positions[:, 0], positions[:, 1])
-    # plt.show()
+    path = os.path.join(Dirs.realdata, "2022_04_10_11_57_44_706120")
+    positions = load_raw_data(path=f"{path}/positions.npy")
+    actions = load_raw_data(path=f"{path}/actions.npy")
+    linear = load_raw_data(path=f"{path}/linear.npy")
+    angular = load_raw_data(path=f"{path}/angular.npy")
+
+    plt.figure()
+    plt.plot(np.arange(linear.shape[0]), angular[:, 2])
+    plt.show()
+    exit()
 
 
     # data = [("Raw linear velocity along X axis (forward velocity)", linear[:, 0], "time step", "meters per second"),
@@ -106,7 +107,7 @@ def plottrainingdata():
     #         ("Action: turn", actions[:, 1], "time step", "")]
 
 
-    path = os.path.join(Dirs.configs, "mlp.yaml")
+    path = os.path.join(Dirs.configs, "cnn.yaml")
     config = loadconfig(path=path)
     # config["test_size"] = 0
     train, test, ncnts = get_data(params=config)
@@ -155,7 +156,8 @@ def plot_policy_learning_curve(path: str, maxtimesteps: int = None):
 
 if __name__ == "__main__":
     # plotobshistogram()
-    # plottrainingdata()
+    plottrainingdata()
+    exit()
     # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
     # plot_policy_learning_curve(path=path, maxtimesteps=500000)

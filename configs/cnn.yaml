@@ -1,9 +1,9 @@
-"n_channels" : '[5, 10, 16, 32]'
+"n_channels" : '[5, 16, 32, 64]'
 "input_dim": 5
 "sequence_length": 100
 "out_dim" : 3
-"kernel": '[5, 4, 5]'
-"stride": '[5, 4, 5]'
+"kernel": '[16, 8, 8]'
+"stride": '[4, 2, 1]'
 "dilation": '[1, 1, 1]'
 "non_linearity" : "nn.ReLU6" #  nn.ReLU, nn.ReLU6, nn.LeakyReLU, nn.ELU, nn.Tanh
 "datadir": ""
@@ -12,7 +12,7 @@
 "weight_decay" : 0.0001
 "test_size" : 0.2
 "batchsize" : 256
-"num_epochs": 20
+"num_epochs": 2
 "balance": False
 "dimbalance": 2
 "filter": "pastmean" # pastmean, smooth
