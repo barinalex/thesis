@@ -316,9 +316,15 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
     from scripts.constants import Dirs
     from scripts.datamanagement.datamanagementutils import save_raw_data, load_raw_data
-    # wps = noise2trajectory(n=100, smoothness=50)
-    # plt.scatter(wps[:, 0], wps[:, 1])
-    # plt.show()
+
+    wps = generate_infinity(points_distance=0.05, radius=0.5)
+    wps = np.reshape(wps, (1, *wps.shape))
+    print(wps.shape)
+    plt.scatter(wps[0, :, 0], wps[0, :, 1])
+    plt.show()
+    path = os.path.join(Dirs.trajectories, f"inf_r05")
+    save_raw_data(data=wps, path=path)
+    exit()
     n = 10
     n_wps = 500
     smth = 50
