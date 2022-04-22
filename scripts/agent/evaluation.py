@@ -33,11 +33,11 @@ def evaluate_tcnn_based() -> np.ndarray:
     :return: list of rewards for each episodes
     """
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    path = os.path.join(Dirs.models, "tcnn_2022_04_13_20_39_18_985948")
-    engine = TCNNBased(path=path, visualize=False)
+    path = os.path.join(Dirs.models, "tcnn_2022_04_22_11_27_58_275542")
+    engine = TCNNBased(path=path, visualize=True)
     config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
     env = Environment(config=config, engine=engine, random=False)
-    path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.zip")
+    path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_22_11_57_47_144995.zip")
     agent = Agent()
     agent.load(path=path)
     rewards = evaluationloop(env=env, agent=agent, n=5)
@@ -48,7 +48,7 @@ def evaluate_mujoco_based() -> np.ndarray:
     """
     :return: list of rewards for each episodes
     """
-    engine = MujocoEngine(visualize=False)
+    engine = MujocoEngine(visualize=True)
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
     config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
     env = Environment(config=config, engine=engine, random=False)
