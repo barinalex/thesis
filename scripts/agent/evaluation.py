@@ -23,6 +23,7 @@ def evaluationloop(env: Environment, agent: Agent, n: int) -> np.ndarray:
         while not done:
             action = agent.act(observation=obs)
             obs, reward, done, _ = env.step(action=action)
+            print(obs)
             stats[i] += [reward, 1]
         env.reset()
     return stats
@@ -34,8 +35,9 @@ def evaluate_tcnn_based() -> np.ndarray:
     """
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
     path = os.path.join(Dirs.models, "tcnn_2022_04_22_11_27_58_275542")
-    engine = TCNNBased(path=path, visualize=False)
-    config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
+    engine = TCNNBased(path=path, visualize=True)
+    # config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
+    config["trajectories"] = "lap_r1_s3.npy"
     env = Environment(config=config, engine=engine, random=False)
     path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_22_11_57_47_144995.zip")
     agent = Agent()
@@ -48,9 +50,10 @@ def evaluate_mujoco_based() -> np.ndarray:
     """
     :return: list of rewards for each episodes
     """
-    engine = MujocoEngine(visualize=False)
+    engine = MujocoEngine(visualize=True)
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
+    # config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
+    config["trajectories"] = "lap_r1_s3.npy"
     env = Environment(config=config, engine=engine, random=False)
     path = os.path.join(Dirs.policy, "ppo_2022_04_18_12_00_09_493536.zip")
     agent = Agent()
