@@ -23,7 +23,7 @@ def evaluationloop(env: Environment, agent: Agent, n: int) -> np.ndarray:
         while not done:
             action = agent.act(observation=obs)
             obs, reward, done, _ = env.step(action=action)
-            print(obs)
+            # print(obs)
             stats[i] += [reward, 1]
         env.reset()
     return stats
@@ -42,7 +42,7 @@ def evaluate_tcnn_based() -> np.ndarray:
     path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_22_11_57_47_144995.zip")
     agent = Agent()
     agent.load(path=path)
-    rewards = evaluationloop(env=env, agent=agent, n=2)
+    rewards = evaluationloop(env=env, agent=agent, n=3)
     return rewards
 
 
@@ -55,10 +55,10 @@ def evaluate_mujoco_based() -> np.ndarray:
     # config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
     config["trajectories"] = "inf_r1.npy"
     env = Environment(config=config, engine=engine, random=False)
-    path = os.path.join(Dirs.policy, "ppo_2022_04_18_12_00_09_493536.zip")
+    path = os.path.join(Dirs.policy, "ppo_2022_04_24_12_26_52_876557.zip")
     agent = Agent()
     agent.load(path=path)
-    rewards = evaluationloop(env=env, agent=agent, n=2)
+    rewards = evaluationloop(env=env, agent=agent, n=3)
     return rewards
 
 
