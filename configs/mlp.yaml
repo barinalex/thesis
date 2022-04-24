@@ -2,7 +2,7 @@
 "output_dim" : 3
 "hidden_dim" : 64
 "n_hidden": 1
-"sequence_length": 1
+"sequence_length": 3
 "non_linearity" : "nn.ReLU6" #  nn.ReLU, nn.ReLU6, nn.LeakyReLU, nn.ELU, nn.Tanh
 "dropout": 0.
 "datadir": ""
@@ -10,7 +10,7 @@
 "weight_decay" : 0.00
 "test_size" : 0.2
 "batchsize" : 128
-"num_epochs": 100
+"num_epochs": 80
 "balance": False
 "dimbalance": 2
 "filter": "pastmean" # pastmean, smooth

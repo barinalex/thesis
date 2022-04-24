@@ -46,10 +46,10 @@ if __name__ == "__main__":
     from scripts.engine.identityeng import IdentityEng
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "tcnn_2022_04_22_11_27_58_275542")
-    # engine = MLPBased(path=path)
-    # engine = TCNNBased(path=path, visualize=True)
-    engine = MujocoEngine(visualize=False)
+    path = os.path.join(Dirs.models, "mlp_2022_04_24_20_04_23_633569")
+    engine = MLPBased(path=path)
+    # engine = TCNNBased(path=path, visualize=False)
+    # engine = MujocoEngine(visualize=False)
 
     # engine = IdentityEng(datadir="2022_04_12_15_09_00_833808")
 
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     config = loadconfig(f"{path}.yaml")
 
     limit = 800
-    episodes = ["2022_04_10_11_57_44_706120", "2022_04_10_12_13_40_250118"]
+    episodes = ["2022_04_10_11_57_44_706120", "2022_04_10_12_09_57_067617"]
 
     import matplotlib.pyplot as plt
     figure, axis = plt.subplots(1, len(episodes))
@@ -79,6 +79,7 @@ if __name__ == "__main__":
 
         # axis[i].legend(['gt', 'sim'])
         axis[i].set_xlabel("meters")
+        axis[0].set_ylabel("meters")
         axis[i].plot(positions[:limit, 0], positions[:limit, 1], color='b')
         axis[i].plot(simpositions[:, 0], simpositions[:, 1], color='r')
     plt.show()

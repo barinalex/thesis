@@ -222,7 +222,7 @@ if __name__ == "__main__":
     from scripts.engine.mujocoengine import MujocoEngine
     iw = JoystickInputWrapper()
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    path = os.path.join(Dirs.models, "mlp_2022_04_24_19_56_37_855601")
+    path = os.path.join(Dirs.models, "mlp_2022_04_24_20_04_23_633569")
     # engine = TCNNBased(path=path, visualize=True)
     # engine = MujocoEngine(visualize=True)
     engine = MLPBased(path=path, visualize=True)

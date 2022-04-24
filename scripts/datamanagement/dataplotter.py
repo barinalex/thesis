@@ -77,14 +77,17 @@ def plothistograms(data: np.ndarray):
 
 
 def plotevals():
+
     path = os.path.join(Dirs.models, "mlp_2022_04_24_19_56_37_855601.evals" + ".npy")
     mlpevals = load_raw_data(path=path)
+    path = os.path.join(Dirs.models, "mlp_2022_04_24_20_04_23_633569.evals" + ".npy")
+    hmlpevals = load_raw_data(path=path)
     path = os.path.join(Dirs.models, "tcnn_2022_04_24_19_54_44_249977.evals" + ".npy")
     cnnevals = load_raw_data(path=path)
 
     epochs = np.arange(mlpevals.shape[0])
 
-    figure, axis = plt.subplots(1, 2)
+    figure, axis = plt.subplots(1, 3)
     axis[0].set_title("MLP")
     axis[0].set_xlabel("epochs")
     axis[0].set_ylabel("loss")
@@ -95,10 +98,19 @@ def plotevals():
     epochs = np.arange(cnnevals.shape[0])
     axis[1].set_title("TCNN")
     axis[1].set_xlabel("epochs")
-    axis[1].set_ylabel("loss")
+    # axis[1].set_ylabel("loss")
     axis[1].plot(epochs, cnnevals[:, 0], color='b')
     axis[1].plot(epochs, cnnevals[:, 1], color='r')
     axis[1].legend(['train loss', 'test loss'])
+
+    epochs = np.arange(hmlpevals.shape[0])
+
+    axis[2].set_title("MLP with history")
+    axis[2].set_xlabel("epochs")
+    # axis[2].set_ylabel("loss")
+    axis[2].plot(epochs, hmlpevals[:, 0], color='b')
+    axis[2].plot(epochs, hmlpevals[:, 1], color='r')
+    axis[2].legend(['train loss', 'test loss'])
     plt.show()
 
 
