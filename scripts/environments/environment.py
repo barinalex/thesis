@@ -218,10 +218,14 @@ if __name__ == "__main__":
     from scripts.datamanagement.datamanagement import loadconfig
     from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
     from scripts.engine.tcnnbased import TCNNBased
+    from scripts.engine.mlpbased import MLPBased
+    from scripts.engine.mujocoengine import MujocoEngine
     iw = JoystickInputWrapper()
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    path = os.path.join(Dirs.models, "tcnn_2022_04_22_11_27_58_275542")
-    engine = TCNNBased(path=path, visualize=True)
+    path = os.path.join(Dirs.models, "mlp_2022_04_24_19_56_37_855601")
+    # engine = TCNNBased(path=path, visualize=True)
+    # engine = MujocoEngine(visualize=True)
+    engine = MLPBased(path=path, visualize=True)
     env = Environment(config=config, engine=engine)
     interrupt = False
     done = False

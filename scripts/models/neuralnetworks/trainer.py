@@ -33,7 +33,7 @@ class Trainer:
         print(f"Training initialized for {n_epochs} epochs")
         for epoch in range(n_epochs):
             loss = None
-            obstrn, labelstrn = shuffle(self.obstrn, self.labelstrn)
+            obstrn, labelstrn = self.obstrn, self.labelstrn
             for i in range(len(obstrn)):
                 obs_batch = torch.from_numpy(obstrn[i]).to(device=device)
                 labels_batch = torch.from_numpy(labelstrn[i]).to(device=device)

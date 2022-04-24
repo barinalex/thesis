@@ -77,13 +77,28 @@ def plothistograms(data: np.ndarray):
 
 
 def plotevals():
-    path = os.path.join(Dirs.models, "mlp_2022_04_12_18_06_34_082909.evals" + ".npy")
-    evals = load_raw_data(path=path)
-    plt.figure()
-    epochs = np.arange(evals.shape[0])
-    plt.plot(epochs, evals[:, 0], color='b')
-    plt.plot(epochs, evals[:, 1], color='r')
-    plt.legend(['train loss', 'test loss'])
+    path = os.path.join(Dirs.models, "mlp_2022_04_24_19_56_37_855601.evals" + ".npy")
+    mlpevals = load_raw_data(path=path)
+    path = os.path.join(Dirs.models, "tcnn_2022_04_24_19_54_44_249977.evals" + ".npy")
+    cnnevals = load_raw_data(path=path)
+
+    epochs = np.arange(mlpevals.shape[0])
+
+    figure, axis = plt.subplots(1, 2)
+    axis[0].set_title("MLP")
+    axis[0].set_xlabel("epochs")
+    axis[0].set_ylabel("loss")
+    axis[0].plot(epochs, mlpevals[:, 0], color='b')
+    axis[0].plot(epochs, mlpevals[:, 1], color='r')
+    axis[0].legend(['train loss', 'test loss'])
+
+    epochs = np.arange(cnnevals.shape[0])
+    axis[1].set_title("TCNN")
+    axis[1].set_xlabel("epochs")
+    axis[1].set_ylabel("loss")
+    axis[1].plot(epochs, cnnevals[:, 0], color='b')
+    axis[1].plot(epochs, cnnevals[:, 1], color='r')
+    axis[1].legend(['train loss', 'test loss'])
     plt.show()
 
 
@@ -94,10 +109,28 @@ def plottrainingdata():
     linear = load_raw_data(path=f"{path}/linear.npy")
     angular = load_raw_data(path=f"{path}/angular.npy")
 
-    plt.figure()
-    plt.plot(np.arange(linear.shape[0]), angular[:, 2])
-    plt.show()
-    exit()
+    from scripts.datamanagement.datafilters import applyfilter
+    from scripts.datamanagement.datamanagement import make_labels
+    from scripts.datamanagement.datamanagementutils import reshapeto2d
+
+    path = os.path.join(Dirs.configs, "cnn.yaml")
+    config = loadconfig(path=path)
+    k=1000
+
+    # lin = reshapeto2d(linear[:, 0:2])
+    # ang = reshapeto2d(angular[:, 2])
+    # lbls = make_labels(lin=lin, ang=ang)
+    #
+    # flin = applyfilter(params=config, data=lin)
+    # flbls = make_labels(lin=flin, ang=ang)
+
+    # data = [("Raw linear velocity along X axis", linear[:k, 0], "time step", "meters per second"),
+    #         ("Filtered linear velocity along X axis", flin[:k, 0], "time step", "meters per second")]
+
+    # data = [("Delta linear velocity along X axis", lbls[:k, 0], "time step", "meters per second"),
+    #         ("Delta filtered linear velocity along X axis", flbls[:k, 0], "time step", "meters per second")]
+
+
 
 
     # data = [("Raw linear velocity along X axis (forward velocity)", linear[:, 0], "time step", "meters per second"),
@@ -106,9 +139,6 @@ def plottrainingdata():
     #         ("Action: throttle", actions[:, 0], "time step", ""),
     #         ("Action: turn", actions[:, 1], "time step", "")]
 
-
-    path = os.path.join(Dirs.configs, "cnn.yaml")
-    config = loadconfig(path=path)
     # config["test_size"] = 0
     train, test, ncnts = get_data(params=config)
     obs, labels = reshape_no_batches(train[DT.obs], train[DT.labels])
@@ -117,16 +147,23 @@ def plottrainingdata():
     # data = [("Action throttle", obs[:, 3], "time step", ""),
     #         ("Action turn", obs[:, 4], "time step", "")]
 
-    # data = [("Delta linear velocity along X axis", labels[:, 0], "time step", "meters per second"),
-    #         ("Delta linear velocity along Y axis", labels[:, 1], "time step", "meters per second"),
-    #         ("Delta angular velocity", labels[:, 2], "time step", "meters per second")]
+    data = [("Delta linear velocity along X axis", labels[100:k*2, 0], "time step", "meters per second"),
+            ("Delta linear velocity along Y axis", labels[100:k*2, 1], "time step", "meters per second"),
+            ("Delta angular velocity", labels[100:k*2, 2], "time step", "meters per second")]
 
-    data = [("Filtered linear velocity along X axis (forward velocity)", obs[:, 0], "time step", "meters per second"),
-            ("Filtered linear velocity along Y axis", obs[:, 1], "time step", "meters per second"),
-            ("Filtered angular velocity around Z axis", obs[:, 2], "time step", "meters per second")]
+    # data = [("Filtered linear velocity along X axis (forward velocity)", obs[:, 0], "time step", "meters per second"),
+    #         ("Filtered linear velocity along Y axis", obs[:, 1], "time step", "meters per second"),
+    #         ("Filtered angular velocity around Z axis", obs[:, 2], "time step", "meters per second")]
 
-    for d in data:
-        plot2d(data=d)
+    figure, axis = plt.subplots(1, len(data))
+    for i, d in enumerate(data):
+        axis[i].set_title(d[0])
+        axis[i].set_xlabel(d[2])
+        axis[0].set_ylabel(d[3])
+        axis[i].plot(np.arange(d[1].shape[0]), d[1])
+    plt.show()
+    # for d in data:
+    #     plot2d(data=d)
 
 
 def plotobshistogram():
@@ -156,18 +193,37 @@ def plot_policy_learning_curve(path: str, maxtimesteps: int = None):
 
 if __name__ == "__main__":
     # plotobshistogram()
-    plottrainingdata()
+    # plottrainingdata()
+    # exit()
+    plotevals()
     exit()
-    # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
     # plot_policy_learning_curve(path=path, maxtimesteps=500000)
     # pass
-    points = load_raw_data(os.path.join(Dirs.trajectories, "n10_wps500_smth50_mplr10.npy"))
-    points = points[:, :150, :]
-    print(points.shape)
-    plt.figure()
-    plt.xlabel("X meters")
-    plt.ylabel("Y meters")
-    for traj in points:
-        plt.plot(traj[:, 0], traj[:, 1])
+
+
+    # points = load_raw_data(os.path.join(Dirs.trajectories, "n1000_wps500_smth50_mplr10.npy"))
+    # points = points[:, :70, :]
+    #
+    # figure, axis = plt.subplots(1, 2)
+    # axis[0].set_xlabel("X meters")
+    # axis[0].set_ylabel("Y meters")
+    # for traj in points[:5,:30]:
+    #     axis[0].scatter(traj[:, 0], traj[:, 1])
+    #
+    # axis[1].set_xlabel("X meters")
+    # axis[1].set_ylabel("Y meters")
+    # for traj in points[5:]:
+    #     axis[1].plot(traj[:, 0], traj[:, 1])
+    # plt.show()
+
+    lap = load_raw_data(os.path.join(Dirs.trajectories, "lap_pd01_r1_s2.npy"))
+    inf = load_raw_data(os.path.join(Dirs.trajectories, "inf_pd01_r1.npy"))
+    figure, axis = plt.subplots(1, 2)
+    axis[0].set_xlabel("X meters")
+    axis[0].set_ylabel("Y meters")
+    axis[0].plot(lap[0, :, 0], lap[0, :, 1])
+    axis[1].set_xlabel("X meters")
+    axis[1].set_ylabel("Y meters")
+    axis[1].plot(inf[0, :, 0], inf[0, :, 1])
     plt.show()

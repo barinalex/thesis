@@ -317,18 +317,19 @@ if __name__ == "__main__":
     from scripts.constants import Dirs
     from scripts.datamanagement.datamanagementutils import save_raw_data, load_raw_data
 
-    wps = generate_infinity(points_distance=0.05, radius=0.5)
-    wps = np.reshape(wps, (1, *wps.shape))
-    print(wps.shape)
-    plt.scatter(wps[0, :, 0], wps[0, :, 1])
-    plt.show()
-    path = os.path.join(Dirs.trajectories, f"inf_r05")
-    save_raw_data(data=wps, path=path)
-    exit()
+    # wps = generate_infinity(points_distance=0.1, radius=1)
+    # wps = generate_lap(points_distance=0.1, radius=1, straight_length=2)
+    # wps = np.reshape(wps, (1, *wps.shape))
+    # print(wps.shape)
+    # plt.scatter(wps[0, :, 0], wps[0, :, 1])
+    # plt.show()
+    # path = os.path.join(Dirs.trajectories, f"lap_pd01_r1_s2")
+    # save_raw_data(data=wps, path=path)
+    # exit()
     n = 10
     n_wps = 500
     smth = 50
-    mplr = 10
+    mplr = 2
     path = os.path.join(Dirs.trajectories, f"n{n}_wps{n_wps}_smth{smth}_mplr{mplr}")
 
     def saveNtrajs():
