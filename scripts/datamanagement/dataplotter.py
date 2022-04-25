@@ -191,26 +191,42 @@ def plotobshistogram():
     plt.show()
 
 
-def plot_policy_learning_curve(path: str, maxtimesteps: int = None):
+def plot_policy_learning_curve(maxtimesteps: int = None):
     """load evaluation callback results and plot as a learning curve"""
-    ev = load_raw_data(path)
-    means = np.mean(ev['results'], axis=1)
+
+    path = os.path.join(Dirs.policy, "ppo_2022_04_24_12_26_52_876557" + ".npz")
+    mj = load_raw_data(path=path)
+    path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_22_11_57_47_144995" + ".npz")
+    tcnn = load_raw_data(path=path)
+
+    means = np.mean(mj['results'], axis=1)
     time = np.arange(maxtimesteps, step=maxtimesteps//means.shape[0]) if maxtimesteps else np.arange(means.shape[0])
-    plt.figure()
-    plt.xlabel("timesteps")
-    plt.ylabel("reward")
-    plt.plot(time[:means.shape[0]], means)
+
+    figure, axis = plt.subplots(1, 2)
+    axis[0].set_title("MuJuCo")
+    axis[0].set_xlabel("timesteps")
+    axis[0].set_ylabel("reward")
+    axis[0].plot(time[:means.shape[0]], means)
+
+    means = np.mean(tcnn['results'], axis=1)
+    time = np.arange(maxtimesteps, step=maxtimesteps//means.shape[0]) if maxtimesteps else np.arange(means.shape[0])
+
+    axis[1].set_title("TCNN")
+    axis[1].set_xlabel("timesteps")
+    axis[1].set_ylabel("reward")
+    axis[1].plot(time[:means.shape[0]], means)
     plt.show()
+
 
 
 if __name__ == "__main__":
     # plotobshistogram()
     # plottrainingdata()
     # exit()
-    plotevals()
-    exit()
+    # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
-    # plot_policy_learning_curve(path=path, maxtimesteps=500000)
+    plot_policy_learning_curve(maxtimesteps=500000)
+    exit()
     # pass
 
 
