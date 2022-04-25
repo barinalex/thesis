@@ -57,14 +57,17 @@ class PolicyTrainer:
         :return: stable-baseline3 callback instance
         """
         eval_freq = int(self.config['callback_freq']) # * self.config['n_cpu'])
-        # path = os.path.join(Dirs.models, "tcnn_2022_04_22_11_27_58_275542")
-        # engine = TCNNBased(path=path, visualize=False)
-        engine = MujocoEngine()
-        env = Environment(self.config, engine)
+        path = os.path.join(Dirs.models, "tcnn_2022_04_24_19_54_44_249977")
+        engine = TCNNBased(path=path, visualize=False)
+        # engine = MujocoEngine()
+        config = self.config.copy()
+        # config["trajectories"] = config["evaltrajectories"]
+        env = Environment(config, engine)
 
         return EvalCallback(env,
                             log_path=Dirs.policy,
                             eval_freq=eval_freq,
+                            n_eval_episodes=5,
                             deterministic=True,
                             render=False)
 
@@ -105,11 +108,11 @@ if __name__ == "__main__":
     config = loadconfig(path=path)
     path = os.path.join(Dirs.configs, "env.yaml")
     config.update(loadconfig(path=path))
-    # path = os.path.join(Dirs.models, "tcnn_2022_04_22_11_27_58_275542")
-    # engine = TCNNBased(path=path)
-    engine = MujocoEngine()
+    path = os.path.join(Dirs.models, "tcnn_2022_04_24_19_54_44_249977")
+    engine = TCNNBased(path=path)
+    # engine = MujocoEngine()
     trainer = PolicyTrainer(engine=engine, config=config)
     trainer.train()
     timestamp = gettimestamp()
-    path = os.path.join(Dirs.policy, f"ppo_{timestamp}")
+    path = os.path.join(Dirs.policy, f"ppo_tcnn_{timestamp}")
     trainer.save(path=path)

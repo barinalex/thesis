@@ -194,16 +194,16 @@ def plotobshistogram():
 def plot_policy_learning_curve(maxtimesteps: int = None):
     """load evaluation callback results and plot as a learning curve"""
 
-    path = os.path.join(Dirs.policy, "ppo_2022_04_24_12_26_52_876557" + ".npz")
+    path = os.path.join(Dirs.policy, "ppo_mjc_2022_04_25_14_17_26_866055" + ".npz")
     mj = load_raw_data(path=path)
-    path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_22_11_57_47_144995" + ".npz")
+    path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_25_15_02_48_445186" + ".npz")
     tcnn = load_raw_data(path=path)
 
     means = np.mean(mj['results'], axis=1)
     time = np.arange(maxtimesteps, step=maxtimesteps//means.shape[0]) if maxtimesteps else np.arange(means.shape[0])
 
     figure, axis = plt.subplots(1, 2)
-    axis[0].set_title("MuJuCo")
+    axis[0].set_title("MuJoCo")
     axis[0].set_xlabel("timesteps")
     axis[0].set_ylabel("reward")
     axis[0].plot(time[:means.shape[0]], means)
@@ -225,7 +225,7 @@ if __name__ == "__main__":
     # exit()
     # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
-    plot_policy_learning_curve(maxtimesteps=500000)
+    plot_policy_learning_curve(maxtimesteps=1000000)
     exit()
     # pass
 

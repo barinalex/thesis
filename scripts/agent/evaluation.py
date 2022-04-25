@@ -29,47 +29,64 @@ def evaluationloop(env: Environment, agent: Agent, n: int) -> np.ndarray:
     return stats
 
 
-def evaluate_tcnn_based() -> np.ndarray:
+def evaluate_tcnn_based(n: int) -> np.ndarray:
     """
+    :param n: number of episodes
+
     :return: list of rewards for each episodes
     """
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    path = os.path.join(Dirs.models, "tcnn_2022_04_22_11_27_58_275542")
+    path = os.path.join(Dirs.models, "tcnn_2022_04_24_19_54_44_249977")
     engine = TCNNBased(path=path, visualize=False)
-    # config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
-    config["trajectories"] = "inf_r1.npy"
+    config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
+    config["trajectories"] = "inf_pd01_r1.npy"
+    # config["trajectories"] = "lap_pd01_r1_s2.npy"
     env = Environment(config=config, engine=engine, random=False)
-    path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_22_11_57_47_144995.zip")
+    path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_25_15_02_48_445186.zip")
     agent = Agent()
     agent.load(path=path)
-    rewards = evaluationloop(env=env, agent=agent, n=3)
+    rewards = evaluationloop(env=env, agent=agent, n=n)
     return rewards
 
 
-def evaluate_mujoco_based() -> np.ndarray:
+def evaluate_mujoco_based(n: int) -> np.ndarray:
     """
+    :param n: number of episodes
+
     :return: list of rewards for each episodes
     """
-    engine = MujocoEngine(visualize=True)
+    engine = MujocoEngine(visualize=False)
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
     # config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
-    config["trajectories"] = "inf_r1.npy"
+    config["trajectories"] = "inf_pd01_r1.npy"
+    # config["trajectories"] = "lap_pd01_r1_s2.npy"
     env = Environment(config=config, engine=engine, random=False)
-    path = os.path.join(Dirs.policy, "ppo_2022_04_24_12_26_52_876557.zip")
+    path = os.path.join(Dirs.policy, "ppo_mjc_2022_04_25_14_17_26_866055.zip")
     agent = Agent()
     agent.load(path=path)
-    rewards = evaluationloop(env=env, agent=agent, n=3)
+    rewards = evaluationloop(env=env, agent=agent, n=n)
     return rewards
 
 
-def compare_tcnn2mujoco_based():
-    tcnn_rws = evaluate_tcnn_based()
-    mujoco_rws = evaluate_mujoco_based()
+def compare_tcnn2mujoco_based(n: int):
+    """
+    :param n: number of episodes
+
+    :return: list of rewards for each episodes
+    """
+    tcnn_rws = evaluate_tcnn_based(n=n)
+    mujoco_rws = evaluate_mujoco_based(n=n)
     print("TCNN REWARDS")
     print(tcnn_rws)
+    print(np.mean(tcnn_rws, axis=0))
+    print(np.std(tcnn_rws, axis=0))
     print("MUJOCO REWARDS")
     print(mujoco_rws)
+    print(np.mean(mujoco_rws, axis=0))
+    print(np.std(mujoco_rws, axis=0))
 
 
 if __name__ == "__main__":
-    compare_tcnn2mujoco_based()
+    # mujoco_rws = evaluate_mujoco_based(n=1)
+    # print(mujoco_rws)
+    compare_tcnn2mujoco_based(n=1)
