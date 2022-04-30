@@ -10,4 +10,6 @@ __pycache__/
 /data
 /catkin_ws/build
 /catkin_ws/devel
+/controlscripts/policy
+/controlscripts/points
 .idea
