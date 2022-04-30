@@ -1,5 +1,4 @@
 import numpy as np
-from scipy.spatial.transform import Rotation as Rot
 import quaternion
 import math
 
@@ -93,11 +92,6 @@ def compute_determinant(matrix):
 def get_anticlockwise_2d_normal(vec):
     """return normal to a 2d vector"""
     return np.array([-vec[1], vec[0]])
-
-
-def euler_from_quaternion(quat):
-    """return euler"""
-    return Rot.from_quat(quat).as_euler(seq='xyz')
 
 
 def get_pybullet_quaternion(q):
