@@ -51,7 +51,7 @@
       <recent name="$PROJECT_DIR$/scripts/models/neuralnetworks" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.dataplotter">
+  <component name="RunManager" selected="Python.evaluation">
     <configuration name="dataplotter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -159,8 +159,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.dataplotter" />
         <item itemvalue="Python.evaluation" />
+        <item itemvalue="Python.dataplotter" />
         <item itemvalue="Python.generator" />
         <item itemvalue="Python.environment" />
         <item itemvalue="Python.policytrainer" />
