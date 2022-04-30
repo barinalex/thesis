@@ -19,7 +19,7 @@ def evaluationloop(env: Environment, agent: Agent, n: int) -> np.ndarray:
     stats = np.zeros((n, 2))
     for i in range(n):
         done = False
-        obs = env.make_observation(action=[-1, 0])
+        obs = env.make_observation()
         while not done:
             action = agent.act(observation=obs)
             obs, reward, done, _ = env.step(action=action)
@@ -55,13 +55,13 @@ def evaluate_mujoco_based(n: int) -> np.ndarray:
 
     :return: list of rewards for each episodes
     """
-    engine = MujocoEngine(visualize=False)
+    engine = MujocoEngine(visualize=True)
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
     # config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
-    config["trajectories"] = "inf_pd01_r1.npy"
-    # config["trajectories"] = "lap_pd01_r1_s2.npy"
+    # config["trajectories"] = "inf_pd02_r1.npy"
+    config["trajectories"] = "lap_pd02_r1_s2.npy"
     env = Environment(config=config, engine=engine, random=False)
-    path = os.path.join(Dirs.policy, "ppo_mjc_2022_04_25_14_17_26_866055.zip")
+    path = os.path.join(Dirs.policy, "ppo_mjc_2022_04_30_13_53_45_932163.zip")
     agent = Agent()
     agent.load(path=path)
     rewards = evaluationloop(env=env, agent=agent, n=n)
@@ -87,6 +87,6 @@ def compare_tcnn2mujoco_based(n: int):
 
 
 if __name__ == "__main__":
-    # mujoco_rws = evaluate_mujoco_based(n=1)
-    # print(mujoco_rws)
-    compare_tcnn2mujoco_based(n=1)
+    mujoco_rws = evaluate_mujoco_based(n=1)
+    print(mujoco_rws)
+    # compare_tcnn2mujoco_based(n=1)

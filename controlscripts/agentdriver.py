@@ -23,7 +23,6 @@ class AgentDriver:
         self.velbuffer = QueueBuffer(size=10, initvector=initvector)
         self.lin = np.zeros(3)
         self.ang = np.zeros(3)
-        self.action = np.array([-1, 0])
 
     def updatestate(self):
         """
@@ -37,7 +36,7 @@ class AgentDriver:
         """
         :return: agent's state observation
         """
-        obs = np.hstack((self.lin[:2], self.ang[2], self.action[0], self.action[1]))
+        obs = np.hstack((self.lin[:2], self.ang[2]))
         self.actbuffer.add(element=obs)
         state = self.actbuffer.get_vector()
         wps = self.waypointer.get_waypoints_vector()
@@ -50,8 +49,8 @@ class AgentDriver:
         :return: throttle, steering
         """
         obs = self.make_observation()
-        self.action = self.agent.act(observation=obs)
-        return tuple(self.action)
+        action = self.agent.act(observation=obs)
+        return tuple(action)
 
     def update(self, lin: np.ndarray, ang: np.ndarray):
         """

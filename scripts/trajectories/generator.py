@@ -318,12 +318,12 @@ if __name__ == "__main__":
     from scripts.datamanagement.datamanagementutils import save_raw_data, load_raw_data
 
     # wps = generate_infinity(points_distance=0.2, radius=1)
-    wps = generate_lap(points_distance=0.2, radius=1, straight_length=2)
+    wps = generate_lap(points_distance=0.15, radius=1, straight_length=2)
     wps = np.reshape(wps, (1, *wps.shape))
     print(wps.shape)
     plt.scatter(wps[0, :, 0], wps[0, :, 1])
     plt.show()
-    path = os.path.join(Dirs.trajectories, f"lap_pd02_r1_s2")
+    path = os.path.join(Dirs.trajectories, f"lap_pd015_r1_s2")
     save_raw_data(data=wps, path=path)
     exit()
     n = 10
