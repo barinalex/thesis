@@ -148,9 +148,9 @@ class BuggyReader:
                                                             self.bl2rs.transform.rotation)
         odom_msg.twist.twist.angular = rotate_vector_by_quat(odom_msg.twist.twist.angular,
                                                              self.bl2rs.transform.rotation)
-        odom_msg.pose.pose.position.x = self.bl2rs.transform.translation.x
-        odom_msg.pose.pose.position.y = self.bl2rs.transform.translation.y
-        odom_msg.pose.pose.position.z = self.bl2rs.transform.translation.z
+        odom_msg.pose.pose.position.x -= self.bl2rs.transform.translation.x
+        odom_msg.pose.pose.position.y -= self.bl2rs.transform.translation.y
+        odom_msg.pose.pose.position.z -= self.bl2rs.transform.translation.z
         return odom_msg
 
     def gather(self):
