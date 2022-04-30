@@ -166,6 +166,8 @@ def get_gathering_data_episode(params: dict, edir: str) -> (dict, dict):
     :return: tuple of dicts (train data, test data)
     """
     data = load_dataset(datadir=edir, dts=DT.traintesttypes)
+    if params["balance"]:
+        balance_left_right_turn(data=data)
     obs, labels = get_labeled_obs(data=data, params=params)
     interval = random_interval(limit=len(obs), size=int(len(obs) * params["test_size"]))
     testset = get_test_subset(obs=obs, labels=labels, interval=interval)
