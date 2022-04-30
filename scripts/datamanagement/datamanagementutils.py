@@ -1,12 +1,24 @@
 import os.path
-
 import sys
-import glob
+import json
 import numpy as np
-import quaternion
-from scripts.utils.linalg_utils import torobotframe
 from scripts.constants import DT, Dirs
 from scripts.datamanagement.pathmanagement import create_directories
+
+
+def readjson(path: str):
+    """
+    Read data from json file
+
+    :param path: path to a json file
+    """
+    data = None
+    try:
+        with open(path, 'r') as f:
+            data = json.load(f)
+    except:
+        pass
+    return data
 
 
 def drop_first(data: dict, n: int) -> dict:

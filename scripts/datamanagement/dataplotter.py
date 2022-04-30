@@ -2,7 +2,7 @@ import numpy as np
 import itertools
 import matplotlib.pyplot as plt
 from scripts.datamanagement.datamanagement import loadconfig, get_data
-from scripts.datamanagement.datamanagementutils import load_raw_data, reshape_no_batches
+from scripts.datamanagement.datamanagementutils import load_raw_data, reshape_no_batches, readjson
 from scripts.constants import Dirs, DT
 import os
 
@@ -218,6 +218,16 @@ def plot_policy_learning_curve(maxtimesteps: int = None):
     plt.show()
 
 
+def plotexperiment():
+    path = os.path.join(Dirs.experiments, "2022_04_30_12_45_43_220823")
+    data = readjson(path=path)
+    positions = [entry["pos"] for entry in data]
+    positions = np.asarray(positions)
+    plt.figure()
+    plt.plot(positions[:0], positions[:1])
+    plt.show()
+
+
 
 if __name__ == "__main__":
     # plotobshistogram()
@@ -225,7 +235,8 @@ if __name__ == "__main__":
     # exit()
     # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
-    plot_policy_learning_curve(maxtimesteps=1000000)
+    # plot_policy_learning_curve(maxtimesteps=1000000)
+    plotexperiment()
     exit()
     # pass
 
