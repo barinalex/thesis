@@ -115,46 +115,42 @@ def plotevals():
 
 
 def plottrainingdata():
-    path = os.path.join(Dirs.realdata, "2022_04_30_14_34_06_977957")
-    positions = load_raw_data(path=f"{path}/positions.npy")
-    actions = load_raw_data(path=f"{path}/actions.npy")
-    linear = load_raw_data(path=f"{path}/linear.npy")
-    angular = load_raw_data(path=f"{path}/angular.npy")
-
-    from scripts.datamanagement.datafilters import applyfilter
-    from scripts.datamanagement.datamanagement import make_labels
-    from scripts.datamanagement.datamanagementutils import reshapeto2d
+    # path = os.path.join(Dirs.realdata, "2022_04_30_14_34_06_977957")
+    # positions = load_raw_data(path=f"{path}/positions.npy")
+    # actions = load_raw_data(path=f"{path}/actions.npy")
+    # linear = load_raw_data(path=f"{path}/linear.npy")
+    # angular = load_raw_data(path=f"{path}/angular.npy")
+    # n = positions.shape[0]
+    # indices = np.arange(0, n, 2)
+    # positions = positions[indices]
+    # actions = actions[indices]
+    # linear = linear[indices]
+    # angular = angular[indices]
+    #
+    # from scripts.datamanagement.datafilters import applyfilter
+    # from scripts.datamanagement.datamanagement import make_labels
+    # from scripts.datamanagement.datamanagementutils import reshapeto2d
 
     path = os.path.join(Dirs.configs, "cnn.yaml")
     config = loadconfig(path=path)
-    k=10000
+    k=100000
 
-    # lin = reshapeto2d(linear[:, 0:2])
-    # ang = reshapeto2d(angular[:, 2])
-    # lbls = make_labels(lin=lin, ang=ang)
-    #
-    # flin = applyfilter(params=config, data=lin)
-    # flbls = make_labels(lin=flin, ang=ang)
-
-    # data = [("Raw linear velocity along X axis", linear[:k, 0], "time step", "meters per second"),
-    #         ("Filtered linear velocity along X axis", flin[:k, 0], "time step", "meters per second")]
-
-    # data = [("Delta linear velocity along X axis", lbls[:k, 0], "time step", "meters per second"),
-    #         ("Delta filtered linear velocity along X axis", flbls[:k, 0], "time step", "meters per second")]
-
-
-    #
-    #
-    data = [("Raw linear velocity along X axis (forward velocity)", linear[:k, 0], "time step", "meters per second"),
-            ("Raw linear velocity along Y axis", linear[:k, 1], "time step", "meters per second"),
-            ("Raw angular velocity around Z axis", angular[:k, 2], "time step", "meters per second"),
-            ("Action: throttle", actions[:k, 0], "time step", ""),
-            ("Action: turn", actions[:k, 1], "time step", "")]
+    # data = [("Raw linear velocity along X axis (forward velocity)", linear[:k, 0], "time step", "meters per second"),
+    #         ("Raw linear velocity along Y axis", linear[:k, 1], "time step", "meters per second"),
+    #         ("Raw angular velocity around Z axis", angular[:k, 2], "time step", "meters per second"),
+    #         ("Action: throttle", actions[:k, 0], "time step", ""),
+    #         ("Action: turn", actions[:k, 1], "time step", "")]
 
     # config["test_size"] = 0
     train, test, ncnts = get_data(params=config)
     obs, labels = reshape_no_batches(train[DT.obs], train[DT.labels])
     print(obs.shape)
+
+    data = [("Raw linear velocity along X axis (forward velocity)", obs[:k, 0], "time step", "meters per second"),
+            ("Raw linear velocity along Y axis", obs[:k, 1], "time step", "meters per second"),
+            ("Raw angular velocity around Z axis", obs[:k, 2], "time step", "meters per second"),
+            ("Action: throttle", obs[:k, 3], "time step", ""),
+            ("Action: turn", obs[:k, 4], "time step", "")]
     #
     # data = [("Action throttle", obs[:, 3], "time step", ""),
     #         ("Action turn", obs[:, 4], "time step", "")]
@@ -231,12 +227,12 @@ def plotexperiment():
 
 if __name__ == "__main__":
     # plotobshistogram()
-    # plottrainingdata()
+    plottrainingdata()
     # exit()
     # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
     # plot_policy_learning_curve(maxtimesteps=1000000)
-    plotexperiment()
+    # plotexperiment()
     exit()
     # pass
 

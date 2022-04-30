@@ -15,6 +15,7 @@ class DT:
     labels = "labels"
     typeslist = [pos, orn, lin, ang, act]
     traintesttypes = [lin, ang, act]
+    bagtypes = [pos, lin, ang, act]
 
 
 class Dirs:
@@ -24,6 +25,7 @@ class Dirs:
     source = os.path.dirname(os.path.abspath(__file__))
     root = os.path.abspath(os.path.join(source, os.pardir))
     data = os.path.join(root, "data")
+    archive = os.path.join(data, "archive")
     realdata = os.path.join(data, "real")
     experiments = os.path.join(data, "experiments")
     simdata = os.path.join(data, "sim")

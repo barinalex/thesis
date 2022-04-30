@@ -172,7 +172,8 @@ def save_dataset(data: dict, path: str):
     """
     create_directories(path=path)
     for key in data.keys():
-        np.save(f"{path}/{key}", data[key])
+        keypath = os.path.join(path, key)
+        np.save(keypath, data[key])
 
 
 def load_episode(path) -> dict:
@@ -264,3 +265,17 @@ def concatenate_dicts(d1: dict, d2: dict) -> dict:
     for key in d1.keys():
         d1[key] = np.concatenate((d1[key], d2[key]))
     return d1
+
+
+if __name__ == "__main__":
+    def reducefrequency():
+        import glob
+        for edir in glob.glob(pathname=os.path.join(Dirs.realdata, "*")):
+            data = load_dataset(datadir=edir, dts=DT.bagtypes)
+            n = data[list(data.keys())[0]].shape[0]
+            indices = np.arange(0, n, 2)
+            data = {key: item[indices] for key, item in data.items()}
+            save_dataset(data=data, path=edir)
+
+    reducefrequency()
+

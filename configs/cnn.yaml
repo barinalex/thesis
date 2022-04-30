@@ -15,7 +15,7 @@
 "num_epochs": 30
 "balance": False
 "dimbalance": 2
-"filter": "pastmean" # pastmean, smooth
+"filter": "" # pastmean, smooth
 "pastmean_k": 10
 "smoothness": 0.2 # lower is smoother
 "normalizelbl": True
