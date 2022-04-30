@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18a7d627-6fa0-4aae-9874-33993ce2790d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controlscripts/agentdriver.py" beforeDir="false" afterPath="$PROJECT_DIR$/controlscripts/agentdriver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controlscripts/data/test" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/controlscripts/pwmdriver.py" beforeDir="false" afterPath="$PROJECT_DIR$/controlscripts/pwmdriver.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,6 +54,7 @@
       <recent name="$PROJECT_DIR$/data/real" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/controlscripts/data" />
       <recent name="$PROJECT_DIR$/scripts/models/neuralnetworks" />
     </key>
   </component>

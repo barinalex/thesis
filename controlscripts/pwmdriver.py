@@ -1,11 +1,6 @@
-import os.path
 import Adafruit_PCA9685
-# import board
-# import busio
-# import adafruit_pca9685
 import time
 import numpy as np
-from utils import loadconfig
 import logging
 import sys
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
@@ -23,9 +18,7 @@ class PWMDriver:
         self.throttlemin = 0.5
         self.steeringmiddle = 0.5
         logging.info("Initializing the PWMdriver. ")
-        # i2c = busio.I2C(board.SCL, board.SDA)
-        # self.pwm = adafruit_pca9685.PCA9685(i2c)
-        self.pwm = Adafruit_PCA9685.PCA9685()
+        self.pwm = Adafruit_PCA9685.PCA9685(address=0x43, i2c=None)
         self.pwm.set_pwm_freq(pwm_freq)
         self.arm_escs()
         logging.info("Finished initializing the PWMdriver. ")
