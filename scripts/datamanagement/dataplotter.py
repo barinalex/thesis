@@ -194,9 +194,9 @@ def plotobshistogram():
 def plot_policy_learning_curve(maxtimesteps: int = None):
     """load evaluation callback results and plot as a learning curve"""
 
-    path = os.path.join(Dirs.policy, "ppo_mjc_2022_04_25_14_17_26_866055" + ".npz")
+    path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_30_14_38_23_442446" + ".npz")
     mj = load_raw_data(path=path)
-    path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_25_15_02_48_445186" + ".npz")
+    path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_30_14_38_23_442446" + ".npz")
     tcnn = load_raw_data(path=path)
 
     means = np.mean(mj['results'], axis=1)
@@ -221,11 +221,11 @@ def plot_policy_learning_curve(maxtimesteps: int = None):
 
 if __name__ == "__main__":
     # plotobshistogram()
-    plottrainingdata()
+    # plottrainingdata()
     # exit()
     # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
-    # plot_policy_learning_curve(maxtimesteps=1000000)
+    plot_policy_learning_curve(maxtimesteps=1000000)
     exit()
     # pass
 
