@@ -34,13 +34,15 @@ class Controller:
         if specified pass control to the AI agent.
         return actions: throttle, steering corresponding to the motors m1 and m2
         """
+        start = time.time()
         throttle, steering, autonomous = self.JOYStick.get_joystick_input()
         if autonomous:
             laststate = self.history[-1]
             lin, ang = np.copy(laststate["lin"]), np.copy(laststate["ang"])
             self.agent.update(lin=lin, ang=ang)
             throttle, steering = self.agent.act()
-        logging.info(f"autonomous: {autonomous}; throttle: {throttle}; steering: {steering}")
+        acttime = time.time() - start
+        logging.info(f"autonomous: {autonomous}; throttle: {throttle}; steering: {steering}; acttime: {acttime}")
         return throttle, steering
 
     def actions2motor(self, throttle: float, steering: float) -> (float, float):
