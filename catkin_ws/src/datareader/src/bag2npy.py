@@ -15,7 +15,7 @@ import time
 import copy
 
 
-DATA_DIR = "/home/barinale/Documents/thesis/thesis/data/real"
+DATA_DIR = "/home/barinale/Documents/thesis/thesis/data/real2"
 
 
 def create_directories(path: str):
@@ -124,7 +124,7 @@ class BuggyReader:
         """
         :param odom: message containing odometry data
         """
-        print("MESSAGE: ", self.counter)
+        print("MESSAGE: ", self.counter, odom.header.seq)
         self.counter += 1
         print(odom.twist.twist.linear.x, odom.twist.twist.linear.y, odom.twist.twist.angular.z)
         self.gt_odom_list.append(odom)
@@ -148,9 +148,9 @@ class BuggyReader:
                                                             self.bl2rs.transform.rotation)
         odom_msg.twist.twist.angular = rotate_vector_by_quat(odom_msg.twist.twist.angular,
                                                              self.bl2rs.transform.rotation)
-        odom_msg.pose.pose.position.x -= self.bl2rs.transform.translation.x
-        odom_msg.pose.pose.position.y -= self.bl2rs.transform.translation.y
-        odom_msg.pose.pose.position.z -= self.bl2rs.transform.translation.z
+        odom_msg.pose.pose.position.x = self.bl2rs.transform.translation.x
+        odom_msg.pose.pose.position.y = self.bl2rs.transform.translation.y
+        odom_msg.pose.pose.position.z = self.bl2rs.transform.translation.z
         return odom_msg
 
     def gather(self):

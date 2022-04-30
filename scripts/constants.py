@@ -24,7 +24,7 @@ class Dirs:
     source = os.path.dirname(os.path.abspath(__file__))
     root = os.path.abspath(os.path.join(source, os.pardir))
     data = root + "/data"
-    realdata = data + "/real"
+    realdata = data + "/real2"
     simdata = data + "/sim"
     datasets = data + "/datasets"
     policy = data + "/policy"

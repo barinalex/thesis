@@ -115,7 +115,7 @@ def plotevals():
 
 
 def plottrainingdata():
-    path = os.path.join(Dirs.realdata, "2022_04_10_11_57_44_706120")
+    path = os.path.join(Dirs.realdata, "2022_04_30_14_34_06_977957")
     positions = load_raw_data(path=f"{path}/positions.npy")
     actions = load_raw_data(path=f"{path}/actions.npy")
     linear = load_raw_data(path=f"{path}/linear.npy")
@@ -127,7 +127,7 @@ def plottrainingdata():
 
     path = os.path.join(Dirs.configs, "cnn.yaml")
     config = loadconfig(path=path)
-    k=1000
+    k=10000
 
     # lin = reshapeto2d(linear[:, 0:2])
     # ang = reshapeto2d(angular[:, 2])
@@ -143,13 +143,13 @@ def plottrainingdata():
     #         ("Delta filtered linear velocity along X axis", flbls[:k, 0], "time step", "meters per second")]
 
 
-
-
-    # data = [("Raw linear velocity along X axis (forward velocity)", linear[:, 0], "time step", "meters per second"),
-    #         ("Raw linear velocity along Y axis", linear[:, 1], "time step", "meters per second"),
-    #         ("Raw angular velocity around Z axis", angular[:, 2], "time step", "meters per second"),
-    #         ("Action: throttle", actions[:, 0], "time step", ""),
-    #         ("Action: turn", actions[:, 1], "time step", "")]
+    #
+    #
+    data = [("Raw linear velocity along X axis (forward velocity)", linear[:k, 0], "time step", "meters per second"),
+            ("Raw linear velocity along Y axis", linear[:k, 1], "time step", "meters per second"),
+            ("Raw angular velocity around Z axis", angular[:k, 2], "time step", "meters per second"),
+            ("Action: throttle", actions[:k, 0], "time step", ""),
+            ("Action: turn", actions[:k, 1], "time step", "")]
 
     # config["test_size"] = 0
     train, test, ncnts = get_data(params=config)
@@ -158,10 +158,10 @@ def plottrainingdata():
     #
     # data = [("Action throttle", obs[:, 3], "time step", ""),
     #         ("Action turn", obs[:, 4], "time step", "")]
-
-    data = [("Delta linear velocity along X axis", labels[100:k*2, 0], "time step", "meters per second"),
-            ("Delta linear velocity along Y axis", labels[100:k*2, 1], "time step", "meters per second"),
-            ("Delta angular velocity", labels[100:k*2, 2], "time step", "meters per second")]
+    #
+    # data = [("Delta linear velocity along X axis", labels[100:k*2, 0], "time step", "meters per second"),
+    #         ("Delta linear velocity along Y axis", labels[100:k*2, 1], "time step", "meters per second"),
+    #         ("Delta angular velocity", labels[100:k*2, 2], "time step", "meters per second")]
 
     # data = [("Filtered linear velocity along X axis (forward velocity)", obs[:, 0], "time step", "meters per second"),
     #         ("Filtered linear velocity along Y axis", obs[:, 1], "time step", "meters per second"),
@@ -221,11 +221,11 @@ def plot_policy_learning_curve(maxtimesteps: int = None):
 
 if __name__ == "__main__":
     # plotobshistogram()
-    # plottrainingdata()
+    plottrainingdata()
     # exit()
     # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
-    plot_policy_learning_curve(maxtimesteps=1000000)
+    # plot_policy_learning_curve(maxtimesteps=1000000)
     exit()
     # pass
 
