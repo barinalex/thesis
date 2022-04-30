@@ -20,7 +20,7 @@ class JoyController:
         steering, throttle = [self.joystick.get_axis(3), self.joystick.get_axis(1)]
         button_x = self.joystick.get_button(0)
         pygame.event.clear()
-        return -throttle, steering, button_x
+        return -throttle, -steering, button_x
 
 
 if __name__ == "__main__":
