@@ -17,12 +17,13 @@ class Controller:
         path = os.path.join("configs", "default.yaml")
         self.config = loadconfig(path=path)
         self.motors_on = self.config["motors_on"]
-        print(f"Initializing the Controller, motors_on: {self.config['motors_on']}")
+        logging.info(f"Initializing the Controller, motors_on: {self.config['motors_on']}")
         self.rsreader = RSReader()
         self.driver = PWMDriver(config=self.config)
         self.JOYStick = JoyController()
         self.agent = AgentDriver()
         self.history = []
+        logging.info(f"Controller initialized")
 
     def __enter__(self):
         return self
@@ -39,6 +40,7 @@ class Controller:
             lin, ang = np.copy(laststate["lin"]), np.copy(laststate["ang"])
             self.agent.update(lin=lin, ang=ang)
             throttle, steering = self.agent.act()
+        logging.info(f"autonomous: {autonomous}; throttle: {throttle}; steering: {steering}")
         return throttle, steering
 
     def actions2motor(self, throttle: float, steering: float) -> (float, float):

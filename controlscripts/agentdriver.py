@@ -14,7 +14,7 @@ class AgentDriver:
         bufsize = 1
         pointspath = os.path.join("data", "points", "lap_pd02_r1_s2.npy")
         points = load_raw_data(path=pointspath)
-        initvector = np.array([0, 0, 0, -1, 0])
+        initvector = np.array([0, 0, 0])
         self.agent = Agent()
         self.agent.load(path=policypath)
         self.state = State(timestep=0.005)
