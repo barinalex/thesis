@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="18a7d627-6fa0-4aae-9874-33993ce2790d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/cnn.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/cnn.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/data.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/data.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/datamanagement/databalancing.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/databalancing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/mlp.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/mlp.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/datamanagement/datamanagement.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/datamanagement.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" afterDir="false" />
     </list>

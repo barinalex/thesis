@@ -175,7 +175,7 @@ def plottrainingdata():
 
 
 def plotobshistogram():
-    path = os.path.join(Dirs.configs, "cnn.yaml")
+    path = os.path.join(Dirs.configs, "mlp.yaml")
     config = loadconfig(path=path)
     config["test_size"] = 0
     train, test, ncnts = get_data(params=config)

@@ -90,12 +90,20 @@ def label_observations(obs: np.ndarray) -> np.ndarray:
     return make_labels(lin=vel, ang=ang)
 
 
-def make_sequential(obs: np.ndarray, length: int) -> (np.ndarray, np.ndarray):
+def make_sequential(obs: np.ndarray, length: int = 1, everyn: int = 1) -> (np.ndarray, np.ndarray):
     """
     :param obs: observations. numpy array (n, ...)
     :param length: sequence length
+    :param everyn: take a sequence element as a mean of every n values
     :return: array of observation sequences. numpy array (n, length, ...)
     """
+    # print(obs.shape)
+    # n = obs.shape[0] - obs.shape[0] % everyn
+    # obs = obs[:n]
+    # print(obs.shape)
+    # obs = obs.reshape((n//everyn, everyn, *obs.shape[1:]))
+    # print(obs.shape)
+    # exit()
     sobs = np.zeros((obs.shape[0], length, *obs.shape[1:]))
     for i in range(length):
         sobs[i][length - (i + 1): length] = obs[: i + 1]
@@ -128,7 +136,8 @@ def get_labeled_obs(data: dict, params: dict) -> (np.ndarray, np.ndarray):
     obs = preprocess_observations(params=params, obs=obs)
     labels = label_observations(obs=obs)
     if params["sequence_length"] > 1:
-        obs = make_sequential(obs=obs, length=params["sequence_length"])
+        everyn = params["everyn"] if "everyn" in params else 1
+        obs = make_sequential(obs=obs, length=params["sequence_length"], everyn=everyn)
     return obs[:-1], labels[1:]
 
 
