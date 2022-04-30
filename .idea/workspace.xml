@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="18a7d627-6fa0-4aae-9874-33993ce2790d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/default.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/mlp.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/mlp.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/datamanagement/datamanagement.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/datamanagement.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/simulation/simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simulation/simulator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,16 +42,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "last_opened_file_path": "/home/barinale/Documents/thesis/thesis/data/archive"
+    "last_opened_file_path": "/home/barinale/Documents/thesis/thesis/data/real/2022_04_30_14_34_06_977957"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/data/real/2022_04_30_14_34_06_977957" />
       <recent name="$PROJECT_DIR$/data/archive" />
       <recent name="$PROJECT_DIR$/controlscripts/policy" />
       <recent name="$PROJECT_DIR$/controlscripts/points" />
       <recent name="$PROJECT_DIR$/controlscripts" />
-      <recent name="$PROJECT_DIR$/controlmodule" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/data/experiments" />
@@ -101,27 +102,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="environment" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="thesis" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/environments" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/environments/environment.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="evaluation" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -143,7 +123,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="generator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="simulator" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -151,11 +131,32 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/trajectories" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/simulation" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/trajectories/generator.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/simulation/simulator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="training" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="thesis" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/models" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/models/training.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -167,10 +168,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.dataplotter" />
+        <item itemvalue="Python.simulator" />
+        <item itemvalue="Python.training" />
         <item itemvalue="Python.datamanagementutils" />
         <item itemvalue="Python.evaluation" />
-        <item itemvalue="Python.generator" />
-        <item itemvalue="Python.environment" />
       </list>
     </recent_temporary>
   </component>

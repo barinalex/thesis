@@ -115,8 +115,13 @@ def plotevals():
 
 
 def plottrainingdata():
-    # path = os.path.join(Dirs.realdata, "2022_04_30_14_34_06_977957")
-    # positions = load_raw_data(path=f"{path}/positions.npy")
+    path = os.path.join(Dirs.archive, "2022_04_30_14_34_06_977957")
+    positions = load_raw_data(path=f"{path}/positions.npy")
+    plt.figure()
+    plt.plot(positions[:, 0], positions[:, 1])
+    plt.show()
+    exit()
+
     # actions = load_raw_data(path=f"{path}/actions.npy")
     # linear = load_raw_data(path=f"{path}/linear.npy")
     # angular = load_raw_data(path=f"{path}/angular.npy")
@@ -226,8 +231,8 @@ def plotexperiment():
 
 
 if __name__ == "__main__":
-    plotobshistogram()
-    # plottrainingdata()
+    # plotobshistogram()
+    plottrainingdata()
     # exit()
     # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")

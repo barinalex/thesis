@@ -46,7 +46,7 @@ if __name__ == "__main__":
     from scripts.engine.identityeng import IdentityEng
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "mlp_2022_04_24_20_04_23_633569")
+    path = os.path.join(Dirs.models, "mlp_2022_04_30_20_48_34_286131")
     engine = MLPBased(path=path)
     # engine = TCNNBased(path=path, visualize=False)
     # engine = MujocoEngine(visualize=False)
@@ -62,24 +62,23 @@ if __name__ == "__main__":
     from scripts.datamanagement.datamanagementutils import load_raw_data
     config = loadconfig(f"{path}.yaml")
 
-    limit = 800
-    episodes = ["2022_04_10_11_57_44_706120", "2022_04_10_12_09_57_067617"]
+    limit = 1600
+    episodes = ["2022_04_30_14_18_54_538013", "2022_04_30_14_26_14_986823"]
 
     import matplotlib.pyplot as plt
     figure, axis = plt.subplots(1, len(episodes))
     for i, episode in enumerate(episodes):
         path = os.path.join(Dirs.realdata, episode)
-        positions = -load_raw_data(path=f"{path}/positions.npy")
+        positions = load_raw_data(path=f"{path}/positions.npy")
         actions = load_raw_data(path=f"{path}/actions.npy")
         linear = load_raw_data(path=f"{path}/linear.npy")
         angular = load_raw_data(path=f"{path}/angular.npy")
         sim = Simulator(iw=DataWrapper(actions=actions[:limit]), engine=engine)
         simpositions = sim.simulate()
         engine.reset()
-
-        # axis[i].legend(['gt', 'sim'])
+        axis[i].legend(['gt', 'sim'])
         axis[i].set_xlabel("meters")
         axis[0].set_ylabel("meters")
         axis[i].plot(positions[:limit, 0], positions[:limit, 1], color='b')
-        axis[i].plot(simpositions[:, 0], simpositions[:, 1], color='r')
+        # axis[i].plot(simpositions[:, 0], simpositions[:, 1], color='r')
     plt.show()

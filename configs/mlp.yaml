@@ -1,8 +1,8 @@
 "input_dim" : 5
 "output_dim" : 3
 "hidden_dim" : 64
-"n_hidden": 1
-"sequence_length": 3
+"n_hidden": 2
+"sequence_length": 1
 "everyn": 1
 "non_linearity" : "nn.ReLU6" #  nn.ReLU, nn.ReLU6, nn.LeakyReLU, nn.ELU, nn.Tanh
 "dropout": 0.
