@@ -36,7 +36,8 @@ class Controller:
         throttle, steering, autonomous = self.JOYStick.get_joystick_input()
         if autonomous:
             laststate = self.history[-1]
-            self.agent.updatevelocities(lin=laststate["lin"], ang=laststate["ang"])
+            lin, ang = np.copy(laststate["lin"]), np.copy(laststate["ang"])
+            self.agent.update(lin=lin, ang=ang)
             throttle, steering = self.agent.act()
         return throttle, steering
 

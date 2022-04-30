@@ -1,4 +1,3 @@
-from threading import Lock
 from agent import Agent
 from queuebuffer import QueueBuffer
 from waypointer import Waypointer
@@ -25,15 +24,12 @@ class AgentDriver:
         self.lin = np.zeros(3)
         self.ang = np.zeros(3)
         self.action = np.array([-1, 0])
-        self.actlock = Lock()
-        self.odomlock = Lock()
 
     def updatestate(self):
         """
         Given velocities from sensor update imaginary state
         """
-        with self.odomlock:
-            self.state.set(vel=self.lin, ang=self.ang)
+        self.state.set(vel=self.lin, ang=self.ang)
         self.state.update_pos()
         self.state.update_orn()
 
@@ -53,21 +49,19 @@ class AgentDriver:
         """
         :return: throttle, steering
         """
-        with self.actlock:
-            self.updatestate()
-            self.waypointer.update(pos=self.state.getpos()[:2])
-            obs = self.make_observation()
-            self.action = self.agent.act(observation=obs)
-        return self.action[0], self.action[1]
+        obs = self.make_observation()
+        self.action = self.agent.act(observation=obs)
+        return tuple(self.action)
 
-    def updatevelocities(self, lin: np.ndarray, ang: np.ndarray):
+    def update(self, lin: np.ndarray, ang: np.ndarray):
         """
         :param lin: linear velocity
         :param ang: angular velocity
         """
-        with self.odomlock:
-            self.lin = lin
-            self.ang = ang
+        self.lin = lin
+        self.ang = ang
+        self.updatestate()
+        self.waypointer.update(pos=self.state.getpos()[:2])
 
 
 if __name__ == "__main__":
