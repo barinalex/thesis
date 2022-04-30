@@ -9,7 +9,7 @@ import scripts.utils.linalg_utils as lau
 state = State(timestep=0.01)
 
 
-def noise2trajectory(n: int = 1e5, smoothness: int = 100, multiplier: int = 10) -> np.ndarray:
+def noise2trajectory(n: int = 1e5, smoothness: int = 100, multiplier: float = 10) -> np.ndarray:
     """
     :param n: number of waypoints per trajectory
     :param smoothness: the higher the number the smoother the trajectory
@@ -28,7 +28,7 @@ def noise2trajectory(n: int = 1e5, smoothness: int = 100, multiplier: int = 10) 
     return waypoints[1:, :2]
 
 
-def generateNtrajectories(n: int, n_wps: int = 1e5, smoothness: int = 100, multiplier: int = 10) -> np.ndarray:
+def generateNtrajectories(n: int, n_wps: int = 1e5, smoothness: int = 100, multiplier: float = 10) -> np.ndarray:
     """
     :param n: number of trajectories to generate
     :param n_wps: number of waypoints per trajectory
@@ -317,15 +317,15 @@ if __name__ == "__main__":
     from scripts.constants import Dirs
     from scripts.datamanagement.datamanagementutils import save_raw_data, load_raw_data
 
-    # wps = generate_infinity(points_distance=0.1, radius=1)
-    # wps = generate_lap(points_distance=0.1, radius=1, straight_length=2)
-    # wps = np.reshape(wps, (1, *wps.shape))
-    # print(wps.shape)
-    # plt.scatter(wps[0, :, 0], wps[0, :, 1])
-    # plt.show()
-    # path = os.path.join(Dirs.trajectories, f"lap_pd01_r1_s2")
-    # save_raw_data(data=wps, path=path)
-    # exit()
+    # wps = generate_infinity(points_distance=0.2, radius=1)
+    wps = generate_lap(points_distance=0.2, radius=1, straight_length=2)
+    wps = np.reshape(wps, (1, *wps.shape))
+    print(wps.shape)
+    plt.scatter(wps[0, :, 0], wps[0, :, 1])
+    plt.show()
+    path = os.path.join(Dirs.trajectories, f"lap_pd02_r1_s2")
+    save_raw_data(data=wps, path=path)
+    exit()
     n = 10
     n_wps = 500
     smth = 50
@@ -340,8 +340,8 @@ if __name__ == "__main__":
     trajs = saveNtrajs()
     # trajs = load_raw_data(path=f"{path}.npy")
 
-    for wps in trajs:
-        plt.plot(wps[:, 0], wps[:, 1])
+    for wps in trajs[:20]:
+        plt.plot(wps[:100, 0], wps[:100, 1])
         plt.xlabel("meters")
         plt.ylabel("meters")
     plt.show()

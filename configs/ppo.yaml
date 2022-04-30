@@ -1,4 +1,4 @@
-callback_freq: 20000
+callback_freq: 30000
 clip_range: 0.2
 ent_coef: 0.0
 gamma: 0.998

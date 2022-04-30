@@ -20,7 +20,7 @@ class SimplexNoise(ActionNoise):
                          for i in range(self.dim)], dtype=np.float64)
         noise *= self.multiplier
         if self.clip:
-            noise = np.clip(noise, -1, 1)
+            noise = np.clip(noise, 1, 1)
         return noise.astype(dtype=np.float64)
 
     def __repr__(self) -> str:

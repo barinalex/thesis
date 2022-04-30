@@ -35,7 +35,7 @@ class Environment(Env):
         self.action_space = Box(low=-np.ones(2, dtype=np.float32),
                                 high=np.ones(2, dtype=np.float32),
                                 dtype=np.float32)
-        obsmax = np.ones((self.n_observations, 5), dtype=np.float32)
+        obsmax = np.ones((self.n_observations, 3), dtype=np.float32)
         obsmax[:, :3] *= 10
         wpsmax = np.ones((self.n_waypoints, 2), dtype=np.float32).flatten() * 5
         self.observation_space = Box(low=np.hstack((-obsmax.flatten(), -wpsmax)),
@@ -45,7 +45,7 @@ class Environment(Env):
         self.lastdeviation = 0
         self.wpclosed = False
         self.stepsleft = self.maxsteps
-        initvector = np.array([0, 0, 0, -1, 0])
+        initvector = np.zeros(3)
         self.buffer = QueueBuffer(size=self.n_observations, initvector=initvector)
         self.initialize_waypoints_visualization()
 
@@ -131,14 +131,13 @@ class Environment(Env):
         """
         return np.linalg.norm(self.waypointer.next_unvisited_point() - self.engine.getpos()[:2])
 
-    def make_observation(self, action) -> np.ndarray:
+    def make_observation(self) -> np.ndarray:
         """
-        :param action: last taken action. [throttle, turn]
         :return: agent's state observation
         """
         lin = self.engine.getlin()[:2]
         ang = self.engine.getang()[2]
-        obs = np.hstack((lin, ang, action[0], action[1]))
+        obs = np.hstack((lin, ang))
         self.buffer.add(element=obs)
         state = self.buffer.get_vector()
         wps = self.waypointer.get_waypoints_vector()
@@ -192,7 +191,7 @@ class Environment(Env):
         self.engine.step(throttle=action[0], turn=action[1])
         self.updatetrajectory()
         # print(self.waypointer.next_unvisited_point(), self.engine.getpos())
-        observation = self.make_observation(action=action)
+        observation = self.make_observation()
         reward = self.compute_reward(action=action)
         done = self.isdone()
         # if done:
@@ -211,7 +210,7 @@ class Environment(Env):
         self.stepsleft = self.maxsteps
         self.lastnorm = self.computenormtothegoal()
         self.lastdeviation = 0
-        return self.make_observation(action=[-1, 0])
+        return self.make_observation()
 
 
 if __name__ == "__main__":
@@ -222,11 +221,12 @@ if __name__ == "__main__":
     from scripts.engine.mujocoengine import MujocoEngine
     iw = JoystickInputWrapper()
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    path = os.path.join(Dirs.models, "mlp_2022_04_24_20_04_23_633569")
+    # path = os.path.join(Dirs.models, "mlp_2022_04_24_20_04_23_633569")
     # engine = TCNNBased(path=path, visualize=True)
     engine = MujocoEngine(visualize=True)
     # engine = MLPBased(path=path, visualize=True)
-    env = Environment(config=config, engine=engine)
+    config["trajectories"] = "lap_pd02_r1_s2.npy"
+    env = Environment(config=config, engine=engine, random=True)
     interrupt = False
     done = False
     sumrewards = 0

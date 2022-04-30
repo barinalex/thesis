@@ -61,13 +61,13 @@ class PolicyTrainer:
         engine = TCNNBased(path=path, visualize=False)
         # engine = MujocoEngine()
         config = self.config.copy()
-        # config["trajectories"] = config["evaltrajectories"]
+        config["trajectories"] = config["evaltrajectories"]
         env = Environment(config, engine)
 
         return EvalCallback(env,
                             log_path=Dirs.policy,
                             eval_freq=eval_freq,
-                            n_eval_episodes=5,
+                            n_eval_episodes=10,
                             deterministic=True,
                             render=False)
 
