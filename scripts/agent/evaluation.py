@@ -90,4 +90,3 @@ if __name__ == "__main__":
     # mujoco_rws = evaluate_mujoco_based(n=1)
     # print(mujoco_rws)
     compare_tcnn2mujoco_based(n=1)
-    
