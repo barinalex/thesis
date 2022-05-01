@@ -115,10 +115,10 @@ def plotevals():
 
 
 def plottrainingdata():
-    path = os.path.join(Dirs.archive, "2022_04_30_14_34_06_977957")
+    path = os.path.join(Dirs.realdata, "2022_05_01_11_36_57_768983")
     positions = load_raw_data(path=f"{path}/positions.npy")
     plt.figure()
-    plt.plot(positions[:, 0], positions[:, 1])
+    plt.plot(positions[:2000, 0], positions[:2000, 1])
     plt.show()
     exit()
 

@@ -15,7 +15,7 @@ import time
 import copy
 
 
-DATA_DIR = "/data/real"
+DATA_DIR = "/home/barinale/Documents/thesis/thesis/data/real"
 
 
 def create_directories(path: str):

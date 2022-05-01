@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="18a7d627-6fa0-4aae-9874-33993ce2790d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/catkin_ws/src/datareader/src/bag2npy.py" beforeDir="false" afterPath="$PROJECT_DIR$/catkin_ws/src/datareader/src/bag2npy.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/default.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/mlp.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/mlp.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/engine/identityeng.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/engine/identityeng.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/simulation/simulator.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/simulation/simulator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,13 +43,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "last_opened_file_path": "/home/barinale/Documents/thesis/thesis/data/real/2022_04_30_14_34_06_977957"
+    "last_opened_file_path": "/home/barinale/Documents/thesis/thesis/data/archive"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/data/real/2022_04_30_14_34_06_977957" />
       <recent name="$PROJECT_DIR$/data/archive" />
+      <recent name="$PROJECT_DIR$/data/real/2022_04_30_14_34_06_977957" />
       <recent name="$PROJECT_DIR$/controlscripts/policy" />
       <recent name="$PROJECT_DIR$/controlscripts/points" />
       <recent name="$PROJECT_DIR$/controlscripts" />
@@ -59,7 +60,7 @@
       <recent name="$PROJECT_DIR$/scripts/models/neuralnetworks" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.dataplotter">
+  <component name="RunManager" selected="Python.simulator">
     <configuration name="datamanagementutils" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -167,10 +168,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.dataplotter" />
         <item itemvalue="Python.simulator" />
-        <item itemvalue="Python.training" />
         <item itemvalue="Python.datamanagementutils" />
+        <item itemvalue="Python.dataplotter" />
+        <item itemvalue="Python.training" />
         <item itemvalue="Python.evaluation" />
       </list>
     </recent_temporary>
