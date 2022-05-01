@@ -13,8 +13,8 @@
 "batchsize" : 128
 "num_epochs": 80
 "balance": True
-"filter": "" # pastmean, smooth
-"pastmean_k": 10
+"filter": "pastmean" # pastmean, smooth
+"pastmean_k": 5
 "smoothness": 0.2 # lower is smoother
 "normalizelbl": True
 "normcnst": []

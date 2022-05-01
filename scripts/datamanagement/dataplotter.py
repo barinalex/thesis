@@ -78,11 +78,11 @@ def plothistograms(data: np.ndarray):
 
 def plotevals():
 
-    path = os.path.join(Dirs.models, "mlp_2022_04_24_19_56_37_855601.evals" + ".npy")
+    path = os.path.join(Dirs.models, "mlp_2022_05_01_12_25_58_575886.evals" + ".npy")
     mlpevals = load_raw_data(path=path)
-    path = os.path.join(Dirs.models, "mlp_2022_04_24_20_04_23_633569.evals" + ".npy")
+    path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419.evals" + ".npy")
     hmlpevals = load_raw_data(path=path)
-    path = os.path.join(Dirs.models, "tcnn_2022_04_24_19_54_44_249977.evals" + ".npy")
+    path = os.path.join(Dirs.models, "mlp_2022_05_01_12_27_38_690971.evals" + ".npy")
     cnnevals = load_raw_data(path=path)
 
     epochs = np.arange(mlpevals.shape[0])
@@ -96,7 +96,7 @@ def plotevals():
     axis[0].legend(['train loss', 'test loss'])
 
     epochs = np.arange(cnnevals.shape[0])
-    axis[1].set_title("TCNN")
+    axis[1].set_title("MLP, k=5 pastmean")
     axis[1].set_xlabel("epochs")
     # axis[1].set_ylabel("loss")
     axis[1].plot(epochs, cnnevals[:, 0], color='b')
@@ -105,7 +105,7 @@ def plotevals():
 
     epochs = np.arange(hmlpevals.shape[0])
 
-    axis[2].set_title("MLP with history")
+    axis[2].set_title("MLP, k=5 pastmean, steering balance")
     axis[2].set_xlabel("epochs")
     # axis[2].set_ylabel("loss")
     axis[2].plot(epochs, hmlpevals[:, 0], color='b')
@@ -232,9 +232,9 @@ def plotexperiment():
 
 if __name__ == "__main__":
     # plotobshistogram()
-    plottrainingdata()
+    # plottrainingdata()
     # exit()
-    # plotevals()
+    plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
     # plot_policy_learning_curve(maxtimesteps=1000000)
     # plotexperiment()

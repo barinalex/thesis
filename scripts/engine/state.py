@@ -1,3 +1,5 @@
+import os.path
+
 import numpy as np
 import scripts.utils.linalg_utils as lau
 from scripts.datamanagement.datamanagement import loadconfig
@@ -7,7 +9,8 @@ import quaternion
 
 class State:
     def __init__(self, timestep: float = None):
-        config = loadconfig(path=Dirs.configs + "/default.yaml")
+        cpath = os.path.join(Dirs.configs, "default.yaml")
+        config = loadconfig(path=cpath)
         self.timestep = timestep if timestep else config["timeinterval"]
         self.pos = np.array([0, 0, 0.05])
         self.orn = quaternion.quaternion(1, 0, 0, 0)

@@ -46,8 +46,8 @@ if __name__ == "__main__":
     from scripts.engine.identityeng import IdentityEng
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "mlp_2022_04_30_20_48_34_286131")
-    # engine = MLPBased(path=path)
+    path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
+    engine = MLPBased(path=path)
     # engine = TCNNBased(path=path, visualize=False)
     # engine = MujocoEngine(visualize=False)
 
@@ -61,14 +61,14 @@ if __name__ == "__main__":
     from scripts.datamanagement.datamanagementutils import load_raw_data
     config = loadconfig(f"{path}.yaml")
 
-    limit = 2000
-    episodes = ["2022_05_01_12_14_00_452235", "2022_05_01_12_10_36_731951"]
+    limit = 1000
+    episodes = ["2022_05_01_11_51_35_858887", "2022_05_01_11_57_36_659432"]
 
     import matplotlib.pyplot as plt
     figure, axis = plt.subplots(1, len(episodes))
     for i, episode in enumerate(episodes):
         path = os.path.join(Dirs.realdata, episode)
-        engine = IdentityEng(datadir=episode)
+        # engine = IdentityEng(datadir=episode)
         positions = -load_raw_data(path=f"{path}/positions.npy")
         actions = load_raw_data(path=f"{path}/actions.npy")
         linear = load_raw_data(path=f"{path}/linear.npy")
