@@ -99,7 +99,10 @@ class State:
         :param dang: angular velocity change between t+1 and t timesteps, shape (3,)
         """
         self.vel += dvel
+        self.vel[0] = max(self.vel[0], -1)
+        self.vel[1] = np.clip(self.vel[1], -5, 5)
         self.ang += dang
+        self.ang[2] = np.clip(self.ang[2], -6, 6)
         # self.vel = np.clip(self.vel, -1, self.vellimit)
         # self.ang = np.clip(self.ang, -self.anglimit, self.anglimit)
 

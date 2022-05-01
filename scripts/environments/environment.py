@@ -221,10 +221,10 @@ if __name__ == "__main__":
     from scripts.engine.mujocoengine import MujocoEngine
     iw = JoystickInputWrapper()
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    path = os.path.join(Dirs.models, "tcnn_2022_05_01_13_01_05_602503")
-    engine = TCNNBased(path=path, visualize=True)
+    path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
+    # engine = TCNNBased(path=path, visualize=True)
     # engine = MujocoEngine(visualize=True)
-    # engine = MLPBased(path=path, visualize=True)
+    engine = MLPBased(path=path, visualize=True)
     # config["trajectories"] = "lap_pd02_r1_s2.npy"
     env = Environment(config=config, engine=engine, random=True)
     interrupt = False
@@ -234,5 +234,5 @@ if __name__ == "__main__":
         throttle, turn, interrupt = iw.getinput()
         obs, reward, done, _ = env.step(action=np.asarray([throttle, turn]))
         sumrewards += reward
-        print(env.engine.getlin())
+        print(throttle, turn, env.engine.getlin())
     print(sumrewards)
