@@ -35,5 +35,5 @@ def traincnn():
 
 
 if __name__ == "__main__":
-    trainmlp()
-    # traincnn()
+    # trainmlp()
+    traincnn()

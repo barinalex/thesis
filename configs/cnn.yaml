@@ -12,10 +12,10 @@
 "weight_decay" : 0.0003
 "test_size" : 0.2
 "batchsize" : 256
-"num_epochs": 30
+"num_epochs": 100
 "balance": True
-"filter": "" # pastmean, smooth
-"pastmean_k": 10
+"filter": "pastmean" # pastmean, smooth
+"pastmean_k": 5
 "smoothness": 0.2 # lower is smoother
 "normalizelbl": True
 "normcnst": []
