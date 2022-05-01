@@ -46,10 +46,10 @@ if __name__ == "__main__":
     from scripts.engine.identityeng import IdentityEng
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "mlp_2022_05_01_12_27_38_690971")
-    # engine = MLPBased(path=path)
+    path = os.path.join(Dirs.models, "mlp_ft_2022_05_01_17_10_28_402240")
+    engine = MLPBased(path=path)
     # engine = TCNNBased(path=path, visualize=False)
-    engine = MujocoEngine(visualize=False)
+    # engine = MujocoEngine(visualize=False)
 
 
     # sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     from scripts.datamanagement.datamanagementutils import load_raw_data
     config = loadconfig(f"{path}.yaml")
 
-    limit = 500
+    limit = 1000
     episodes = ["2022_05_01_11_57_36_659432", "2022_05_01_12_00_50_750831",
                 "2022_05_01_12_10_36_731951", "2022_05_01_12_14_00_452235"]
 

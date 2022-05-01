@@ -34,6 +34,12 @@ def traincnn():
     saveconfig(path=cfgpath, config=config)
 
 
+def finetunecnn():
+    """
+    Fine tune on real data tcnn trained on sim data
+    """
+
+
 if __name__ == "__main__":
-    # trainmlp()
-    traincnn()
+    trainmlp()
+    # traincnn()

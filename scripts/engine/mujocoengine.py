@@ -147,7 +147,7 @@ if __name__ == "__main__":
     #     time.sleep(1)
     for i in range(1):
         print(i)
-        eng.gatherdata(n_steps=10000)
+        eng.gatherdata(n_steps=5000)
         eng.reset()
     exit()
     interrupt = False

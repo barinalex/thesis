@@ -12,7 +12,7 @@
 "test_size" : 0.2
 "batchsize" : 128
 "num_epochs": 80
-"balance": False
+"balance": True
 "filter": "pastmean" # pastmean, smooth
 "pastmean_k": 5
 "smoothness": 0.2 # lower is smoother
