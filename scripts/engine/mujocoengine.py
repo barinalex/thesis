@@ -101,24 +101,23 @@ class MujocoEngine(Engine):
         """
         :param n_steps: number of timesteps per episode
         """
-        # from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
-        # jw = JoystickInputWrapper()
+        from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
+        jw = JoystickInputWrapper()
         position = np.zeros((n_steps, 3))
         orientation = np.zeros((n_steps, 4))
         linear = np.zeros((n_steps, 3))
         angular = np.zeros((n_steps, 3))
         actions = np.zeros((n_steps, 2))
 
-        throtlegenerator = SimplexNoise(dim=1, smoothness=300, multiplier=2)
-        turngenerator = SimplexNoise(dim=1, smoothness=350, multiplier=2)
-        start = time.time()
+        throtlegenerator = SimplexNoise(dim=1, smoothness=50, multiplier=2)
+        turngenerator = SimplexNoise(dim=1, smoothness=50, multiplier=2)
         for i in range(n_steps):
-            throttle = float(throtlegenerator())
-            throttle = np.random.choice([throttle, -1], p=[0.9, 0.1])
-            turn = float(turngenerator())
-            # action, x = jw.getinput()
-            # if x:
-            #     return
+            # throttle = float(throtlegenerator())
+            # throttle = np.random.choice([throttle, -1], p=[0.99, 0.01])
+            # turn = float(turngenerator())
+            throttle, turn, x = jw.getinput()
+            if x:
+                return
             position[i, ] = self.get_pos()
             orientation[i, ] = self.get_orn()
             linear[i, ] = self.get_lin()
@@ -138,18 +137,19 @@ class MujocoEngine(Engine):
 
 
 if __name__ == "__main__":
-    from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
-    iw = JoystickInputWrapper()
+    # from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
+    # iw = JoystickInputWrapper()
     eng = MujocoEngine(visualize=True)
     # for i in range(10):
     #     eng.movecar(pos=np.array([i, 0]), euler=np.array([0,0,i]))
     #     print(eng.getpos(), eng.getorn())
     #     eng.viewer.render()
     #     time.sleep(1)
-    # for i in range(5):
-    #     eng.gatherdata(n_steps=2000)
-    #     eng.reset()
-    # exit()
+    for i in range(1):
+        print(i)
+        eng.gatherdata(n_steps=10000)
+        eng.reset()
+    exit()
     interrupt = False
     while not interrupt:
         throttle, turn, interrupt = iw.getinput()

@@ -193,12 +193,11 @@ def get_data(params: dict) -> (dict, dict, list):
     :return: tuple of dicts (train data, test data, train set normalization constants)
     """
     train, test = {}, {}
-    for edir in glob.glob(pathname=os.path.join(Dirs.realdata, "*")):
+    for edir in glob.glob(pathname=os.path.join(Dirs.simdata, "*")):
         tr, ts = get_gathering_data_episode(params=params, edir=edir)
         train = concatenate_dicts(d1=train, d2=tr)
         test = concatenate_dicts(d1=test, d2=ts)
-    train[DT.labels], test[DT.labels], normconst = normalizesets(train=train[DT.labels],
-                                                                 test=test[DT.labels])
+    train[DT.labels], test[DT.labels], normconst = normalizesets(train=train[DT.labels], test=test[DT.labels])
     train[DT.obs], train[DT.labels] = reshape_batch_first(obs=train[DT.obs],
                                                           labels=train[DT.labels],
                                                           batchsize=params["batchsize"])
