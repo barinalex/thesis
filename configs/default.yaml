@@ -1,5 +1,5 @@
 "timeinterval" : 0.01
-"limit": False
+"limit": True
 "linxclip": [-1, 3.5]
 "linyclip": [-3.5, 3.5]
 "angclip": [-6.5, 6.5]

@@ -11,8 +11,8 @@
 "weight_decay" : 0.00
 "test_size" : 0.2
 "batchsize" : 128
-"num_epochs": 80
-"balance": True
+"num_epochs": 40
+"balance": False
 "filter": "pastmean" # pastmean, smooth
 "pastmean_k": 5
 "smoothness": 0.2 # lower is smoother

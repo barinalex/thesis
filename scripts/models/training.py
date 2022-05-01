@@ -34,12 +34,23 @@ def traincnn():
     saveconfig(path=cfgpath, config=config)
 
 
-def finetunecnn():
+def finetunemlp():
     """
-    Fine tune on real data tcnn trained on sim data
+    Fine tune on real data MLP trained on sim data
     """
+    path = os.path.join(Dirs.models, "mlp_ft_2022_05_01_17_25_26_298465")
+    model = MLPModel()
+    model.load(path=path)
+    path = os.path.join(Dirs.configs, "mlp.yaml")
+    config = loadconfig(path=path)
+    timestamp = gettimestamp()
+    savepath = os.path.join(Dirs.models, f"mlp_ft_{timestamp}")
+    cfgpath = os.path.join(Dirs.models, f"mlp_ft_{timestamp}.yaml")
+    model.train(config=config, savepath=savepath, finetune=True)
+    saveconfig(path=cfgpath, config=config)
 
 
 if __name__ == "__main__":
-    trainmlp()
+    # trainmlp()
     # traincnn()
+    finetunemlp()

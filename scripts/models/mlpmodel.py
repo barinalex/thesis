@@ -16,14 +16,16 @@ class MLPModel(Model):
         self.model = None
         self.config = None
 
-    def train(self, config: dict, savepath: str = None):
+    def train(self, config: dict, savepath: str = None, finetune: bool = False):
         """
         Train new model and save parameters
 
         :param config: training configuration
         :param savepath: path to an existing directory with file name
+        :param finetune: if True do not initialize new model
         """
-        self.model = MLP(config=config)
+        if not finetune:
+            self.model = MLP(config=config)
         train, test, normcnst = get_data(params=config)
         config["normcnst"] = normcnst
         trainer = Trainer(train=train, test=test, model=self.model)
