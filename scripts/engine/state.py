@@ -10,12 +10,16 @@ import quaternion
 class State:
     def __init__(self, timestep: float = None):
         cpath = os.path.join(Dirs.configs, "default.yaml")
-        config = loadconfig(path=cpath)
-        self.timestep = timestep if timestep else config["timeinterval"]
+        self.config = loadconfig(path=cpath)
+        self.timestep = timestep if timestep else self.config["timeinterval"]
         self.pos = np.array([0, 0, 0.05])
         self.orn = quaternion.quaternion(1, 0, 0, 0)
         self.vel = np.zeros(3)
         self.ang = np.zeros(3)
+        self.limit = self.config["limit"]
+        self.linxclip = self.config["linxclip"]
+        self.linyclip = self.config["linyclip"]
+        self.angclip = self.config["angclip"]
 
     def reset(self):
         """set all to zero"""
@@ -99,10 +103,11 @@ class State:
         :param dang: angular velocity change between t+1 and t timesteps, shape (3,)
         """
         self.vel += dvel
-        self.vel[0] = max(self.vel[0], -1)
-        self.vel[1] = np.clip(self.vel[1], -5, 5)
         self.ang += dang
-        self.ang[2] = np.clip(self.ang[2], -6, 6)
+        if self.limit:
+            self.vel[0] = np.clip(self.vel[0], self.linxclip[0], self.linxclip[1])
+            self.vel[1] = np.clip(self.vel[1], self.linyclip[0], self.linyclip[1])
+            self.ang[2] = np.clip(self.ang[2], self.angclip[0], self.angclip[1])
         # self.vel = np.clip(self.vel, -1, self.vellimit)
         # self.ang = np.clip(self.ang, -self.anglimit, self.anglimit)
 

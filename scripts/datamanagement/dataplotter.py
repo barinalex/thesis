@@ -115,12 +115,12 @@ def plotevals():
 
 
 def plottrainingdata():
-    path = os.path.join(Dirs.realdata, "2022_05_01_11_36_57_768983")
-    positions = load_raw_data(path=f"{path}/positions.npy")
-    plt.figure()
-    plt.plot(positions[:2000, 0], positions[:2000, 1])
-    plt.show()
-    exit()
+    # path = os.path.join(Dirs.realdata, "2022_05_01_11_36_57_768983")
+    # positions = load_raw_data(path=f"{path}/positions.npy")
+    # plt.figure()
+    # plt.plot(positions[:2000, 0], positions[:2000, 1])
+    # plt.show()
+    # exit()
 
     # actions = load_raw_data(path=f"{path}/actions.npy")
     # linear = load_raw_data(path=f"{path}/linear.npy")
@@ -136,7 +136,7 @@ def plottrainingdata():
     # from scripts.datamanagement.datamanagement import make_labels
     # from scripts.datamanagement.datamanagementutils import reshapeto2d
 
-    path = os.path.join(Dirs.configs, "cnn.yaml")
+    path = os.path.join(Dirs.configs, "mlp.yaml")
     config = loadconfig(path=path)
     k=100000
 
@@ -232,8 +232,8 @@ def plotexperiment():
 
 if __name__ == "__main__":
     # plotobshistogram()
-    # plottrainingdata()
-    # exit()
+    plottrainingdata()
+    exit()
     plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
     # plot_policy_learning_curve(maxtimesteps=1000000)
