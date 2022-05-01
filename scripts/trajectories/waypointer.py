@@ -30,6 +30,7 @@ class Waypointer:
         with mutex:
             self.nextwp = 0
             self.next = (self.next + 1) % self.points.shape[0]
+            print("TRAJECTORY ID:", self.next)
             self.waypoints = self.points2trajectory()
 
     def gettrajectoryindex(self):
