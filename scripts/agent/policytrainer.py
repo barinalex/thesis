@@ -57,9 +57,10 @@ class PolicyTrainer:
         :return: stable-baseline3 callback instance
         """
         eval_freq = int(self.config['callback_freq']) # * self.config['n_cpu'])
-        path = os.path.join(Dirs.models, "tcnn_2022_04_24_19_54_44_249977")
-        engine = TCNNBased(path=path, visualize=False)
+        path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
+        # engine = TCNNBased(path=path, visualize=False)
         # engine = MujocoEngine()
+        engine = MLPBased(path=path)
         config = self.config.copy()
         config["trajectories"] = config["evaltrajectories"]
         env = Environment(config, engine)
@@ -101,6 +102,7 @@ class PolicyTrainer:
 if __name__ == "__main__":
     from scripts.engine.mujocoengine import MujocoEngine
     from scripts.engine.tcnnbased import TCNNBased
+    from scripts.engine.mlpbased import MLPBased
     from scripts.datamanagement.datamanagement import loadconfig
     from scripts.datamanagement.pathmanagement import gettimestamp
     import os
@@ -108,8 +110,9 @@ if __name__ == "__main__":
     config = loadconfig(path=path)
     path = os.path.join(Dirs.configs, "env.yaml")
     config.update(loadconfig(path=path))
-    path = os.path.join(Dirs.models, "tcnn_2022_04_24_19_54_44_249977")
-    engine = TCNNBased(path=path)
+    path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
+    # engine = TCNNBased(path=path)
+    engine = MLPBased(path=path)
     # engine = MujocoEngine()
     trainer = PolicyTrainer(engine=engine, config=config)
     trainer.train()
