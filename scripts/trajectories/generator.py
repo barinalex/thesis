@@ -318,18 +318,18 @@ if __name__ == "__main__":
     from scripts.datamanagement.datamanagementutils import save_raw_data, load_raw_data
 
     # wps = generate_infinity(points_distance=0.2, radius=1)
-    wps = generate_lap(points_distance=0.15, radius=1, straight_length=2)
-    wps = np.reshape(wps, (1, *wps.shape))
-    print(wps.shape)
-    plt.scatter(wps[0, :, 0], wps[0, :, 1])
-    plt.show()
-    path = os.path.join(Dirs.trajectories, f"lap_pd015_r1_s2")
-    save_raw_data(data=wps, path=path)
-    exit()
-    n = 10
+    # wps = generate_lap(points_distance=0.15, radius=1, straight_length=2)
+    # wps = np.reshape(wps, (1, *wps.shape))
+    # print(wps.shape)
+    # plt.scatter(wps[0, :, 0], wps[0, :, 1])
+    # plt.show()
+    # path = os.path.join(Dirs.trajectories, f"lap_pd015_r1_s2")
+    # save_raw_data(data=wps, path=path)
+    # exit()
+    n = 1000
     n_wps = 500
     smth = 50
-    mplr = 2
+    mplr = 10
     path = os.path.join(Dirs.trajectories, f"n{n}_wps{n_wps}_smth{smth}_mplr{mplr}")
 
     def saveNtrajs():
@@ -337,8 +337,8 @@ if __name__ == "__main__":
         save_raw_data(data=trajs, path=path)
         return trajs
 
-    trajs = saveNtrajs()
-    # trajs = load_raw_data(path=f"{path}.npy")
+    # trajs = saveNtrajs()
+    trajs = load_raw_data(path=f"{path}.npy")
 
     for wps in trajs[:20]:
         plt.plot(wps[:100, 0], wps[:100, 1])

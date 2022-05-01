@@ -123,7 +123,13 @@ class Environment(Env):
             to a state s_t+1 with an action a_t
         """
         reward = 1 if self.wpclosed else 0
-        return reward
+        # pos = self.engine.getpos()[:2]
+        # deviation = self.waypointer.distance_to_trajectory(pos=pos)
+        # a, b, g = self.get_driving_angles()
+        # dpenalty = deviation * 0.05
+        # apenalty = g * 0.05
+        # print(reward, dpenalty, apenalty, reward - dpenalty - apenalty)
+        return reward #- dpenalty - apenalty
 
     def computenormtothegoal(self):
         """
@@ -226,13 +232,13 @@ if __name__ == "__main__":
     # engine = MujocoEngine(visualize=True)
     engine = MLPBased(path=path, visualize=True)
     # config["trajectories"] = "lap_pd02_r1_s2.npy"
-    env = Environment(config=config, engine=engine, random=True)
+    env = Environment(config=config, engine=engine, random=False)
     interrupt = False
     done = False
     sumrewards = 0
-    while not interrupt:
+    while not done and not interrupt:
         throttle, turn, interrupt = iw.getinput()
         obs, reward, done, _ = env.step(action=np.asarray([throttle, turn]))
         sumrewards += reward
-        print(throttle, turn, env.engine.getlin())
+        # print(throttle, turn, env.engine.getlin())
     print(sumrewards)
