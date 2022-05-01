@@ -46,10 +46,10 @@ if __name__ == "__main__":
     from scripts.engine.identityeng import IdentityEng
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "tcnn_2022_05_01_13_01_05_602503")
+    path = os.path.join(Dirs.models, "tcnn_2022_05_01_12_58_35_112302")
     # engine = MLPBased(path=path)
-    engine = TCNNBased(path=path, visualize=False)
-    # engine = MujocoEngine(visualize=False)
+    # engine = TCNNBased(path=path, visualize=False)
+    engine = MujocoEngine(visualize=False)
 
 
     # sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
@@ -61,8 +61,8 @@ if __name__ == "__main__":
     from scripts.datamanagement.datamanagementutils import load_raw_data
     config = loadconfig(f"{path}.yaml")
 
-    limit = 1000
-    episodes = ["2022_05_01_11_51_35_858887", "2022_05_01_11_57_36_659432"]
+    limit = 500
+    episodes = ["2022_05_01_12_10_36_731951", "2022_05_01_12_14_00_452235", "2022_05_01_11_57_36_659432"]
 
     import matplotlib.pyplot as plt
     figure, axis = plt.subplots(1, len(episodes))
