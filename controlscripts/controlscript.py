@@ -4,10 +4,11 @@ import numpy as np
 from joycontroller import JoyController
 from rsreader import RSReader
 from pwmdriver import PWMDriver
-from utils import loadconfig, save2json, gettimestamp
+from utils import loadconfig, save2json, gettimestamp, save_raw_data
 import logging
 import sys
 import os.path
+import copy
 from agentdriver import AgentDriver
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
@@ -24,6 +25,10 @@ class Controller:
         self.agent = AgentDriver()
         self.history = []
         logging.info(f"Controller initialized")
+        logging.info(f"Initialize agent's policy by running it few times")
+        for _ in range(5):
+            self.agent.act()
+        logging.info(f"Agent is prepared")
 
     def __enter__(self):
         return self
@@ -51,8 +56,8 @@ class Controller:
         :param steering: joystick action [-1, 1]
         :return: motor actions (throttle, steering)
         """
-        throttle = 0.5 * ((throttle + 1) / 2) * self.config["motor_scalar"]
-        mthrottle = np.clip(throttle + self.config["throttle_offset"], 0.5, 1)
+        throttle = 0.5 * throttle * self.config["motor_scalar"] + self.config["throttle_offset"]
+        mthrottle = np.clip(throttle, 0.5, 1)
         msteering = (steering / 2) + 0.5
         return mthrottle, msteering
 
@@ -64,19 +69,37 @@ class Controller:
         logging.info("Starting the control loop")
         while True:
             start = time.time()
-            self.history.append(self.rsreader.update())
+            statedict = self.rsreader.update()
+            logging.info(f"state dict: {statedict}")
+            self.history.append(copy.deepcopy(statedict))
             throttle, steering = self.get_actions()
             mthrottle, msteering = self.actions2motor(throttle=throttle, steering=steering)
+            logging.info(f"motor throttle: {mthrottle}; motor steering: {msteering}")
             self.history[-1]["act"] = [throttle, steering]
             self.history[-1]["servos"] = [mthrottle, msteering]
             self.driver.write_servos(actions=[mthrottle, msteering])
             itertime = time.time() - start
             time.sleep(max(0, self.config["update_period"] - itertime))
 
+    def list2dict(self) -> dict:
+        """
+        Convert list of dicts to dict of lists
+        """
+        keys, items = self.history[0].items()
+        n = len(self.history)
+        data = {key: np.zeros((n, *item.shape)) for key, item in zip(keys, items)}
+        for i, entry in enumerate(self.history):
+            for key, item in entry.items():
+                data[key][i] = item
+        return data
+
     def __exit__(self, exc_type, exc_value, traceback):
         self.driver.stop()
         path = os.path.join("data", gettimestamp())
-        save2json(path=path, data=self.history)
+        data = self.list2dict()
+        for key, item in data.items():
+            save_raw_data(data=item, path=os.path.join(path, key))
+        # save2json(path=path, data=self.history)
             
 
 if __name__ == "__main__":

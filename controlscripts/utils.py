@@ -20,6 +20,19 @@ def save2json(path: str, data):
         pass
 
 
+def save_raw_data(data: np.ndarray, path: str):
+    """
+    save numpy array to a file. exit on fail
+
+    :param data: numpy array
+    :param path: where to save
+    """
+    try:
+        np.save(file=path, arr=data)
+    except Exception as e:
+        sys.exit(f"ERROR WHILE SAVING DATA: {e}")
+
+
 def load_raw_data(path: str) -> np.ndarray:
     """
     load data from a file. exit on fail
