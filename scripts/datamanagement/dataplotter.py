@@ -220,24 +220,33 @@ def plot_policy_learning_curve(maxtimesteps: int = None):
 
 
 def plotexperiment():
-    path = os.path.join(Dirs.experiments, "2022_04_30_12_45_43_220823")
-    data = readjson(path=path)
-    positions = [entry["pos"] for entry in data]
-    positions = np.asarray(positions)
+    path = os.path.join(Dirs.experiments, "2022_05_02_09_18_13_218465")
+    history = {"pos": [],
+               "orn": [],
+               "euler": [],
+               "lin": [],
+               "ang": [],
+               "timestamp": [],
+               "updated": [],
+               "act": [],
+               "servos": []}
+    for key in history.keys():
+        history[key] = load_raw_data(path=os.path.join(path, key + ".npy"))
+        print(key, history[key].shape)
     plt.figure()
-    plt.plot(positions[:0], positions[:1])
+    plt.plot(history["timestamp"], history["servos"][:, 1])
     plt.show()
 
 
 
 if __name__ == "__main__":
     # plotobshistogram()
-    plottrainingdata()
-    exit()
-    plotevals()
+    # plottrainingdata()
+    # exit()
+    # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
     # plot_policy_learning_curve(maxtimesteps=1000000)
-    # plotexperiment()
+    plotexperiment()
     exit()
     # pass
 
