@@ -4,6 +4,7 @@ import datetime
 import json
 import yaml
 import sys
+import os
 
 
 def save2json(path: str, data):
@@ -18,6 +19,14 @@ def save2json(path: str, data):
             json.dump(data, f)
     except Exception as e:
         pass
+
+
+def create_directories(path: str):
+    """create all directories in the path
+    that do not exist and return path"""
+    if not os.path.exists(path):
+        os.makedirs(path)
+    return path
 
 
 def save_raw_data(data: np.ndarray, path: str):

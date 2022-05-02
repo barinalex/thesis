@@ -4,7 +4,7 @@ import numpy as np
 from joycontroller import JoyController
 from rsreader import RSReader
 from pwmdriver import PWMDriver
-from utils import loadconfig, save2json, gettimestamp, save_raw_data
+from utils import loadconfig, gettimestamp, save_raw_data, create_directories
 import logging
 import sys
 import os.path
@@ -23,7 +23,15 @@ class Controller:
         self.driver = PWMDriver(config=self.config)
         self.JOYStick = JoyController()
         self.agent = AgentDriver()
-        self.history = []
+        self.history = {"pos": [],
+                        "orn": [],
+                        "euler": [],
+                        "lin": [],
+                        "ang": [],
+                        "timestamp": [],
+                        "updated": [],
+                        "act": [],
+                        "servos": []}
         logging.info(f"Controller initialized")
         logging.info(f"Initialize agent's policy by running it few times")
         for _ in range(5):
@@ -42,8 +50,7 @@ class Controller:
         start = time.time()
         throttle, steering, autonomous = self.JOYStick.get_joystick_input()
         if autonomous:
-            laststate = self.history[-1]
-            lin, ang = np.copy(laststate["lin"]), np.copy(laststate["ang"])
+            lin, ang = np.copy(self.history["lin"][-1]), np.copy(self.history["ang"][-1])
             self.agent.update(lin=lin, ang=ang)
             throttle, steering = self.agent.act()
         acttime = time.time() - start
@@ -70,35 +77,24 @@ class Controller:
         while True:
             start = time.time()
             statedict = self.rsreader.update()
-            logging.info(f"state dict: {statedict}")
-            self.history.append(copy.deepcopy(statedict))
+            for key, item in statedict.items():
+                self.history[key].append(item)
             throttle, steering = self.get_actions()
             mthrottle, msteering = self.actions2motor(throttle=throttle, steering=steering)
             logging.info(f"motor throttle: {mthrottle}; motor steering: {msteering}")
-            self.history[-1]["act"] = [throttle, steering]
-            self.history[-1]["servos"] = [mthrottle, msteering]
+            self.history["act"].append([throttle, steering])
+            self.history["servos"].append([mthrottle, msteering])
             self.driver.write_servos(actions=[mthrottle, msteering])
             itertime = time.time() - start
             time.sleep(max(0, self.config["update_period"] - itertime))
 
-    def list2dict(self) -> dict:
-        """
-        Convert list of dicts to dict of lists
-        """
-        keys, items = self.history[0].items()
-        n = len(self.history)
-        data = {key: np.zeros((n, *item.shape)) for key, item in zip(keys, items)}
-        for i, entry in enumerate(self.history):
-            for key, item in entry.items():
-                data[key][i] = item
-        return data
-
     def __exit__(self, exc_type, exc_value, traceback):
         self.driver.stop()
         path = os.path.join("data", gettimestamp())
-        data = self.list2dict()
-        for key, item in data.items():
-            save_raw_data(data=item, path=os.path.join(path, key))
+        create_directories(path=path)
+        for key, item in self.history.items():
+            data = np.asarray(item)
+            save_raw_data(data=data, path=os.path.join(path, key))
         # save2json(path=path, data=self.history)
             
 
