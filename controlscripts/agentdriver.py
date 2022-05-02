@@ -9,7 +9,8 @@ import os.path
 
 class AgentDriver:
     def __init__(self):
-        policypath = os.path.join("data", "policy", "ppo_mjc_2022_04_30_13_53_45_932163.zip")
+        # policypath = os.path.join("data", "policy", "ppo_mjc_2022_05_01_19_11_03_544420.zip")
+        policypath = os.path.join("data", "policy", "ppo_mlp_2022_05_01_18_29_08_505558.zip")
         n_wps = 10
         bufsize = 1
         pointspath = os.path.join("data", "points", "lap_pd02_r1_s2.npy")

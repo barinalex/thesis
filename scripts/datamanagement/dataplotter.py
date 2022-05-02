@@ -220,7 +220,7 @@ def plot_policy_learning_curve(maxtimesteps: int = None):
 
 
 def plotexperiment():
-    path = os.path.join(Dirs.experiments, "2022_05_02_09_18_13_218465")
+    path = os.path.join(Dirs.experiments, "2022_05_02_09_30_06_408895")
     history = {"pos": [],
                "orn": [],
                "euler": [],
@@ -229,12 +229,15 @@ def plotexperiment():
                "timestamp": [],
                "updated": [],
                "act": [],
-               "servos": []}
+               "servos": [],
+               "auto": [],
+               "acttime": []
+               }
     for key in history.keys():
         history[key] = load_raw_data(path=os.path.join(path, key + ".npy"))
         print(key, history[key].shape)
     plt.figure()
-    plt.plot(history["timestamp"], history["servos"][:, 1])
+    plt.plot(history["timestamp"], history["acttime"][:])
     plt.show()
 
 
