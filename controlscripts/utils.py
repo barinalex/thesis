@@ -7,20 +7,6 @@ import sys
 import os
 
 
-def save2json(path: str, data):
-    """
-    save data to a json file
-
-    :param path: path to a file
-    :param data: data to store
-    """
-    try:
-        with open(path, 'w') as f:
-            json.dump(data, f)
-    except Exception as e:
-        pass
-
-
 def create_directories(path: str):
     """create all directories in the path
     that do not exist and return path"""

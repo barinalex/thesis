@@ -31,7 +31,9 @@ class Controller:
                         "timestamp": [],
                         "updated": [],
                         "act": [],
-                        "servos": []}
+                        "servos": [],
+                        "auto": [],
+                        "acttime": []}
         logging.info(f"Controller initialized")
         logging.info(f"Initialize agent's policy by running it few times")
         for _ in range(5):
@@ -54,6 +56,8 @@ class Controller:
             self.agent.update(lin=lin, ang=ang)
             throttle, steering = self.agent.act()
         acttime = time.time() - start
+        self.history["auto"].append(autonomous)
+        self.history["acttime"].append(acttime)
         logging.info(f"autonomous: {autonomous}; throttle: {throttle}; steering: {steering}; acttime: {acttime}")
         return throttle, steering
 
@@ -81,7 +85,6 @@ class Controller:
                 self.history[key].append(item)
             throttle, steering = self.get_actions()
             mthrottle, msteering = self.actions2motor(throttle=throttle, steering=steering)
-            logging.info(f"motor throttle: {mthrottle}; motor steering: {msteering}")
             self.history["act"].append([throttle, steering])
             self.history["servos"].append([mthrottle, msteering])
             self.driver.write_servos(actions=[mthrottle, msteering])
@@ -95,7 +98,6 @@ class Controller:
         for key, item in self.history.items():
             data = np.asarray(item)
             save_raw_data(data=data, path=os.path.join(path, key))
-        # save2json(path=path, data=self.history)
             
 
 if __name__ == "__main__":
