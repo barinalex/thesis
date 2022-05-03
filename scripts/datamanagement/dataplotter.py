@@ -238,7 +238,7 @@ def plotexperiment():
         print(key, history[key].shape)
     autoindices = np.where(history["auto"] == 1)[0]
     plt.figure()
-    plt.plot(history["timestamp"][autoindices], history["lin"][autoindices, 0])
+    plt.plot(history["timestamp"][autoindices], history["act"][autoindices, 0])
     # plt.plot(history["pos"][autoindices, 0], history["pos"][autoindices, 1])
     plt.show()
 

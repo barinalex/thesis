@@ -19,7 +19,7 @@ class Agent:
         :param observation: numpy array
         :return: action: [throttle, turn]
         """
-        action, _state = self.policy.predict(observation)
+        action, _state = self.policy.predict(observation, deterministic=True)
         return action
 
 

@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="18a7d627-6fa0-4aae-9874-33993ce2790d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controlscripts/configs/default.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/controlscripts/configs/default.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controlscripts/joycontroller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controlscripts/joycontroller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controlscripts/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/controlscripts/agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/agent/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/agent/agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/agent/evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/agent/evaluation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,7 +21,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../simtoreal2d" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -59,7 +60,7 @@
       <recent name="$PROJECT_DIR$/scripts/models/neuralnetworks" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.dataplotter">
+  <component name="RunManager" selected="Python.evaluation">
     <configuration name="dataplotter" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -167,8 +168,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.dataplotter" />
         <item itemvalue="Python.evaluation" />
+        <item itemvalue="Python.dataplotter" />
         <item itemvalue="Python.policytrainer" />
         <item itemvalue="Python.environment" />
         <item itemvalue="Python.generator" />
