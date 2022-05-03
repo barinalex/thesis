@@ -1,6 +1,6 @@
 "motors_on" : True
 "controller_source" : "joystick" # agent/joystick
-"update_period" : 0.005
+"update_period" : 0.01
 "motor_scalar" : 0.4
 "throttle_offset" : 0.5
 "target_proximity_threshold" : 0.6

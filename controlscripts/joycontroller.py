@@ -17,7 +17,7 @@ class JoyController:
         :return: throttle [-1, 1], steering [-1, 1], done
         """
         pygame.event.pump()
-        steering, throttle = [self.joystick.get_axis(3), self.joystick.get_axis(1)]
+        steering, throttle = self.joystick.get_axis(3), self.joystick.get_axis(1)
         button_x = self.joystick.get_button(0)
         pygame.event.clear()
         return -throttle, -steering, button_x

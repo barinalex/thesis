@@ -18,7 +18,7 @@ class AgentDriver:
         initvector = np.array([0, 0, 0])
         self.agent = Agent()
         self.agent.load(path=policypath)
-        self.state = State(timestep=0.005)
+        self.state = State(timestep=0.01)
         self.waypointer = Waypointer(n_wps=n_wps, points=points)
         self.actbuffer = QueueBuffer(size=bufsize, initvector=initvector)
         self.velbuffer = QueueBuffer(size=10, initvector=initvector)
