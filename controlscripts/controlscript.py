@@ -22,7 +22,9 @@ class Controller:
         self.rsreader = RSReader()
         self.driver = PWMDriver(config=self.config)
         self.JOYStick = JoyController()
+        logging.info(f"Controller initialized")
         self.agent = AgentDriver()
+        logging.info(f"Policy loaded: {sys.getsizeof(self.agent.agent.policy)}")
         self.history = {"pos": [],
                         "orn": [],
                         "euler": [],
@@ -34,7 +36,6 @@ class Controller:
                         "servos": [],
                         "auto": [],
                         "acttime": []}
-        logging.info(f"Controller initialized")
         logging.info(f"Initialize agent's policy by running it few times")
         for _ in range(5):
             self.agent.act()

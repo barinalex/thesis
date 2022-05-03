@@ -1,3 +1,5 @@
+import time
+
 from agent import Agent
 from queuebuffer import QueueBuffer
 from waypointer import Waypointer
@@ -5,6 +7,9 @@ from utils import load_raw_data
 from state import State
 import numpy as np
 import os.path
+import sys
+import logging
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
 class AgentDriver:
@@ -17,7 +22,9 @@ class AgentDriver:
         points = load_raw_data(path=pointspath)
         initvector = np.array([0, 0, 0])
         self.agent = Agent()
+        logging.info(f"Load policy")
         self.agent.load(path=policypath)
+        logging.info(f"Policy ready")
         self.state = State(timestep=0.01)
         self.waypointer = Waypointer(n_wps=n_wps, points=points)
         self.actbuffer = QueueBuffer(size=bufsize, initvector=initvector)
