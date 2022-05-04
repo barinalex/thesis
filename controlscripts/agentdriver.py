@@ -64,11 +64,12 @@ class AgentDriver:
         """
         :param lin: linear velocity
         :param ang: angular velocity
+        :return: True if waypoints was closed
         """
         self.lin = lin
         self.ang = ang
         self.updatestate()
-        self.waypointer.update(pos=self.state.getpos()[:2])
+        return self.waypointer.update(pos=self.state.getpos()[:2])
 
 
 if __name__ == "__main__":

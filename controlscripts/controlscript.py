@@ -27,6 +27,8 @@ class Controller:
         logging.info(f"Policy loaded: {sys.getsizeof(self.agent.agent.policy)}")
         self.history = {"pos": [],
                         "orn": [],
+                        "ipos": [],
+                        "iorn": [],
                         "euler": [],
                         "lin": [],
                         "ang": [],
@@ -34,6 +36,7 @@ class Controller:
                         "updated": [],
                         "act": [],
                         "servos": [],
+                        "rewards": [],
                         "auto": [],
                         "acttime": []}
         logging.info(f"Initialize agent's policy by running it few times")
@@ -54,7 +57,10 @@ class Controller:
         throttle, steering, autonomous = self.JOYStick.get_joystick_input()
         if autonomous:
             lin, ang = np.copy(self.history["lin"][-1]), np.copy(self.history["ang"][-1])
-            self.agent.update(lin=lin, ang=ang)
+            wpclosed = self.agent.update(lin=lin, ang=ang)
+            self.history["rewards"].append(wpclosed)
+            self.history["ipos"].append(self.agent.state.getpos())
+            self.history["iorn"].append(self.agent.state.getorn())
             throttle, steering = self.agent.act()
             throttle = (throttle + 1) / 2
         acttime = time.time() - start
