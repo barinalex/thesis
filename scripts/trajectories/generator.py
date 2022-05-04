@@ -116,6 +116,8 @@ def generate_curve(points_distance: float = 0.3, length: float = 1, radius: floa
     :param reset: False if this trajectory will continue previous trajectory
     :return: curved line described by a set of points
     """
+    if radius > 0:
+        points_distance = points_distance * np.min((1, radius * 2))
     linear, angular = compute_velocities(points_distance=points_distance, radius=radius)
     steps = int(length // (linear[0] * state.timestep))
     return angular_motion(linear=linear, angular=angular, steps=steps,
@@ -318,14 +320,14 @@ if __name__ == "__main__":
     from scripts.datamanagement.datamanagementutils import save_raw_data, load_raw_data
 
     # wps = generate_infinity(points_distance=0.2, radius=1)
-    # wps = generate_lap(points_distance=0.15, radius=1, straight_length=2)
-    # wps = np.reshape(wps, (1, *wps.shape))
-    # print(wps.shape)
-    # plt.scatter(wps[0, :, 0], wps[0, :, 1])
-    # plt.show()
-    # path = os.path.join(Dirs.trajectories, f"lap_pd015_r1_s2")
+    wps = generate_lap(points_distance=0.2, radius=0.2, straight_length=2)
+    wps = np.reshape(wps, (1, *wps.shape))
+    print(wps.shape)
+    plt.scatter(wps[0, :, 0], wps[0, :, 1])
+    plt.show()
+    path = os.path.join(Dirs.trajectories, f"lap_pd02_r02_s2")
     # save_raw_data(data=wps, path=path)
-    # exit()
+    exit()
     n = 1000
     n_wps = 500
     smth = 50
