@@ -320,15 +320,15 @@ if __name__ == "__main__":
     from scripts.datamanagement.datamanagementutils import save_raw_data, load_raw_data
 
     # wps = generate_infinity(points_distance=0.2, radius=1)
-    wps = generate_lap(points_distance=0.2, radius=0.2, straight_length=2)
-    wps = np.reshape(wps, (1, *wps.shape))
-    print(wps.shape)
-    plt.scatter(wps[0, :, 0], wps[0, :, 1])
-    plt.show()
-    path = os.path.join(Dirs.trajectories, f"lap_pd02_r02_s2")
+    # wps = generate_lap(points_distance=0.2, radius=0.2, straight_length=2)
+    # wps = np.reshape(wps, (1, *wps.shape))
+    # print(wps.shape)
+    # plt.scatter(wps[0, :, 0], wps[0, :, 1])
+    # plt.show()
+    # path = os.path.join(Dirs.trajectories, f"lap_pd02_r02_s2")
     # save_raw_data(data=wps, path=path)
-    exit()
-    n = 1000
+    # exit()
+    n = 1
     n_wps = 500
     smth = 50
     mplr = 10
@@ -339,11 +339,11 @@ if __name__ == "__main__":
         save_raw_data(data=trajs, path=path)
         return trajs
 
-    # trajs = saveNtrajs()
-    trajs = load_raw_data(path=f"{path}.npy")
+    trajs = saveNtrajs()
+    # trajs = load_raw_data(path=f"{path}.npy")
 
-    for wps in trajs[:20]:
-        plt.plot(wps[:100, 0], wps[:100, 1])
+    for wps in trajs[:10]:
+        plt.plot(wps[:50, 0], wps[:50, 1])
         plt.xlabel("meters")
         plt.ylabel("meters")
     plt.show()
