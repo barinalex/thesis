@@ -220,9 +220,11 @@ def plot_policy_learning_curve(maxtimesteps: int = None):
 
 
 def plotexperiment():
-    path = os.path.join(Dirs.experiments, "2022_05_02_09_49_16_780903")
+    path = os.path.join(Dirs.experiments, "2", "mjclap2022_05_02_09_46_30_830191")
     history = {"pos": [],
                "orn": [],
+               "ipos": [],
+               "iorn": [],
                "euler": [],
                "lin": [],
                "ang": [],
@@ -230,6 +232,7 @@ def plotexperiment():
                "updated": [],
                "act": [],
                "servos": [],
+               "rewards": [],
                "auto": [],
                "acttime": []
                }
@@ -238,10 +241,11 @@ def plotexperiment():
         print(key, history[key].shape)
     autoindices = np.where(history["auto"] == 1)[0]
     plt.figure()
-    plt.plot(history["timestamp"][autoindices], history["act"][autoindices, 0])
-    # plt.plot(history["pos"][autoindices, 0], history["pos"][autoindices, 1])
+    plt.plot(history["timestamp"][autoindices], history["lin"][autoindices, 0])
+    # plt.plot(history["pos"][autoindices, 0], history["pos"][autoindices, 1], color="b")
+    # plt.plot(history["ipos"][:, 0], history["ipos"][:, 1], color="r")
     plt.show()
-
+    print("rewards sum:", np.sum(history["rewards"][:2000]))
 
 
 if __name__ == "__main__":

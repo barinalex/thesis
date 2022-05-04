@@ -14,11 +14,15 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 class AgentDriver:
     def __init__(self):
-        # policypath = os.path.join("data", "policy", "ppo_mjc_2022_05_01_19_11_03_544420.zip")
-        policypath = os.path.join("data", "policy", "ppo_mlp_2022_05_01_18_29_08_505558.zip")
+        policies = {"mlp": "ppo_mlp_2022_05_01_18_29_08_505558.zip",
+                    "mjc": "ppo_mjc_2022_05_01_19_11_03_544420.zip"}
+        policypath = os.path.join("data", "policy", policies["mlp"])
         n_wps = 10
         bufsize = 1
-        pointspath = os.path.join("data", "points", "lap_pd02_r1_s2.npy")
+        trajectories = {"inf": "inf_pd02_r1.npy",
+                        "lap": "lap_pd02_r1_s2.npy",
+                        "rand": "n1_wps500_smth50_mplr10.npy"}
+        pointspath = os.path.join("data", "points", trajectories["rand"])
         points = load_raw_data(path=pointspath)
         initvector = np.array([0, 0, 0])
         self.agent = Agent()

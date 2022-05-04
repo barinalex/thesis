@@ -74,14 +74,17 @@ if __name__ == "__main__":
 
     epath = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
     engine = MLPBased(path=epath)
-    m = 5
+    m = 4
     mse, gtpos, simpos = evalloop(path=path, engine=engine, m=m, length=200)
+
+    figure, axis = plt.subplots(1, m)
     for i in range(m):
         print(mse[i])
-        plt.figure()
-        plt.plot(gtpos[i, :, 0], gtpos[i, :, 1], color="b")
-        plt.plot(simpos[i, :, 0], simpos[i, :, 1], color="r")
-        plt.show()
+        axis[i].set_xlabel("meters")
+        axis[0].set_ylabel("meters")
+        axis[i].plot(gtpos[i, :, 0], gtpos[i, :, 1], color="b")
+        axis[i].plot(simpos[i, :, 0], simpos[i, :, 1], color="r")
+    plt.show()
 
     # positions = -load_raw_data(path=os.path.join(path, "positions.npy"))
     # length = 500
