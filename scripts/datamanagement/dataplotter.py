@@ -43,7 +43,7 @@ def makehistogram(fig, data: np.ndarray):
     :param fig: figure to place histogram on
     :param data: array of floats, shape (n, )
     """
-    hist, edges = np.histogram(data)
+    hist, edges = np.histogram(data, bins=15)
     widths = abs(edges[1:] - edges[:-1])
     fig.bar(edges[:len(hist)], hist, width=np.min(widths), color='b', alpha=1, align='edge')
 
@@ -52,7 +52,7 @@ def plothistograms(data: np.ndarray):
     """
     :param data: array of floats, shape (n, 2)
     """
-    figure, axis = plt.subplots(1, 2)
+    figure, axis = plt.subplots(1, 3)
     # makehistogram(axis[0], data[:, 0])
     # axis[0].set_title("Delta linear velocity along X axis")
     # axis[0].set_xlabel("meters per second")
@@ -65,14 +65,16 @@ def plothistograms(data: np.ndarray):
     # axis[0].set_title("Delta angular velocity")
     # axis[0].set_xlabel("radians per second")
     # axis[0].set_ylabel("samples")
-    makehistogram(axis[0], data[:, 3])
-    axis[0].set_title("Throttle")
+    makehistogram(axis[0], data[:, 0])
+    axis[0].set_title("Linear x")
     axis[0].set_xlabel("value")
     axis[0].set_ylabel("samples")
-    makehistogram(axis[1], data[:, 4])
-    axis[1].set_title("Turn")
+    makehistogram(axis[1], data[:, 3])
+    axis[1].set_title("Throttle")
     axis[1].set_xlabel("value")
-    axis[1].set_ylabel("samples")
+    makehistogram(axis[2], data[:, 4])
+    axis[2].set_title("Steering")
+    axis[2].set_xlabel("value")
     plt.show()
 
 
@@ -249,13 +251,13 @@ def plotexperiment():
 
 
 if __name__ == "__main__":
-    # plotobshistogram()
+    plotobshistogram()
     # plottrainingdata()
     # exit()
     # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
     # plot_policy_learning_curve(maxtimesteps=1000000)
-    plotexperiment()
+    # plotexperiment()
     exit()
     # pass
 
