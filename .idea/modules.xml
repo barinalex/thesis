@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../simtoreal2d/.idea/simtoreal2d.iml" filepath="$PROJECT_DIR$/../simtoreal2d/.idea/simtoreal2d.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/thesis.iml" filepath="$PROJECT_DIR$/.idea/thesis.iml" />
     </modules>
   </component>

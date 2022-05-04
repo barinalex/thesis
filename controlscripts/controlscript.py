@@ -56,6 +56,7 @@ class Controller:
             lin, ang = np.copy(self.history["lin"][-1]), np.copy(self.history["ang"][-1])
             self.agent.update(lin=lin, ang=ang)
             throttle, steering = self.agent.act()
+            throttle = (throttle + 1) / 2
         acttime = time.time() - start
         self.history["auto"].append(autonomous)
         self.history["acttime"].append(acttime)
