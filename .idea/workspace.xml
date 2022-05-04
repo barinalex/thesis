@@ -57,7 +57,7 @@
       <recent name="$PROJECT_DIR$/scripts/models/neuralnetworks" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.generator">
+  <component name="RunManager" selected="Python.evaluation">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="simtoreal2d" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -261,9 +261,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.evaluation" />
         <item itemvalue="Python.generator" />
         <item itemvalue="Python.dataplotter" />
-        <item itemvalue="Python.evaluation" />
         <item itemvalue="Python.policytrainer" />
         <item itemvalue="Python.environment" />
       </list>

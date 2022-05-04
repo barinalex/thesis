@@ -67,7 +67,8 @@ def evaluate_mlp_based(n: int) -> np.ndarray:
     engine = MLPBased(path=path, visualize=True)
     # config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
     # config["trajectories"] = "inf_pd02_r1.npy"
-    config["trajectories"] = "lap_pd02_r1_s2.npy"
+    # config["trajectories"] = "lap_pd02_r1_s2.npy"
+    config["trajectories"] = "lap_pd02_r02_s2.npy"
     env = Environment(config=config, engine=engine, random=False)
     path = os.path.join(Dirs.policy, "ppo_mlp_2022_05_01_18_29_08_505558.zip")
     agent = Agent()
@@ -82,11 +83,12 @@ def evaluate_mujoco_based(n: int) -> np.ndarray:
 
     :return: list of rewards for each episodes
     """
-    engine = MujocoEngine(visualize=False)
+    engine = MujocoEngine(visualize=True)
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
     config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
     # config["trajectories"] = "inf_pd02_r1.npy"
     # config["trajectories"] = "lap_pd02_r1_s2.npy"
+    # config["trajectories"] = "lap_pd02_r02_s2.npy"
     env = Environment(config=config, engine=engine, random=False)
     path = os.path.join(Dirs.policy, "ppo_mjc_2022_05_01_19_11_03_544420.zip")
     agent = Agent()
@@ -114,15 +116,15 @@ def compare_custom2mujoco_based(n: int):
 
 
 if __name__ == "__main__":
-    # mujoco_rws = evaluate_mujoco_based(n=1)
-    # print(mujoco_rws)
-    mlp_rws = evaluate_mlp_based(n=1)
-    print(mlp_rws)
+    mujoco_rws = evaluate_mujoco_based(n=1)
+    print(mujoco_rws)
+    # mlp_rws = evaluate_mlp_based(n=1)
+    # print(mlp_rws)
     # compare_custom2mujoco_based(n=5)
-    history["act"] = np.asarray(history["act"])
-    import matplotlib.pyplot as plt
-    plt.figure()
-    plt.plot(np.arange(len(history["act"])), history["act"][:, 0])
-    # plt.plot(history["pos"][autoindices, 0], history["pos"][autoindices, 1])
-    plt.show()
+    # history["act"] = np.asarray(history["act"])
+    # import matplotlib.pyplot as plt
+    # plt.figure()
+    # plt.plot(np.arange(len(history["act"])), history["act"][:, 0])
+    # # plt.plot(history["pos"][autoindices, 0], history["pos"][autoindices, 1])
+    # plt.show()
 
