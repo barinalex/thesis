@@ -97,6 +97,19 @@ class MujocoEngine(Engine):
         if self.viewer and time.time() - self.start < self.sim.data.time:
             self.viewer.render()
 
+    def set_external_state(self, state_dict):
+        pass
+        # old_state = self.sim.get_state()
+        # qpos = old_state.qpos  # qvel
+        # qpos[0:2] = state_dict["x_pos"], state_dict["y_pos"]
+        # quat = e2q(0, 0, state_dict["phi"])
+        # qpos[3:7] = quat
+        # new_state = mujoco_py.MjSimState(old_state.time, qpos, old_state.qvel,
+        #                                  old_state.act, old_state.udd_state)
+        #
+        # self.sim.set_state(new_state)
+        # self.sim.forward()
+
     def gatherdata(self, n_steps: int = 3200):
         """
         :param n_steps: number of timesteps per episode
