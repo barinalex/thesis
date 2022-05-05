@@ -227,12 +227,12 @@ if __name__ == "__main__":
     from scripts.engine.mujocoengine import MujocoEngine
     iw = JoystickInputWrapper()
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
+    # path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
     # engine = TCNNBased(path=path, visualize=True)
-    # engine = MujocoEngine(visualize=True)
-    engine = MLPBased(path=path, visualize=True)
+    engine = MujocoEngine(visualize=True)
+    # engine = MLPBased(path=path, visualize=True)
     # config["trajectories"] = "lap_pd02_r1_s2.npy"
-    env = Environment(config=config, engine=engine, random=False)
+    env = Environment(config=config, engine=engine, random=True)
     interrupt = False
     done = False
     sumrewards = 0
