@@ -3,6 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="18a7d627-6fa0-4aae-9874-33993ce2790d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/env.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/env.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/ppo.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/ppo.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/agent/evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/agent/evaluation.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,15 +39,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;last_opened_file_path&quot;: &quot;/home/barinale/Documents/thesis/thesis/controlscripts/data/points&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "last_opened_file_path": "/home/barinale/Documents/thesis/thesis/controlscripts/data/policy"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/controlscripts/data/points" />
       <recent name="$PROJECT_DIR$/controlscripts/data/policy" />
+      <recent name="$PROJECT_DIR$/controlscripts/data/points" />
       <recent name="$PROJECT_DIR$/data/success/1/policy" />
       <recent name="$PROJECT_DIR$/data/success/1/engine" />
       <recent name="$PROJECT_DIR$/data/archive" />
@@ -261,8 +264,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.evaluation" />
-        <item itemvalue="Python.dataplotter" />
         <item itemvalue="Python.policytrainer" />
+        <item itemvalue="Python.dataplotter" />
         <item itemvalue="Python.environment" />
         <item itemvalue="Python.evaluation (1)" />
       </list>
