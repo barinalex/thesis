@@ -80,38 +80,38 @@ def plothistograms(data: np.ndarray):
 
 def plotevals():
 
-    path = os.path.join(Dirs.models, "tcnn_2022_05_01_12_57_02_934520.evals" + ".npy")
+    path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419.evals" + ".npy")
     mlpevals = load_raw_data(path=path)
-    path = os.path.join(Dirs.models, "tcnn_2022_05_01_13_01_05_602503.evals" + ".npy")
-    cnnevals = load_raw_data(path=path)
-    path = os.path.join(Dirs.models, "tcnn_2022_05_01_12_58_35_112302.evals" + ".npy")
-    hmlpevals = load_raw_data(path=path)
+    path = os.path.join(Dirs.models, "mlp_hist5_2022_05_05_11_23_43_430257.evals" + ".npy")
+    histevals = load_raw_data(path=path)
+    path = os.path.join(Dirs.models, "tcnn_2022_05_05_11_41_16_804864.evals" + ".npy")
+    tcnnevals = load_raw_data(path=path)
 
     epochs = np.arange(mlpevals.shape[0])
 
     figure, axis = plt.subplots(1, 3)
-    axis[0].set_title("TCNN")
+    axis[0].set_title("MLP")
     axis[0].set_xlabel("epochs")
     axis[0].set_ylabel("loss")
     axis[0].plot(epochs, mlpevals[:, 0], color='b')
     axis[0].plot(epochs, mlpevals[:, 1], color='r')
     axis[0].legend(['train loss', 'test loss'])
 
-    epochs = np.arange(cnnevals.shape[0])
-    axis[1].set_title("TCNN, k=5 pastmean")
+    epochs = np.arange(histevals.shape[0])
+    axis[1].set_title("History MLP")
     axis[1].set_xlabel("epochs")
     # axis[1].set_ylabel("loss")
-    axis[1].plot(epochs, cnnevals[:, 0], color='b')
-    axis[1].plot(epochs, cnnevals[:, 1], color='r')
+    axis[1].plot(epochs, histevals[:, 0], color='b')
+    axis[1].plot(epochs, histevals[:, 1], color='r')
     axis[1].legend(['train loss', 'test loss'])
 
-    epochs = np.arange(hmlpevals.shape[0])
+    epochs = np.arange(tcnnevals.shape[0])
 
-    axis[2].set_title("TCNN, k=5 pastmean, steering balance")
+    axis[2].set_title("TCNN")
     axis[2].set_xlabel("epochs")
     # axis[2].set_ylabel("loss")
-    axis[2].plot(epochs, hmlpevals[:, 0], color='b')
-    axis[2].plot(epochs, hmlpevals[:, 1], color='r')
+    axis[2].plot(epochs, tcnnevals[:, 0], color='b')
+    axis[2].plot(epochs, tcnnevals[:, 1], color='r')
     axis[2].legend(['train loss', 'test loss'])
     plt.show()
 
@@ -251,10 +251,10 @@ def plotexperiment():
 
 
 if __name__ == "__main__":
-    plotobshistogram()
+    # plotobshistogram()
     # plottrainingdata()
     # exit()
-    # plotevals()
+    plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
     # plot_policy_learning_curve(maxtimesteps=1000000)
     # plotexperiment()

@@ -39,8 +39,8 @@ class TemporalCNN(NeuralNetwork):
                                dilation=dilation[2])
         slength = compute_out_size(slength, kernel[2], stride[2], dilation[2])
         print(slength)
-        self.lin1 = nn.Linear(n_channels[3]*slength, 32)
-        self.lin2 = nn.Linear(32, 3)
+        self.lin1 = nn.Linear(n_channels[3]*slength, 16)
+        self.lin2 = nn.Linear(16, 3)
 
     def forward(self, x):
         x = self.nonlinearity(self.conv1(x))
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     from scripts.constants import Dirs
     import os
     cnn = TemporalCNN(loadconfig(path=os.path.join(Dirs.configs, "cnn.yaml")))
-    x = np.random.rand(4, 5, 25) # batch, channels, sequence size
+    x = np.random.rand(4, 5, 20) # batch, channels, sequence size
     x = torch.tensor(x, dtype=torch.float32)
     x = cnn.forward(x=x)
     print(x)

@@ -6,7 +6,7 @@ from scripts.datamanagement.datamanagement import loadconfig, saveconfig
 from scripts.datamanagement.pathmanagement import gettimestamp, create_directories
 
 
-def trainmlp():
+def trainmlp(tag: str = ""):
     """
     Train new mlp model
     """
@@ -14,8 +14,8 @@ def trainmlp():
     path = os.path.join(Dirs.configs, "mlp.yaml")
     config = loadconfig(path=path)
     timestamp = gettimestamp()
-    savepath = os.path.join(Dirs.models, f"mlp_{timestamp}")
-    cfgpath = os.path.join(Dirs.models, f"mlp_{timestamp}.yaml")
+    savepath = os.path.join(Dirs.models, f"mlp{tag}_{timestamp}")
+    cfgpath = os.path.join(Dirs.models, f"mlp{tag}_{timestamp}.yaml")
     model.train(config=config, savepath=savepath)
     saveconfig(path=cfgpath, config=config)
 
@@ -51,6 +51,6 @@ def finetunemlp():
 
 
 if __name__ == "__main__":
-    # trainmlp()
-    # traincnn()
-    finetunemlp()
+    # trainmlp(tag="_hist5")
+    traincnn()
+    # finetunemlp()
