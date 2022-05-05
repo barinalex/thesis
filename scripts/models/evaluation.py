@@ -5,20 +5,6 @@ from scripts.simulation.simulator import Simulator
 from scripts.engine.engine import Engine
 from sklearn.metrics import mean_squared_error
 from scripts.datamanagement.datamanagementutils import load_raw_data
-import quaternion
-from scripts.utils.linalg_utils import angle2x
-
-
-def trajectory2xaxis(trajectory: np.ndarray) -> np.ndarray:
-    """
-    :param trajectory: ground truth trajectory. shape (n, 2)
-    :return: rotated trajectory
-    """
-    rotation = angle2x(vector=trajectory[1] - trajectory[0])
-    q = quaternion.from_euler_angles(-rotation/2, 0, -rotation/2)
-    rm = quaternion.as_rotation_matrix(q)
-    rotated = (rm @ trajectory.T).T
-    return rotated[:, :2]
 
 
 def evalsection(positions: np.ndarray, actions: np.ndarray, engine: Engine) -> (float, np.ndarray):
@@ -32,57 +18,53 @@ def evalsection(positions: np.ndarray, actions: np.ndarray, engine: Engine) -> (
     inputwrapper = DataWrapper(actions=actions)
     sim = Simulator(iw=inputwrapper, engine=engine)
     simpositions = sim.simulate()
-    return mean_squared_error(positions, simpositions[:, :2]), simpositions[:, :2]
+    return mean_squared_error(positions[:, :2], simpositions[:, :2]), simpositions[:, :2]
 
 
-def evalloop(path: str, engine: Engine, m: int, length: int) -> (np.ndarray, np.ndarray):
+def evalloop(sections, engine: Engine, msections: int) -> (np.ndarray, np.ndarray):
     """
-    :param path: path to a file with full episode ground truth data
+    :param sections: validation sections from the real episode
     :param engine: engine to evaluate
-    :param m: number of sections to sample for evaluation
-    :param length: lenght of sampled sections
+    :param msections: take at most first msections for evaluation
     :return: (mean squared errors. shape (m,),
-        ground truth trajectories. shape (m, length, 2)),
         simulated trajectories. shape (m, length, 2))
     """
-    positions = -load_raw_data(path=os.path.join(path, "positions.npy"))
-    actions = load_raw_data(path=os.path.join(path, "actions.npy"))
-    linear = load_raw_data(path=os.path.join(path, "linear.npy"))
-    angular = load_raw_data(path=os.path.join(path, "angular.npy"))
-    N = positions.shape[0]
+    m = min(sections[DT.pos].shape[0], msections)
+    length = sections[DT.pos].shape[1]
     mse = np.zeros(m)
-    gtpositions = np.zeros((m, length-1, 2))
     simpositions = np.zeros((m, length-1, 2))
     for i in range(m):
-        start = np.random.randint(N - length)
-        indices = np.arange(start, start + length)
-        engine.setstate(vel=linear[start], ang=angular[start])
-        gtpositions[i] = trajectory2xaxis(positions[indices][:-1] - positions[start])
-        mse[i], simpositions[i] = evalsection(positions=gtpositions[i],
-                                              actions=actions[indices],
+        engine.setstate(vel=sections[DT.lin][i][0], ang=sections[DT.ang][i][0])
+        mse[i], simpositions[i] = evalsection(positions=sections[DT.pos][i][: -1],
+                                              actions=sections[DT.act][i],
                                               engine=engine)
         engine.reset()
-    return mse, gtpositions, simpositions
+    return mse, simpositions
 
 
 if __name__ == "__main__":
-    from scripts.constants import Dirs
+    from scripts.constants import Dirs, DT
     from scripts.engine.mlpbased import MLPBased
+    from scripts.engine.tcnnbased import TCNNBased
     import matplotlib.pyplot as plt
-    episodes = ["2022_05_01_11_51_35_858887"]
-    path = os.path.join(Dirs.realdata, episodes[0])
+
+    sections = {}
+    for key in DT.bagtypes:
+        sections[key] = load_raw_data(path=os.path.join(Dirs.valid, key + ".npy"))
 
     epath = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
     engine = MLPBased(path=epath)
-    m = 4
-    mse, gtpos, simpos = evalloop(path=path, engine=engine, m=m, length=200)
 
+    m = 10
+    mse, simpos = evalloop(sections=sections, engine=engine, msections=m)
+
+    print(np.mean(mse))
     figure, axis = plt.subplots(1, m)
     for i in range(m):
         print(mse[i])
         axis[i].set_xlabel("meters")
         axis[0].set_ylabel("meters")
-        axis[i].plot(gtpos[i, :, 0], gtpos[i, :, 1], color="b")
+        axis[i].plot(sections[DT.pos][i, :, 0], sections[DT.pos][i, :, 1], color="b")
         axis[i].plot(simpos[i, :, 0], simpos[i, :, 1], color="r")
     plt.show()
 

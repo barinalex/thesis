@@ -4,6 +4,7 @@ import json
 import numpy as np
 from scripts.constants import DT, Dirs
 from scripts.datamanagement.pathmanagement import create_directories
+from scripts.utils.linalg_utils import trajectory2xaxis
 
 
 def readjson(path: str):
@@ -267,15 +268,51 @@ def concatenate_dicts(d1: dict, d2: dict) -> dict:
     return d1
 
 
+def makevalidsections(path: str, msections: int, length: int) -> dict:
+    """
+    :param path: path to a file with full episode ground truth data
+    :param msections: number of sections to sample
+    :param length: lenght of sampled sections
+    :return: ground truth sections dictionary with position, actions, velocities.
+        shape of data (m, length, 2))
+    """
+    gt = {key: load_raw_data(path=os.path.join(path, f"{key}.npy")) for key in DT.bagtypes}
+    gt[DT.pos] = -gt[DT.pos]
+    n = gt[DT.pos].shape[0]
+    sections = {key: np.zeros((msections, length, gt[key].shape[1])) for key in DT.bagtypes}
+    for i in range(msections):
+        start = np.random.randint(n - length)
+        indices = np.arange(start, start + length)
+        for key in DT.bagtypes:
+            sections[key][i] = gt[key][indices]
+        sections[DT.pos][i] = trajectory2xaxis(gt[DT.pos][indices] - gt[DT.pos][start])
+    return sections
+
+
 if __name__ == "__main__":
-    def reducefrequency():
-        import glob
-        for edir in glob.glob(pathname=os.path.join(Dirs.realdata, "*")):
-            data = load_dataset(datadir=edir, dts=DT.bagtypes)
-            n = data[list(data.keys())[0]].shape[0]
-            indices = np.arange(0, n, 2)
-            data = {key: item[indices] for key, item in data.items()}
-            save_dataset(data=data, path=edir)
+    # def reducefrequency():
+    #     import glob
+    #     for edir in glob.glob(pathname=os.path.join(Dirs.realdata, "*")):
+    #         data = load_dataset(datadir=edir, dts=DT.bagtypes)
+    #         n = data[list(data.keys())[0]].shape[0]
+    #         indices = np.arange(0, n, 2)
+    #         data = {key: item[indices] for key, item in data.items()}
+    #         save_dataset(data=data, path=edir)
+    #
+    # reducefrequency()
 
-    reducefrequency()
-
+    pass
+    # path = os.path.join(Dirs.realdata, "2022_05_01_11_51_35_858887")
+    # m = 10
+    # sections = makevalidsections(path=path, msections=m, length=250)
+    sections = {}
+    for key in DT.bagtypes:
+        sections[key] = load_raw_data(path=os.path.join(Dirs.valid, key + ".npy"))
+    m = sections[DT.pos].shape[0]
+    import matplotlib.pyplot as plt
+    plt.figure()
+    for i in range(m):
+        plt.plot(sections[DT.pos][i, :, 0], sections[DT.pos][i, :, 1])
+    plt.show()
+    # for key, data in sections.items():
+    #     save_raw_data(data=data, path=os.path.join(Dirs.valid, key))

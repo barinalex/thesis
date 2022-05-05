@@ -27,6 +27,7 @@ class Dirs:
     data = os.path.join(root, "data")
     archive = os.path.join(data, "archive")
     realdata = os.path.join(data, "real")
+    valid = os.path.join(data, "valid")
     experiments = os.path.join(data, "experiments")
     simdata = os.path.join(data, "sim")
     datasets = os.path.join(data, "datasets")

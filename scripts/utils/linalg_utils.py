@@ -4,6 +4,18 @@ import quaternion
 import math
 
 
+def trajectory2xaxis(trajectory: np.ndarray) -> np.ndarray:
+    """
+    :param trajectory: ground truth trajectory. shape (n, 2)
+    :return: rotated trajectory
+    """
+    rotation = angle2x(vector=trajectory[1] - trajectory[0])
+    q = quaternion.from_euler_angles(-rotation/2, 0, -rotation/2)
+    rm = quaternion.as_rotation_matrix(q)
+    rotated = (rm @ trajectory.T).T
+    return rotated
+
+
 def angle2x(vector: np.ndarray) -> float:
     """
     :param vector: shape (2,)
