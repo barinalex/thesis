@@ -46,7 +46,7 @@ if __name__ == "__main__":
     from scripts.engine.identityeng import IdentityEng
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
+    path = os.path.join(Dirs.models, "mlp_hist5_balanced_2022_05_05_13_18_21_551739")
     engine = MLPBased(path=path, visualize=True)
     # engine = TCNNBased(path=path, visualize=True)
     # engine = MujocoEngine(visualize=False)

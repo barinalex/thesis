@@ -76,20 +76,20 @@ def evalloop(sections, engine: Engine, msections: int) -> (np.ndarray, np.ndarra
 
 
 def compareengines():
-    mlppath = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
-    histpath = os.path.join(Dirs.models, "mlp_hist5_2022_05_05_11_23_43_430257")
-    tcnnpath = os.path.join(Dirs.models, "tcnn_2022_05_05_13_08_24_709391")
-    mlp = (MLPBased(path=mlppath), "MLP")
-    hist = (MLPBased(path=histpath), "History MLP")
+    mlppath = os.path.join(Dirs.models, "mlp_hist5_2022_05_05_11_23_43_430257")
+    histpath = os.path.join(Dirs.models, "mlp_unfilt_2022_05_05_13_22_16_555707")
+    tcnnpath = os.path.join(Dirs.models, "tcnn_2022_05_05_11_41_16_804864")
+    mlp = (MLPBased(path=mlppath), "History MLP")
+    hist = (MLPBased(path=histpath), "History MLP unfiltered")
     tcnn = (TCNNBased(path=tcnnpath), "TCNN")
-    engines = [mlp, hist, tcnn]
+    engines = [mlp, hist]
 
     m = 5
     sections = {}
     for key in DT.bagtypes:
         sections[key] = load_raw_data(path=os.path.join(Dirs.valid, key + ".npy"))
 
-    figure, axis = plt.subplots(3, m)
+    figure, axis = plt.subplots(len(engines), m)
     for i, engine in enumerate(engines):
         mse, simpos = evalloop(sections=sections, engine=engine[0], msections=m)
         print(f"{engine[1]} MSE:", np.mean(mse))
