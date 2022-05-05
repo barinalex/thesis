@@ -302,17 +302,17 @@ if __name__ == "__main__":
     # reducefrequency()
 
     pass
-    # path = os.path.join(Dirs.realdata, "2022_05_01_11_51_35_858887")
-    # m = 10
-    # sections = makevalidsections(path=path, msections=m, length=250)
-    sections = {}
-    for key in DT.bagtypes:
-        sections[key] = load_raw_data(path=os.path.join(Dirs.valid, key + ".npy"))
-    m = sections[DT.pos].shape[0]
+    path = os.path.join(Dirs.realdata, "2022_05_01_11_51_35_858887")
+    m = 10
+    sections = makevalidsections(path=path, msections=m, length=50)
+    # sections = {}
+    # for key in DT.bagtypes:
+    #     sections[key] = load_raw_data(path=os.path.join(Dirs.valid, key + ".npy"))
+    # m = sections[DT.pos].shape[0]
     import matplotlib.pyplot as plt
     plt.figure()
     for i in range(m):
         plt.plot(sections[DT.pos][i, :, 0], sections[DT.pos][i, :, 1])
     plt.show()
-    # for key, data in sections.items():
-    #     save_raw_data(data=data, path=os.path.join(Dirs.valid, key))
+    for key, data in sections.items():
+        save_raw_data(data=data, path=os.path.join(Dirs.valid, key))

@@ -47,14 +47,14 @@ if __name__ == "__main__":
     from scripts.constants import Dirs
     import os
     path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
-    engine = MLPBased(path=path)
-    # engine = TCNNBased(path=path, visualize=False)
+    engine = MLPBased(path=path, visualize=True)
+    # engine = TCNNBased(path=path, visualize=True)
     # engine = MujocoEngine(visualize=False)
 
 
-    # sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
-    # sim.simulate()
-    # exit()
+    sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
+    sim.simulate()
+    exit()
 
     from scripts.simulation.datainputwrapper import DataWrapper
     from scripts.datamanagement.datamanagement import loadconfig
