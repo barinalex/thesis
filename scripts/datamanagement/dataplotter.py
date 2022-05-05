@@ -197,12 +197,13 @@ def plotobshistogram():
 def plot_policy_learning_curve(maxtimesteps: int = None):
     """load evaluation callback results and plot as a learning curve"""
 
-    path = os.path.join(Dirs.policy, "mlp_hist5_ppo_2022_05_05_16_37_13_929111" + ".npz")
+    path = os.path.join(Dirs.policy, "mjc_ppo_2022_05_05_18_07_46_972885" + ".npz")
     mj = load_raw_data(path=path)
-    path = os.path.join(Dirs.policy, "mlp_hist5_ppo_2022_05_05_16_37_13_929111" + ".npz")
-    tcnn = load_raw_data(path=path)
+    path = os.path.join(Dirs.policy, "mlp_hist5_penalty_ppo_2022_05_05_20_24_14_023454" + ".npz")
+    mlp = load_raw_data(path=path)
 
     means = np.mean(mj['results'], axis=1)
+    means = np.hstack((0, means.flatten()))
     time = np.arange(maxtimesteps, step=maxtimesteps//means.shape[0]) if maxtimesteps else np.arange(means.shape[0])
 
     figure, axis = plt.subplots(1, 2)
@@ -211,10 +212,11 @@ def plot_policy_learning_curve(maxtimesteps: int = None):
     axis[0].set_ylabel("reward")
     axis[0].plot(time[:means.shape[0]], means)
 
-    means = np.mean(tcnn['results'], axis=1)
+    means = np.mean(mlp['results'], axis=1)
+    means = np.hstack((0, means.flatten()))
     time = np.arange(maxtimesteps, step=maxtimesteps//means.shape[0]) if maxtimesteps else np.arange(means.shape[0])
 
-    axis[1].set_title("TCNN")
+    axis[1].set_title("Data Driven Model")
     axis[1].set_xlabel("timesteps")
     axis[1].set_ylabel("reward")
     axis[1].plot(time[:means.shape[0]], means)
