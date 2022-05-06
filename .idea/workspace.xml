@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="18a7d627-6fa0-4aae-9874-33993ce2790d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controlscripts/agentdriver.py" beforeDir="false" afterPath="$PROJECT_DIR$/controlscripts/agentdriver.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/agent/evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/agent/evaluation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/environments/environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/environments/environment.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +59,7 @@
       <recent name="$PROJECT_DIR$/scripts/models/neuralnetworks" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.evaluation">
+  <component name="RunManager" selected="Python.dataplotter">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="simtoreal2d" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -263,9 +263,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.dataplotter" />
         <item itemvalue="Python.evaluation" />
         <item itemvalue="Python.mujocoengine" />
-        <item itemvalue="Python.dataplotter" />
         <item itemvalue="Python.evaluation (1)" />
         <item itemvalue="Python.queuebuffer" />
       </list>

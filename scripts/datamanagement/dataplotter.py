@@ -256,11 +256,11 @@ if __name__ == "__main__":
     # plotobshistogram()
     # plottrainingdata()
     # exit()
-    plotevals()
+    # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
     # plot_policy_learning_curve(maxtimesteps=3000000)
     # plotexperiment()
-    exit()
+    # exit()
     # pass
 
 
@@ -279,13 +279,15 @@ if __name__ == "__main__":
     #     axis[1].plot(traj[:, 0], traj[:, 1])
     # plt.show()
 
-    lap = load_raw_data(os.path.join(Dirs.trajectories, "lap_pd01_r1_s2.npy"))
-    inf = load_raw_data(os.path.join(Dirs.trajectories, "inf_pd01_r1.npy"))
-    figure, axis = plt.subplots(1, 2)
+    lap = load_raw_data(os.path.join(Dirs.trajectories, "lap_pd02_r1_s2.npy"))
+    inf = load_raw_data(os.path.join(Dirs.trajectories, "inf_pd02_r1.npy"))
+    rand = load_raw_data(os.path.join(Dirs.trajectories, "n1_wps500_smth50_mplr10.npy"))
+    figure, axis = plt.subplots(1, 3)
     axis[0].set_xlabel("X meters")
     axis[0].set_ylabel("Y meters")
     axis[0].plot(lap[0, :, 0], lap[0, :, 1])
     axis[1].set_xlabel("X meters")
-    axis[1].set_ylabel("Y meters")
     axis[1].plot(inf[0, :, 0], inf[0, :, 1])
+    axis[2].set_xlabel("X meters")
+    axis[2].plot(rand[0, :70, 0], rand[0, :70, 1])
     plt.show()
