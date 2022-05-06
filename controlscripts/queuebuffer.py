@@ -56,9 +56,8 @@ class QueueBuffer:
 
 
 if __name__ == '__main__':
-    buf = QueueBuffer(3, -np.ones(3))
-    print(buf.get_vector())
-    buf.add(np.array([1, 0.5, 0.2]))
-    buf.add(np.array([0.2, 0.3, -0.4]))
-    print(buf.get_vector())
+    buf = QueueBuffer(5, np.random.rand(3))
+    state = buf.get_sequential_input()
+    print(state)
+    print(state.mean(axis=1))
 

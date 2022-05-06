@@ -1,6 +1,5 @@
 import time
 import numpy as np
-# import smbus
 from joycontroller import JoyController
 from rsreader import RSReader
 from pwmdriver import PWMDriver
@@ -8,7 +7,6 @@ from utils import loadconfig, gettimestamp, save_raw_data, create_directories
 import logging
 import sys
 import os.path
-import copy
 from agentdriver import AgentDriver
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
@@ -23,7 +21,9 @@ class Controller:
         self.driver = PWMDriver(config=self.config)
         self.JOYStick = JoyController()
         logging.info(f"Controller initialized")
-        self.agent = AgentDriver()
+        self.policy = "mlp" # mlp, mjc
+        self.trajectory = "lap" # inf, lap, rand
+        self.agent = AgentDriver(policy=self.policy, trajectory=self.trajectory)
         logging.info(f"Policy loaded: {sys.getsizeof(self.agent.agent.policy)}")
         self.history = {"pos": [],
                         "orn": [],
@@ -101,7 +101,7 @@ class Controller:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.driver.stop()
-        path = os.path.join("data", gettimestamp())
+        path = os.path.join("data", f"{self.policy}_{self.trajectory}_{gettimestamp()}")
         create_directories(path=path)
         for key, item in self.history.items():
             data = np.asarray(item)
