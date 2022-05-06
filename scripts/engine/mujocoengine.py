@@ -97,18 +97,20 @@ class MujocoEngine(Engine):
         if self.viewer and time.time() - self.start < self.sim.data.time:
             self.viewer.render()
 
-    def set_external_state(self, state_dict):
-        pass
-        # old_state = self.sim.get_state()
-        # qpos = old_state.qpos  # qvel
+    def setstate(self, pos=None, orn=None, vel=None, ang=None):
+        super(MujocoEngine, self).setstate(pos=pos, orn=orn, vel=vel, ang=ang)
+        state = self.sim.get_state()
+        qvel = state.qvel
+        if vel is not None:
+            qvel[:2] = vel[:2]
+        if ang is not None:
+            qvel[5] = ang[2]
         # qpos[0:2] = state_dict["x_pos"], state_dict["y_pos"]
         # quat = e2q(0, 0, state_dict["phi"])
         # qpos[3:7] = quat
-        # new_state = mujoco_py.MjSimState(old_state.time, qpos, old_state.qvel,
-        #                                  old_state.act, old_state.udd_state)
-        #
-        # self.sim.set_state(new_state)
-        # self.sim.forward()
+        new_state = mujoco_py.MjSimState(state.time, state.qpos, qvel, state.act, state.udd_state)
+        self.sim.set_state(new_state)
+        self.sim.forward()
 
     def gatherdata(self, n_steps: int = 3200):
         """
@@ -150,19 +152,19 @@ class MujocoEngine(Engine):
 
 
 if __name__ == "__main__":
-    # from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
-    # iw = JoystickInputWrapper()
+    from scripts.simulation.joystickinputwrapper import JoystickInputWrapper
+    iw = JoystickInputWrapper()
     eng = MujocoEngine(visualize=True)
     # for i in range(10):
     #     eng.movecar(pos=np.array([i, 0]), euler=np.array([0,0,i]))
     #     print(eng.getpos(), eng.getorn())
     #     eng.viewer.render()
     #     time.sleep(1)
-    for i in range(1):
-        print(i)
-        eng.gatherdata(n_steps=5000)
-        eng.reset()
-    exit()
+    # for i in range(1):
+    #     print(i)
+    #     eng.gatherdata(n_steps=5000)
+    #     eng.reset()
+    # exit()
     interrupt = False
     while not interrupt:
         throttle, turn, interrupt = iw.getinput()
