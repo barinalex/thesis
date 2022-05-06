@@ -66,11 +66,11 @@ def evaluate_mlp_based(n: int) -> np.ndarray:
     # engine = TCNNBased(path=path, visualize=True)
     engine = MLPBased(path=path, visualize=True)
     # config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
-    config["trajectories"] = "inf_pd02_r1.npy"
+    # config["trajectories"] = "inf_pd02_r1.npy"
     # config["trajectories"] = "lap_pd02_r1_s2.npy"
-    # config["trajectories"] = "n1_wps500_smth50_mplr10.npy"
+    config["trajectories"] = "n1_wps500_smth50_mplr10.npy"
     env = Environment(config=config, engine=engine, random=False)
-    path = os.path.join(Dirs.policy, "mlp_hist5_penalty_ppo_2022_05_05_20_24_14_023454.zip")
+    path = os.path.join(Dirs.policy, "mlp_hist5_ppo_2022_05_05_16_37_13_929111.zip")
     agent = Agent()
     agent.load(path=path)
     rewards = evaluationloop(env=env, agent=agent, n=n)
@@ -86,8 +86,8 @@ def evaluate_mujoco_based(n: int) -> np.ndarray:
     engine = MujocoEngine(visualize=True)
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
     # config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
-    config["trajectories"] = "inf_pd02_r1.npy"
-    # config["trajectories"] = "lap_pd02_r1_s2.npy"
+    # config["trajectories"] = "inf_pd02_r1.npy"
+    config["trajectories"] = "lap_pd02_r1_s2.npy"
     # config["trajectories"] = "n1_wps500_smth50_mplr10.npy"
     env = Environment(config=config, engine=engine, random=False)
     path = os.path.join(Dirs.policy, "mjc_ppo_2022_05_05_18_07_46_972885.zip")
@@ -119,7 +119,7 @@ if __name__ == "__main__":
     # mujoco_rws = evaluate_mujoco_based(n=1)
     # print(mujoco_rws)
     mlp_rws = evaluate_mlp_based(n=1)
-    print(mlp_rws)
+    # print(mlp_rws)
     # compare_custom2mujoco_based(n=5)
     # history["act"] = np.asarray(history["act"])
     # import matplotlib.pyplot as plt
