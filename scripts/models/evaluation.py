@@ -5,6 +5,7 @@ from scripts.simulation.simulator import Simulator
 from scripts.engine.engine import Engine
 from scripts.engine.mlpbased import MLPBased
 from scripts.engine.tcnnbased import TCNNBased
+from scripts.engine.mujocoengine import MujocoEngine
 from sklearn.metrics import mean_squared_error
 from scripts.constants import Dirs, DT
 import matplotlib.pyplot as plt
@@ -66,8 +67,11 @@ def evalloop(sections, engine: Engine, msections: int) -> (np.ndarray, np.ndarra
         obs = np.hstack((sections[DT.lin][i][0][:2],
                          sections[DT.ang][i][0][2],
                          sections[DT.act][i][0]))
-        for _ in range(engine.buffer.size):
-            engine.buffer.add(obs)
+        try:
+            for _ in range(engine.buffer.size):
+                engine.buffer.add(obs)
+        except:
+            pass
         mse[i], simpositions[i] = evalsection(positions=sections[DT.pos][i][: -1],
                                               actions=sections[DT.act][i],
                                               engine=engine)
@@ -102,23 +106,23 @@ def compareengines():
 
 
 if __name__ == "__main__":
-    compareengines()
-    exit()
+    # compareengines()
+    # exit()
 
     sections = {}
     for key in DT.bagtypes:
         sections[key] = load_raw_data(path=os.path.join(Dirs.valid, key + ".npy"))
 
     epath = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
-    engine = MLPBased(path=epath)
+    # engine = MLPBased(path=epath)
+    engine = MujocoEngine()
 
-    m = 10
+    m = 5
     mse, simpos = evalloop(sections=sections, engine=engine, msections=m)
 
     print(np.mean(mse))
     figure, axis = plt.subplots(1, m)
     for i in range(m):
-        print(mse[i])
         axis[i].set_xlabel("meters")
         axis[0].set_ylabel("meters")
         axis[i].plot(sections[DT.pos][i, :, 0], sections[DT.pos][i, :, 1], color="b")
