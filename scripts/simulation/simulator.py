@@ -46,24 +46,27 @@ if __name__ == "__main__":
     from scripts.engine.identityeng import IdentityEng
     from scripts.constants import Dirs
     import os
-    path = os.path.join(Dirs.models, "mlp_hist5_balanced_2022_05_05_13_18_21_551739")
-    engine = MLPBased(path=path, visualize=True)
+    # path = os.path.join(Dirs.models, "mlp_hist5_balanced_2022_05_05_13_18_21_551739")
+    # engine = MLPBased(path=path, visualize=True)
     # engine = TCNNBased(path=path, visualize=True)
     # engine = MujocoEngine(visualize=False)
 
 
-    sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
-    sim.simulate()
-    exit()
+    # sim = Simulator(iw=JoystickInputWrapper(), engine=engine)
+    # sim.simulate()
+    # exit()
 
     from scripts.simulation.datainputwrapper import DataWrapper
     from scripts.datamanagement.datamanagement import loadconfig
-    from scripts.datamanagement.datamanagementutils import load_raw_data
-    config = loadconfig(f"{path}.yaml")
+    from scripts.datamanagement.datamanagementutils import load_raw_data, save_raw_data
+    # config = loadconfig(f"{path}.yaml")
 
-    limit = 1000
-    episodes = ["2022_05_01_11_57_36_659432", "2022_05_01_12_00_50_750831",
-                "2022_05_01_12_10_36_731951", "2022_05_01_12_14_00_452235"]
+    limit = 2000
+    episodes = ["2022_05_01_11_51_35_858887",
+                "2022_05_01_11_57_36_659432",
+                "2022_05_01_12_00_50_750831",
+                "2022_05_01_12_10_36_731951",
+                "2022_05_01_12_14_00_452235"]
 
     import matplotlib.pyplot as plt
     figure, axis = plt.subplots(1, len(episodes))
@@ -71,19 +74,19 @@ if __name__ == "__main__":
     # sfigure, saxis = plt.subplots(1, len(episodes))
     for i, episode in enumerate(episodes):
         path = os.path.join(Dirs.realdata, episode)
-        # engine = IdentityEng(datadir=episode)
+        engine = IdentityEng(datadir=episode)
         positions = -load_raw_data(path=f"{path}/positions.npy")
         actions = load_raw_data(path=f"{path}/actions.npy")
         actions[:, 0] = actions[:, 0] * 2 - 1
         linear = load_raw_data(path=f"{path}/linear.npy")
         angular = load_raw_data(path=f"{path}/angular.npy")
-        sim = Simulator(iw=DataWrapper(actions=actions[:limit]), engine=engine)
+        sim = Simulator(iw=DataWrapper(actions=actions[:]), engine=engine)
         simpositions = sim.simulate()
         engine.reset()
         # axis[i].legend(['gt', 'sim'])
         axis[i].set_xlabel("meters")
         axis[0].set_ylabel("meters")
-        axis[i].plot(positions[:limit, 0], positions[:limit, 1], color='b')
+        axis[i].plot(positions[:, 0], positions[:, 1], color='b')
         axis[i].plot(simpositions[:, 0], simpositions[:, 1], color='r')
         #
         # taxis[i].set_xlabel("timestamp")

@@ -18,6 +18,7 @@ class IdentityEng(ModelBased):
         apath = os.path.join(path, f"{DT.ang}.npy")
         self.linear = load_raw_data(path=lpath)
         self.angular = load_raw_data(path=apath)
+        self.state.set(vel=self.linear[0], ang=self.angular[0])
         self.counter = 1
 
     def initializemodel(self) -> IdentityModel:

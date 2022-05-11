@@ -6,6 +6,7 @@ class DT:
     string data types container
     """
     pos = "positions"
+    dpos = "derivedpos"
     orn = "orientation"
     lin = "linear"
     ang = "angular"
