@@ -263,7 +263,6 @@ if __name__ == "__main__":
     exit()
     # pass
 
-
     # points = load_raw_data(os.path.join(Dirs.trajectories, "n1000_wps500_smth50_mplr10.npy"))
     # points = points[:, :70, :]
     #

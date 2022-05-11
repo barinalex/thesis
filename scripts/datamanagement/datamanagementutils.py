@@ -276,16 +276,15 @@ def makevalidsections(path: str, msections: int, length: int) -> dict:
     :return: ground truth sections dictionary with position, actions, velocities.
         shape of data (m, length, 2))
     """
-    gt = {key: load_raw_data(path=os.path.join(path, f"{key}.npy")) for key in DT.bagtypes}
-    gt[DT.pos] = -gt[DT.pos]
-    n = gt[DT.pos].shape[0]
-    sections = {key: np.zeros((msections, length, gt[key].shape[1])) for key in DT.bagtypes}
+    gt = {key: load_raw_data(path=os.path.join(path, f"{key}.npy")) for key in DT.validtypes}
+    n = gt[DT.dpos].shape[0]
+    sections = {key: np.zeros((msections, length, gt[key].shape[1])) for key in DT.validtypes}
     for i in range(msections):
         start = np.random.randint(n - length)
         indices = np.arange(start, start + length)
-        for key in DT.bagtypes:
+        for key in DT.validtypes:
             sections[key][i] = gt[key][indices]
-        sections[DT.pos][i] = trajectory2xaxis(gt[DT.pos][indices] - gt[DT.pos][start])
+        sections[DT.dpos][i] = trajectory2xaxis(gt[DT.dpos][indices] - gt[DT.dpos][start])
     return sections
 
 
@@ -302,13 +301,13 @@ if __name__ == "__main__":
     # reducefrequency()
 
     pass
-    path = os.path.join(Dirs.realdata, "2022_05_01_11_51_35_858887")
+    # path = os.path.join(Dirs.realdata, "2022_05_01_11_51_35_858887")
     m = 10
-    sections = makevalidsections(path=path, msections=m, length=50)
-    # sections = {}
-    # for key in DT.bagtypes:
-    #     sections[key] = load_raw_data(path=os.path.join(Dirs.valid, key + ".npy"))
-    # m = sections[DT.pos].shape[0]
+    # sections = makevalidsections(path=path, msections=m, length=100)
+    sections = {}
+    for key in DT.bagtypes:
+        sections[key] = load_raw_data(path=os.path.join(Dirs.valid, key + ".npy"))
+    m = sections[DT.pos].shape[0]
     import matplotlib.pyplot as plt
     plt.figure()
     for i in range(m):

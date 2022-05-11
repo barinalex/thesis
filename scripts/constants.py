@@ -17,6 +17,7 @@ class DT:
     typeslist = [pos, orn, lin, ang, act]
     traintesttypes = [lin, ang, act]
     bagtypes = [pos, lin, ang, act]
+    validtypes = [dpos, lin, ang, act]
 
 
 class Dirs:
