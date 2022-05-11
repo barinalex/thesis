@@ -301,9 +301,13 @@ if __name__ == "__main__":
     # reducefrequency()
 
     pass
-    # path = os.path.join(Dirs.realdata, "2022_05_01_11_51_35_858887")
+    path = os.path.join(Dirs.realdata, "2022_05_01_11_51_35_858887")
     m = 10
-    # sections = makevalidsections(path=path, msections=m, length=100)
+    sections = makevalidsections(path=path, msections=m, length=100)
+    sections[DT.pos] = sections[DT.dpos]
+    sections.pop(DT.dpos)
+    for key, data in sections.items():
+        save_raw_data(data=data, path=os.path.join(Dirs.valid, key))
     sections = {}
     for key in DT.bagtypes:
         sections[key] = load_raw_data(path=os.path.join(Dirs.valid, key + ".npy"))
@@ -313,5 +317,3 @@ if __name__ == "__main__":
     for i in range(m):
         plt.plot(sections[DT.pos][i, :, 0], sections[DT.pos][i, :, 1])
     plt.show()
-    for key, data in sections.items():
-        save_raw_data(data=data, path=os.path.join(Dirs.valid, key))

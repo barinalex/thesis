@@ -10,6 +10,7 @@ from sklearn.metrics import mean_squared_error
 from scripts.constants import Dirs, DT
 import matplotlib.pyplot as plt
 from scripts.datamanagement.datamanagementutils import load_raw_data
+from scripts.utils.linalg_utils import trajectory2xaxis
 
 
 def computeorientations(pos) -> np.ndarray:
@@ -46,6 +47,7 @@ def evalsection(positions: np.ndarray, actions: np.ndarray, engine: Engine) -> (
     inputwrapper = DataWrapper(actions=actions)
     sim = Simulator(iw=inputwrapper, engine=engine)
     simpositions = sim.simulate()
+    simpositions = trajectory2xaxis(simpositions - simpositions[0])
     return mean_squared_error(positions[:, :2], simpositions[:, :2]), simpositions[:, :2]
     # return custommse(positions[:, :2], simpositions[:, :2]), simpositions[:, :2]
 
@@ -80,28 +82,32 @@ def evalloop(sections, engine: Engine, msections: int) -> (np.ndarray, np.ndarra
 
 
 def compareengines():
-    mlppath = os.path.join(Dirs.models, "mlp_hist5_2022_05_05_11_23_43_430257")
-    histpath = os.path.join(Dirs.models, "mlp_unfilt_2022_05_05_13_22_16_555707")
+    mlppath = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
+    histpath = os.path.join(Dirs.models, "mlp_hist5_2022_05_05_11_23_43_430257")
     tcnnpath = os.path.join(Dirs.models, "tcnn_2022_05_05_11_41_16_804864")
-    mlp = (MLPBased(path=mlppath), "History MLP")
-    hist = (MLPBased(path=histpath), "History MLP unfiltered")
+    mlp = (MLPBased(path=mlppath), "MLP")
+    hist = (MLPBased(path=histpath), "MLP with history of observations")
     tcnn = (TCNNBased(path=tcnnpath), "TCNN")
-    engines = [mlp, hist]
+    engines = [mlp, hist, tcnn]
 
     m = 5
     sections = {}
     for key in DT.bagtypes:
-        sections[key] = load_raw_data(path=os.path.join(Dirs.valid, key + ".npy"))
+        sections[key] = load_raw_data(path=os.path.join(Dirs.valid, key + ".npy"))[:, :100]
 
     figure, axis = plt.subplots(len(engines), m)
     for i, engine in enumerate(engines):
         mse, simpos = evalloop(sections=sections, engine=engine[0], msections=m)
         print(f"{engine[1]} MSE:", np.mean(mse))
-        axis[i][0].set_ylabel(engine[1])
+        axis[i][2].set_title(engine[1])
         for j in range(m):
-            # axis[i][j].set_xlabel("meters")
             axis[i][j].plot(sections[DT.pos][j, :, 0], sections[DT.pos][j, :, 1], color="b")
             axis[i][j].plot(simpos[j, :, 0], simpos[j, :, 1], color="r")
+
+    for ax in axis.flat:
+        ax.set(xlabel='x-axis', ylabel='y-axis')
+    for ax in axis.flat:
+        ax.label_outer()
     plt.show()
 
 
@@ -122,11 +128,14 @@ if __name__ == "__main__":
 
     print(np.mean(mse))
     figure, axis = plt.subplots(1, m)
+    axis[2].set_title("MuJoCo")
     for i in range(m):
-        axis[i].set_xlabel("meters")
-        axis[0].set_ylabel("meters")
         axis[i].plot(sections[DT.pos][i, :, 0], sections[DT.pos][i, :, 1], color="b")
         axis[i].plot(simpos[i, :, 0], simpos[i, :, 1], color="r")
+    for ax in axis.flat:
+        ax.set(xlabel='x-axis', ylabel='y-axis')
+    for ax in axis.flat:
+        ax.label_outer()
     plt.show()
 
     # positions = -load_raw_data(path=os.path.join(path, "positions.npy"))
