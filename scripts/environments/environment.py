@@ -123,13 +123,12 @@ class Environment(Env):
             to a state s_t+1 with an action a_t
         """
         reward = 1 if self.wpclosed else 0
-        # pos = self.engine.getpos()[:2]
-        # deviation = self.waypointer.distance_to_trajectory(pos=pos)
-        # a, b, g = self.get_driving_angles()
-        # dpenalty = deviation * 0.05
-        # apenalty = g * 0.05
-        # print(reward, dpenalty, apenalty, reward - dpenalty - apenalty)
-        return reward #- dpenalty #- apenalty
+        pos = self.engine.getpos()[:2]
+        deviation = self.waypointer.distance_to_trajectory(pos=pos)
+        a, b, g = self.get_driving_angles()
+        dpenalty = deviation * 0.01
+        apenalty = g * 0.01
+        return reward - dpenalty - apenalty
 
     def computenormtothegoal(self):
         """

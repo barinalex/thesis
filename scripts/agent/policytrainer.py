@@ -57,7 +57,7 @@ class PolicyTrainer:
         :return: stable-baseline3 callback instance
         """
         eval_freq = int(self.config['callback_freq']) # * self.config['n_cpu'])
-        path = os.path.join(Dirs.models, "mlp_hist5_2022_05_05_11_23_43_430257")
+        path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
         # engine = TCNNBased(path=path, visualize=False)
         # engine = MujocoEngine()
         engine = MLPBased(path=path)
@@ -110,12 +110,12 @@ if __name__ == "__main__":
     config = loadconfig(path=path)
     path = os.path.join(Dirs.configs, "env.yaml")
     config.update(loadconfig(path=path))
-    path = os.path.join(Dirs.models, "mlp_hist5_2022_05_05_11_23_43_430257")
+    path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
     # engine = TCNNBased(path=path)
     engine = MLPBased(path=path)
     # engine = MujocoEngine()
     trainer = PolicyTrainer(engine=engine, config=config)
     trainer.train()
     timestamp = gettimestamp()
-    path = os.path.join(Dirs.policy, f"mlp_hist5_penalty_ppo_{timestamp}")
+    path = os.path.join(Dirs.policy, f"mlp_penalty_ppo_{timestamp}")
     trainer.save(path=path)
