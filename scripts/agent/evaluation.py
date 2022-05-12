@@ -144,7 +144,7 @@ def getexperimentresults(path: str, n: int = 500) -> float:
     return float(np.sum(history["rewards"][:n]))
 
 
-def getmean_exprewards(paths: list, n: int = 500) -> (float, float):
+def getexperiment_stats(paths: list, n: int = 500) -> (float, float):
     """
     :param paths: list of full paths to directories with experiment results
     :param n: take first n timesteps
@@ -156,7 +156,11 @@ def getmean_exprewards(paths: list, n: int = 500) -> (float, float):
 
 def evaluate_experiments():
     experiments = ["mjc_inf", "mjc_lap", "mjc_rand", "mlp_inf", "mlp_lap", "mlp_rand"]
-
+    for experiment in experiments:
+        pathname = os.path.join(Dirs.experiments, "[3|4]", experiment + "*")
+        paths = [path for path in glob.glob(pathname=pathname)]
+        mean, std = getexperiment_stats(paths=paths, n=1000)
+        print(f"experiment: {experiment}; mean: {mean}; std:{std}")
 
 
 if __name__ == "__main__":
@@ -171,6 +175,4 @@ if __name__ == "__main__":
     # plt.plot(np.arange(len(history["act"])), history["act"][:, 0])
     # # plt.plot(history["pos"][autoindices, 0], history["pos"][autoindices, 1])
     # plt.show()
-    path = os.path.join(Dirs.experiments, "3", "mjc_rand_2022_05_02_10_24_39_675144")
-    rewards = getexperimentresults(path=path)
-    print(rewards)
+    evaluate_experiments()
