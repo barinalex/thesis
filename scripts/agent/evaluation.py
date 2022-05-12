@@ -8,6 +8,7 @@ from scripts.environments.environment import Environment
 from scripts.engine.mujocoengine import MujocoEngine
 from scripts.engine.tcnnbased import TCNNBased
 from scripts.engine.mlpbased import MLPBased
+import glob
 
 
 history = {"act": [],
@@ -116,38 +117,60 @@ def compare_custom2mujoco_based(n: int):
     print(np.std(mujoco_rws, axis=0))
 
 
-def getexperimentresults():
-    path = os.path.join(Dirs.experiments, "3", "mjc_rand_2022_05_02_10_24_39_675144")
-    history = {"pos": [],
-               "orn": [],
-               "ipos": [],
-               "iorn": [],
-               "euler": [],
-               "lin": [],
-               "ang": [],
-               "timestamp": [],
-               "updated": [],
-               "act": [],
-               "servos": [],
+def getexperimentresults(path: str, n: int = 500) -> float:
+    """
+    :param path: full path to a directory with experiment results
+    :param n: take first n timesteps
+    :return: sum of rewards
+    """
+    history = {
+               # "pos": [],
+               # "orn": [],
+               # "ipos": [],
+               # "iorn": [],
+               # "euler": [],
+               # "lin": [],
+               # "ang": [],
+               # "timestamp": [],
+               # "updated": [],
+               # "act": [],
+               # "servos": [],
                "rewards": [],
-               "auto": [],
-               "acttime": []
+               # "auto": [],
+               # "acttime": []
                }
     for key in history.keys():
         history[key] = load_raw_data(path=os.path.join(path, key + ".npy"))
-        print(key, history[key].shape)
-    print("rewards sum:", np.sum(history["rewards"][:500]))
+    return float(np.sum(history["rewards"][:n]))
+
+
+def getmean_exprewards(paths: list, n: int = 500) -> (float, float):
+    """
+    :param paths: list of full paths to directories with experiment results
+    :param n: take first n timesteps
+    :return: mean sum of rewards, standard deviation
+    """
+    results = np.asarray([getexperimentresults(path=path, n=n) for path in paths])
+    return np.mean(results), np.std(results)
+
+
+def evaluate_experiments():
+    experiments = ["mjc_inf", "mjc_lap", "mjc_rand", "mlp_inf", "mlp_lap", "mlp_rand"]
+
+
 
 if __name__ == "__main__":
     # mujoco_rws = evaluate_mujoco_based(n=1)
     # print(mujoco_rws)
     # mlp_rws = evaluate_mlp_based(n=1)
     # print(mlp_rws)
-    compare_custom2mujoco_based(n=1)
+    # compare_custom2mujoco_based(n=1)
     # history["act"] = np.asarray(history["act"])
     # import matplotlib.pyplot as plt
     # plt.figure()
     # plt.plot(np.arange(len(history["act"])), history["act"][:, 0])
     # # plt.plot(history["pos"][autoindices, 0], history["pos"][autoindices, 1])
     # plt.show()
-
+    path = os.path.join(Dirs.experiments, "3", "mjc_rand_2022_05_02_10_24_39_675144")
+    rewards = getexperimentresults(path=path)
+    print(rewards)
