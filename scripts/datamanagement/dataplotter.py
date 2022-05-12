@@ -2,7 +2,7 @@ import numpy as np
 import itertools
 import matplotlib.pyplot as plt
 from scripts.datamanagement.datamanagement import loadconfig, get_data
-from scripts.datamanagement.datamanagementutils import load_raw_data, reshape_no_batches, readjson
+from scripts.datamanagement.utils import load_raw_data, reshape_no_batches, readjson
 from scripts.constants import Dirs, DT
 import os
 

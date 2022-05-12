@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     from scripts.simulation.datainputwrapper import DataWrapper
     from scripts.datamanagement.datamanagement import loadconfig
-    from scripts.datamanagement.datamanagementutils import load_raw_data, save_raw_data
+    from scripts.datamanagement.utils import load_raw_data, save_raw_data
     # config = loadconfig(f"{path}.yaml")
 
     limit = 2000

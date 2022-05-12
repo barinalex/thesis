@@ -5,7 +5,7 @@ from scripts.models.model import Model
 from scripts.models.neuralnetworks.mlp import MLP
 from scripts.models.neuralnetworks.trainer import Trainer
 from scripts.datamanagement.datamanagement import loadconfig, get_data
-from scripts.datamanagement.datamanagementutils import save_raw_data
+from scripts.datamanagement.utils import save_raw_data
 from scripts.constants import Dirs
 import torch
 

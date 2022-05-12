@@ -9,7 +9,7 @@ from scripts.engine.mujocoengine import MujocoEngine
 from sklearn.metrics import mean_squared_error
 from scripts.constants import Dirs, DT
 import matplotlib.pyplot as plt
-from scripts.datamanagement.datamanagementutils import load_raw_data
+from scripts.datamanagement.utils import load_raw_data
 from scripts.utils.linalg_utils import trajectory2xaxis
 
 

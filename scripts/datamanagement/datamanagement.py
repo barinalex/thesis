@@ -6,7 +6,7 @@ import yaml
 import glob
 from typing import List
 from scripts.constants import DT, Dirs
-from scripts.datamanagement.datamanagementutils import *
+from scripts.datamanagement.utils import *
 from scripts.datamanagement.databalancing import *
 from scripts.datamanagement.datafilters import *
 

@@ -153,7 +153,7 @@ class Waypointer:
 
 
 if __name__ == "__main__":
-    from scripts.datamanagement.datamanagementutils import load_raw_data
+    from scripts.datamanagement.utils import load_raw_data
     from scripts.constants import Dirs, DT
     import os
     points = load_raw_data(os.path.join(Dirs.trajectories, "n1000_wps500_smth50.npy"))

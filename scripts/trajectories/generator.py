@@ -317,7 +317,7 @@ def generate_random_trajectories(n: int = 100) -> np.ndarray:
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
     from scripts.constants import Dirs
-    from scripts.datamanagement.datamanagementutils import save_raw_data, load_raw_data
+    from scripts.datamanagement.utils import save_raw_data, load_raw_data
 
     # wps = generate_infinity(points_distance=0.2, radius=1)
     # wps = generate_lap(points_distance=0.2, radius=0.2, straight_length=2)

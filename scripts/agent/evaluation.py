@@ -2,6 +2,7 @@ import numpy as np
 import os
 from scripts.constants import Dirs
 from scripts.agent.agent import Agent
+from scripts.datamanagement.utils import load_raw_data
 from scripts.datamanagement.datamanagement import loadconfig
 from scripts.environments.environment import Environment
 from scripts.engine.mujocoengine import MujocoEngine
@@ -114,6 +115,28 @@ def compare_custom2mujoco_based(n: int):
     print(np.mean(mujoco_rws, axis=0))
     print(np.std(mujoco_rws, axis=0))
 
+
+def getexperimentresults():
+    path = os.path.join(Dirs.experiments, "3", "mjc_rand_2022_05_02_10_24_39_675144")
+    history = {"pos": [],
+               "orn": [],
+               "ipos": [],
+               "iorn": [],
+               "euler": [],
+               "lin": [],
+               "ang": [],
+               "timestamp": [],
+               "updated": [],
+               "act": [],
+               "servos": [],
+               "rewards": [],
+               "auto": [],
+               "acttime": []
+               }
+    for key in history.keys():
+        history[key] = load_raw_data(path=os.path.join(path, key + ".npy"))
+        print(key, history[key].shape)
+    print("rewards sum:", np.sum(history["rewards"][:500]))
 
 if __name__ == "__main__":
     # mujoco_rws = evaluate_mujoco_based(n=1)

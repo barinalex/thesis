@@ -8,7 +8,7 @@ from multiprocessing import Lock
 from scripts.engine.engine import Engine
 from scripts.utils.simplexactionnoise import SimplexNoise
 from scripts.datamanagement.pathmanagement import gettimestamp, create_directories
-from scripts.datamanagement.datamanagementutils import save_raw_data
+from scripts.datamanagement.utils import save_raw_data
 mutex = Lock()
 
 mj_path = mujoco_py.utils.discover_mujoco()

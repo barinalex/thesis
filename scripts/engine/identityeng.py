@@ -2,7 +2,7 @@ import os.path
 
 from scripts.engine.modelbased import ModelBased
 from scripts.models.identitymodel import IdentityModel
-from scripts.datamanagement.datamanagementutils import load_raw_data
+from scripts.datamanagement.utils import load_raw_data
 from scripts.constants import Dirs, DT
 import numpy as np
 
