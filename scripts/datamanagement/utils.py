@@ -303,7 +303,7 @@ if __name__ == "__main__":
     pass
     path = os.path.join(Dirs.realdata, "2022_05_01_11_51_35_858887")
     m = 10
-    sections = makevalidsections(path=path, msections=m, length=100)
+    sections = makevalidsections(path=path, msections=m, length=500)
     sections[DT.pos] = sections[DT.dpos]
     sections.pop(DT.dpos)
     for key, data in sections.items():

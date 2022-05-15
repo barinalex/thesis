@@ -93,7 +93,7 @@ def compareengines():
     m = 5
     sections = {}
     for key in DT.bagtypes:
-        sections[key] = load_raw_data(path=os.path.join(Dirs.valid, key + ".npy"))[:, :100]
+        sections[key] = load_raw_data(path=os.path.join(Dirs.valid, key + ".npy"))[:, :200]
 
     figure, axis = plt.subplots(len(engines), m)
     for i, engine in enumerate(engines):
