@@ -80,11 +80,11 @@ def plothistograms(data: np.ndarray):
 
 def plotevals():
 
-    path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419.evals" + ".npy")
+    path = os.path.join(Dirs.models, "mlp_unfilt_2022_05_15_12_06_40_020544.evals" + ".npy")
     mlpevals = load_raw_data(path=path)
-    path = os.path.join(Dirs.models, "mlp_hist5_2022_05_05_11_23_43_430257.evals" + ".npy")
+    path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419.evals" + ".npy")
     histevals = load_raw_data(path=path)
-    path = os.path.join(Dirs.models, "tcnn_2022_05_05_11_41_16_804864.evals" + ".npy")
+    path = os.path.join(Dirs.models, "mlp_augmented_2022_05_15_12_10_30_303065.evals" + ".npy")
     tcnnevals = load_raw_data(path=path)
 
     epochs = np.arange(mlpevals.shape[0])
@@ -96,23 +96,26 @@ def plotevals():
     axis[0].plot(epochs, mlpevals[:, 0], color='b')
     axis[0].plot(epochs, mlpevals[:, 1], color='r')
     axis[0].legend(['train loss', 'test loss'])
+    axis[0].grid()
 
     epochs = np.arange(histevals.shape[0])
-    axis[1].set_title("History MLP")
+    axis[1].set_title("MLP, k=5 pastmean")
     axis[1].set_xlabel("epochs")
     # axis[1].set_ylabel("loss")
     axis[1].plot(epochs, histevals[:, 0], color='b')
     axis[1].plot(epochs, histevals[:, 1], color='r')
     axis[1].legend(['train loss', 'test loss'])
+    axis[1].grid()
 
     epochs = np.arange(tcnnevals.shape[0])
 
-    axis[2].set_title("TCNN")
+    axis[2].set_title("MLP, augmented")
     axis[2].set_xlabel("epochs")
     # axis[2].set_ylabel("loss")
     axis[2].plot(epochs, tcnnevals[:, 0], color='b')
     axis[2].plot(epochs, tcnnevals[:, 1], color='r')
     axis[2].legend(['train loss', 'test loss'])
+    axis[2].grid()
     plt.show()
 
 
@@ -199,7 +202,7 @@ def plot_policy_learning_curve(maxtimesteps: int = None):
 
     path = os.path.join(Dirs.policy, "mjc_ppo_2022_05_05_18_07_46_972885" + ".npz")
     mj = load_raw_data(path=path)
-    path = os.path.join(Dirs.policy, "mlp_hist5_penalty_ppo_2022_05_05_20_24_14_023454" + ".npz")
+    path = os.path.join(Dirs.policy, "evaluations" + ".npz")
     mlp = load_raw_data(path=path)
 
     means = np.mean(mj['results'], axis=1)
@@ -207,19 +210,21 @@ def plot_policy_learning_curve(maxtimesteps: int = None):
     time = np.arange(maxtimesteps, step=maxtimesteps//means.shape[0]) if maxtimesteps else np.arange(means.shape[0])
 
     figure, axis = plt.subplots(1, 2)
-    axis[0].set_title("MuJoCo")
+    axis[0].set_title("MLP")
     axis[0].set_xlabel("timesteps")
     axis[0].set_ylabel("reward")
     axis[0].plot(time[:means.shape[0]], means)
+    axis[0].grid()
 
     means = np.mean(mlp['results'], axis=1)
     means = np.hstack((0, means.flatten()))
     time = np.arange(maxtimesteps, step=maxtimesteps//means.shape[0]) if maxtimesteps else np.arange(means.shape[0])
 
-    axis[1].set_title("Data Driven Model")
+    axis[1].set_title("MJC free")
     axis[1].set_xlabel("timesteps")
     axis[1].set_ylabel("reward")
     axis[1].plot(time[:means.shape[0]], means)
+    axis[1].grid()
     plt.show()
 
 
@@ -258,9 +263,9 @@ if __name__ == "__main__":
     # exit()
     # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
-    # plot_policy_learning_curve(maxtimesteps=3000000)
+    plot_policy_learning_curve(maxtimesteps=3000000)
     # plotexperiment()
-    # exit()
+    exit()
     # pass
 
     points = load_raw_data(os.path.join(Dirs.trajectories, "n1000_wps500_smth50_mplr10.npy"))

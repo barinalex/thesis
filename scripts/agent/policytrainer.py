@@ -69,6 +69,7 @@ class PolicyTrainer:
                             log_path=Dirs.policy,
                             eval_freq=eval_freq,
                             n_eval_episodes=10,
+                            best_model_save_path=Dirs.policy,
                             deterministic=True,
                             render=False)
 

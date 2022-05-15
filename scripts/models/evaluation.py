@@ -82,12 +82,12 @@ def evalloop(sections, engine: Engine, msections: int) -> (np.ndarray, np.ndarra
 
 
 def compareengines():
-    mlppath = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
-    histpath = os.path.join(Dirs.models, "mlp_hist5_2022_05_05_11_23_43_430257")
-    tcnnpath = os.path.join(Dirs.models, "tcnn_2022_05_05_11_41_16_804864")
+    mlppath = os.path.join(Dirs.models, "mlp_unfilt_2022_05_15_12_06_40_020544")
+    histpath = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
+    tcnnpath = os.path.join(Dirs.models, "mlp_augmented_2022_05_15_12_10_30_303065")
     mlp = (MLPBased(path=mlppath), "MLP")
-    hist = (MLPBased(path=histpath), "MLP with history of observations")
-    tcnn = (TCNNBased(path=tcnnpath), "TCNN")
+    hist = (MLPBased(path=histpath), "MLP, filtered")
+    tcnn = (MLPBased(path=tcnnpath), "MLP augmented")
     engines = [mlp, hist, tcnn]
 
     m = 5
@@ -103,6 +103,7 @@ def compareengines():
         for j in range(m):
             axis[i][j].plot(sections[DT.pos][j, :, 0], sections[DT.pos][j, :, 1], color="b")
             axis[i][j].plot(simpos[j, :, 0], simpos[j, :, 1], color="r")
+            axis[i][j].grid()
 
     for ax in axis.flat:
         ax.set(xlabel='x-axis', ylabel='y-axis')

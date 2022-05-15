@@ -51,6 +51,6 @@ def finetunemlp():
 
 
 if __name__ == "__main__":
-    trainmlp(tag="_unfilt")
+    trainmlp(tag="_augmented")
     # traincnn()
     # finetunemlp()
