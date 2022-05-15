@@ -2,8 +2,8 @@ callback_freq: 50000
 clip_range: 0.2
 ent_coef: 0.0
 gamma: 0.998
-learning_rate: 0.0005
+learning_rate: 0.0003
 n_cpu: 1
 policy: MlpPolicy
 policy_kwargs: dict(activation_fn=nn.ReLU, net_arch=[dict(pi=[64, 64], vf=[64, 64])])
-timesteps: 4000000
+timesteps: 5000000

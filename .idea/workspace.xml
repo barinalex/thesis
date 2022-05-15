@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="18a7d627-6fa0-4aae-9874-33993ce2790d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/agent/evaluation.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/agent/evaluation.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/datamanagement/dataplotter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/ppo.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/ppo.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/agent/policytrainer.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/agent/policytrainer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/environments/environment.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/environments/environment.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
