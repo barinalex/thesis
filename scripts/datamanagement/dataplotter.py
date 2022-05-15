@@ -202,7 +202,7 @@ def plot_policy_learning_curve(maxtimesteps: int = None):
 
     path = os.path.join(Dirs.policy, "mjc_ppo_2022_05_05_18_07_46_972885" + ".npz")
     mj = load_raw_data(path=path)
-    path = os.path.join(Dirs.policy, "evaluations" + ".npz")
+    path = os.path.join(Dirs.policy, "mjc_free_ppo_2022_05_15_15_05_14_337639" + ".npz")
     mlp = load_raw_data(path=path)
 
     means = np.mean(mj['results'], axis=1)
@@ -263,7 +263,7 @@ if __name__ == "__main__":
     # exit()
     # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
-    plot_policy_learning_curve(maxtimesteps=3000000)
+    plot_policy_learning_curve(maxtimesteps=5000000)
     # plotexperiment()
     exit()
     # pass
