@@ -67,7 +67,7 @@ def evaluate_mlp_based(n: int, pname: str = "mlp_hist5_ppo_2022_05_05_16_37_13_9
     path = os.path.join(Dirs.models, "mlp_hist5_2022_05_05_11_23_43_430257")
     # engine = TCNNBased(path=path, visualize=True)
     engine = MLPBased(path=path, visualize=False)
-    config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
+    config["trajectories"] = "n1000_wps500_smth50_mplr10.npy"
     # config["trajectories"] = "inf_pd02_r1.npy"
     # config["trajectories"] = "lap_pd02_r1_s2.npy"
     # config["trajectories"] = "n1_wps500_smth50_mplr10.npy"
@@ -85,9 +85,9 @@ def evaluate_mujoco_based(n: int, pname: str = "mjc_ppo_2022_05_05_18_07_46_9728
 
     :return: list of rewards for each episodes
     """
-    engine = MujocoEngine(visualize=True)
+    engine = MujocoEngine(visualize=False)
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
+    config["trajectories"] = "n1000_wps500_smth50_mplr10.npy"
     # config["trajectories"] = "inf_pd02_r1.npy"
     # config["trajectories"] = "lap_pd02_r1_s2.npy"
     # config["trajectories"] = "n1_wps500_smth50_mplr10.npy"
@@ -175,11 +175,11 @@ def evaluate_experiments():
 
 
 if __name__ == "__main__":
-    mujoco_rws = evaluate_mujoco_based(pname="best_model", n=1)
-    print(mujoco_rws)
+    # mujoco_rws = evaluate_mujoco_based(pname="best_model", n=1)
+    # print(mujoco_rws)
     # mlp_rws = evaluate_mlp_based(n=1)
     # print(mlp_rws)
-    # compare_custom2mujoco_based(n=10)
+    compare_custom2mujoco_based(n=10)
     # history["act"] = np.asarray(history["act"])
     # import matplotlib.pyplot as plt
     # plt.figure()
