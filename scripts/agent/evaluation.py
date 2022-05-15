@@ -57,7 +57,7 @@ def evaluate_tcnn_based(n: int) -> np.ndarray:
     return rewards
 
 
-def evaluate_mlp_based(n: int) -> np.ndarray:
+def evaluate_mlp_based(n: int, pname: str = "mlp_hist5_ppo_2022_05_05_16_37_13_929111.zip") -> np.ndarray:
     """
     :param n: number of episodes
 
@@ -67,19 +67,19 @@ def evaluate_mlp_based(n: int) -> np.ndarray:
     path = os.path.join(Dirs.models, "mlp_hist5_2022_05_05_11_23_43_430257")
     # engine = TCNNBased(path=path, visualize=True)
     engine = MLPBased(path=path, visualize=False)
-    # config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
+    config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
     # config["trajectories"] = "inf_pd02_r1.npy"
     # config["trajectories"] = "lap_pd02_r1_s2.npy"
-    config["trajectories"] = "n1_wps500_smth50_mplr10.npy"
+    # config["trajectories"] = "n1_wps500_smth50_mplr10.npy"
     env = Environment(config=config, engine=engine, random=False)
-    path = os.path.join(Dirs.policy, "mlp_hist5_ppo_2022_05_05_16_37_13_929111.zip")
+    path = os.path.join(Dirs.policy, pname)
     agent = Agent()
     agent.load(path=path)
     rewards = evaluationloop(env=env, agent=agent, n=n)
     return rewards
 
 
-def evaluate_mujoco_based(n: int) -> np.ndarray:
+def evaluate_mujoco_based(n: int, pname: str = "mjc_ppo_2022_05_05_18_07_46_972885.zip") -> np.ndarray:
     """
     :param n: number of episodes
 
@@ -87,12 +87,12 @@ def evaluate_mujoco_based(n: int) -> np.ndarray:
     """
     engine = MujocoEngine(visualize=False)
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    # config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
+    config["trajectories"] = "n10_wps500_smth50_mplr10.npy"
     # config["trajectories"] = "inf_pd02_r1.npy"
     # config["trajectories"] = "lap_pd02_r1_s2.npy"
-    config["trajectories"] = "n1_wps500_smth50_mplr10.npy"
+    # config["trajectories"] = "n1_wps500_smth50_mplr10.npy"
     env = Environment(config=config, engine=engine, random=False)
-    path = os.path.join(Dirs.policy, "mjc_ppo_2022_05_05_18_07_46_972885.zip")
+    path = os.path.join(Dirs.policy, pname)
     agent = Agent()
     agent.load(path=path)
     rewards = evaluationloop(env=env, agent=agent, n=n)
@@ -108,11 +108,22 @@ def compare_custom2mujoco_based(n: int):
     custom_rws = evaluate_mlp_based(n=n)
     mujoco_rws = evaluate_mujoco_based(n=n)
     print("CUSTOM REWARDS")
-    print(custom_rws)
+    # print(custom_rws)
     print(np.mean(custom_rws, axis=0))
     print(np.std(custom_rws, axis=0))
     print("MUJOCO REWARDS")
-    print(mujoco_rws)
+    # print(mujoco_rws)
+    print(np.mean(mujoco_rws, axis=0))
+    print(np.std(mujoco_rws, axis=0))
+
+    custom_rws = evaluate_mlp_based(n=n, pname="mjc_ppo_2022_05_05_18_07_46_972885.zip")
+    mujoco_rws = evaluate_mujoco_based(n=n, pname="mlp_hist5_ppo_2022_05_05_16_37_13_929111.zip")
+    print("MUJOCO on CUSTOM REWARDS")
+    # print(custom_rws)
+    print(np.mean(custom_rws, axis=0))
+    print(np.std(custom_rws, axis=0))
+    print("CUSTON on MUJOCO REWARDS")
+    # print(mujoco_rws)
     print(np.mean(mujoco_rws, axis=0))
     print(np.std(mujoco_rws, axis=0))
 
@@ -164,15 +175,15 @@ def evaluate_experiments():
 
 
 if __name__ == "__main__":
-    # mujoco_rws = evaluate_mujoco_based(n=1)
+    # mujoco_rws = evaluate_mujoco_based(n=10)
     # print(mujoco_rws)
     # mlp_rws = evaluate_mlp_based(n=1)
     # print(mlp_rws)
-    # compare_custom2mujoco_based(n=1)
+    compare_custom2mujoco_based(n=10)
     # history["act"] = np.asarray(history["act"])
     # import matplotlib.pyplot as plt
     # plt.figure()
     # plt.plot(np.arange(len(history["act"])), history["act"][:, 0])
     # # plt.plot(history["pos"][autoindices, 0], history["pos"][autoindices, 1])
     # plt.show()
-    evaluate_experiments()
+    # evaluate_experiments()

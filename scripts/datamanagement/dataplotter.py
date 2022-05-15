@@ -259,24 +259,27 @@ if __name__ == "__main__":
     # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
     # plot_policy_learning_curve(maxtimesteps=3000000)
-    plotexperiment()
-    exit()
+    # plotexperiment()
+    # exit()
     # pass
 
-    # points = load_raw_data(os.path.join(Dirs.trajectories, "n1000_wps500_smth50_mplr10.npy"))
-    # points = points[:, :70, :]
-    #
-    # figure, axis = plt.subplots(1, 2)
-    # axis[0].set_xlabel("X meters")
-    # axis[0].set_ylabel("Y meters")
-    # for traj in points[:5,:30]:
-    #     axis[0].scatter(traj[:, 0], traj[:, 1])
-    #
-    # axis[1].set_xlabel("X meters")
-    # axis[1].set_ylabel("Y meters")
-    # for traj in points[5:]:
-    #     axis[1].plot(traj[:, 0], traj[:, 1])
-    # plt.show()
+    points = load_raw_data(os.path.join(Dirs.trajectories, "n1000_wps500_smth50_mplr10.npy"))
+    points = points[:, :100, :]
+
+    figure, axis = plt.subplots(1, 2)
+    axis[0].set_title("5 trajectories with 100 waypoints")
+    axis[0].set_xlabel("x-axis")
+    axis[0].set_ylabel("y-axis")
+    for traj in points[:5, :]:
+        axis[0].scatter(traj[:, 0], traj[:, 1])
+
+    axis[1].set_title("Training set of 1000 trajectories")
+    axis[1].set_xlabel("x-axis")
+    axis[1].set_ylabel("y-axis")
+    for traj in points[5:, :]:
+        axis[1].plot(traj[:, 0], traj[:, 1])
+    plt.show()
+    exit()
 
     lap = load_raw_data(os.path.join(Dirs.trajectories, "lap_pd02_r1_s2.npy"))
     inf = load_raw_data(os.path.join(Dirs.trajectories, "inf_pd02_r1.npy"))
