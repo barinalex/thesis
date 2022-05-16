@@ -3,6 +3,7 @@ import itertools
 import matplotlib.pyplot as plt
 from scripts.datamanagement.datamanagement import loadconfig, get_data
 from scripts.datamanagement.utils import load_raw_data, reshape_no_batches, readjson
+from scripts.datamanagement.datafilters import radius_filter
 from scripts.constants import Dirs, DT
 import os
 
@@ -200,13 +201,14 @@ def plotobshistogram():
 def plot_policy_learning_curve(maxtimesteps: int = None):
     """load evaluation callback results and plot as a learning curve"""
 
-    path = os.path.join(Dirs.policy, "mjc_free_ppo_2022_05_15_15_05_14_337639" + ".npz")
+    path = os.path.join(Dirs.policy, "mjc_ppo_2022_05_05_18_07_46_972885" + ".npz")
     mj = load_raw_data(path=path)
-    path = os.path.join(Dirs.policy, "mlp_free_ppo_2022_05_15_20_48_56_010681" + ".npz")
+    path = os.path.join(Dirs.policy, "mlp_hist5_ppo_2022_05_05_16_37_13_929111" + ".npz")
     mlp = load_raw_data(path=path)
 
     means = np.mean(mj['results'], axis=1)
     means = np.hstack((0, means.flatten()))
+    means = radius_filter(data=means, radius=5)
     time = np.arange(maxtimesteps, step=maxtimesteps//means.shape[0]) if maxtimesteps else np.arange(means.shape[0])
 
     figure, axis = plt.subplots(1, 2)
@@ -218,6 +220,7 @@ def plot_policy_learning_curve(maxtimesteps: int = None):
 
     means = np.mean(mlp['results'], axis=1)
     means = np.hstack((0, means.flatten()))
+    means = radius_filter(data=means, radius=5)
     time = np.arange(maxtimesteps, step=maxtimesteps//means.shape[0]) if maxtimesteps else np.arange(means.shape[0])
 
     axis[1].set_title("MJC free")

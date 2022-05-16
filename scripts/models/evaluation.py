@@ -103,7 +103,7 @@ def compareengines():
         for j in range(m):
             axis[i][j].plot(sections[DT.pos][j, :, 0], sections[DT.pos][j, :, 1], color="b")
             axis[i][j].plot(simpos[j, :, 0], simpos[j, :, 1], color="r")
-            axis[i][j].grid()
+            # axis[i][j].grid()
 
     for ax in axis.flat:
         ax.set(xlabel='x-axis', ylabel='y-axis')

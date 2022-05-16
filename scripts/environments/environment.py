@@ -227,18 +227,25 @@ if __name__ == "__main__":
     from scripts.engine.mujocoengine import MujocoEngine
     iw = JoystickInputWrapper()
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    # path = os.path.join(Dirs.models, "mlp_2022_05_01_12_30_00_981419")
+    config["trajectories"] = "inf_pd02_r1.npy"
+    path = os.path.join(Dirs.models, "mlp_hist5_2022_05_05_11_23_43_430257")
     # engine = TCNNBased(path=path, visualize=True)
-    engine = MujocoEngine(visualize=True)
-    # engine = MLPBased(path=path, visualize=True)
-    # config["trajectories"] = "lap_pd02_r1_s2.npy"
-    env = Environment(config=config, engine=engine, random=True)
-    interrupt = False
-    done = False
-    sumrewards = 0
-    while not done and not interrupt:
-        throttle, turn, interrupt = iw.getinput()
-        obs, reward, done, _ = env.step(action=np.asarray([throttle, turn]))
-        sumrewards += reward
-        # print(throttle, turn, env.engine.getlin())
-    print(sumrewards)
+    n = 3
+    rewards = np.zeros(n)
+    for i in range(n):
+        # engine = MujocoEngine(visualize=True)
+        engine = MLPBased(path=path, visualize=True)
+        env = Environment(config=config, engine=engine, random=True)
+        interrupt = False
+        done = False
+        sumrewards = 0
+        while not done and not interrupt:
+            throttle, turn, interrupt = iw.getinput()
+            obs, reward, done, _ = env.step(action=np.asarray([throttle, turn]))
+            sumrewards += reward
+            # print(throttle, turn, env.engine.getlin())
+        print(sumrewards)
+        rewards[i] = sumrewards
+        engine.viewer.disconnect()
+
+    print(f"mean: {np.mean(rewards)}; std: {np.std(rewards)}")
