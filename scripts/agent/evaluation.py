@@ -85,11 +85,11 @@ def evaluate_mujoco_based(n: int, pname: str = "mjc_ppo_2022_05_05_18_07_46_9728
 
     :return: list of rewards for each episodes
     """
-    engine = MujocoEngine(visualize=False)
+    engine = MujocoEngine(visualize=True)
     config = loadconfig(os.path.join(Dirs.configs, "env.yaml"))
-    config["trajectories"] = "n1000_wps500_smth50_mplr10.npy"
+    # config["trajectories"] = "n1000_wps500_smth50_mplr10.npy"
     # config["trajectories"] = "inf_pd02_r1.npy"
-    # config["trajectories"] = "lap_pd02_r1_s2.npy"
+    config["trajectories"] = "lap_pd02_r1_s2.npy"
     # config["trajectories"] = "n1_wps500_smth50_mplr10.npy"
     env = Environment(config=config, engine=engine, random=False)
     path = os.path.join(Dirs.policy, pname)
@@ -175,7 +175,7 @@ def evaluate_experiments():
 
 
 if __name__ == "__main__":
-    # mujoco_rws = evaluate_mujoco_based(pname="best_model", n=1)
+    # mujoco_rws = evaluate_mujoco_based(n=1)
     # print(mujoco_rws)
     mlp_rws = evaluate_mlp_based(n=1)
     # print(mlp_rws)

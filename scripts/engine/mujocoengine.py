@@ -40,16 +40,6 @@ class MujocoEngine(Engine):
         self.sim.data.set_mocap_pos(f"waypoint{self.wpi}", np.hstack((pos, [0])))
         self.wpi = (self.wpi + 1) % self.n_wps
 
-    def movecar(self, pos: np.ndarray, euler: np.ndarray):
-        """
-        move car body to new position and orientation
-
-        :param pos: waypoint position shape (2,)
-        :param euler: orientation in euler angles, shape (3,)
-        """
-        # self.sim.data.set_mocap_pos("buddy", np.hstack((pos, [0])))
-        pass
-
     def get_pos(self) -> np.ndarray:
         """
         :return: position of a center of mass
@@ -100,15 +90,17 @@ class MujocoEngine(Engine):
     def setstate(self, pos=None, orn=None, vel=None, ang=None):
         super(MujocoEngine, self).setstate(pos=pos, orn=orn, vel=vel, ang=ang)
         state = self.sim.get_state()
+        qpos = state.qpos
         qvel = state.qvel
         if vel is not None:
             qvel[:2] = vel[:2]
         if ang is not None:
             qvel[5] = ang[2]
-        # qpos[0:2] = state_dict["x_pos"], state_dict["y_pos"]
-        # quat = e2q(0, 0, state_dict["phi"])
-        # qpos[3:7] = quat
-        new_state = mujoco_py.MjSimState(state.time, state.qpos, qvel, state.act, state.udd_state)
+        if pos is not None:
+            qpos[0:2] = pos[:2]
+        if orn is not None:
+            qpos[3:7] = orn
+        new_state = mujoco_py.MjSimState(state.time, qpos, qvel, state.act, state.udd_state)
         self.sim.set_state(new_state)
         self.sim.forward()
 
