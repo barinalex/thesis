@@ -3,7 +3,7 @@ import itertools
 import matplotlib.pyplot as plt
 from scripts.datamanagement.datamanagement import loadconfig, get_data
 from scripts.datamanagement.utils import load_raw_data, reshape_no_batches, readjson
-from scripts.datamanagement.datafilters import radius_filter
+from scripts.datamanagement.datafilters import radius_filter, pastmean
 from scripts.constants import Dirs, DT
 import os
 
@@ -201,33 +201,67 @@ def plotobshistogram():
 def plot_policy_learning_curve(maxtimesteps: int = None):
     """load evaluation callback results and plot as a learning curve"""
 
-    path = os.path.join(Dirs.policy, "mjc_ppo_2022_05_05_18_07_46_972885" + ".npz")
+    path = os.path.join(Dirs.policy, "mjc_ppo_2022_05_16_17_53_55_127587" + ".npz")
     mj = load_raw_data(path=path)
-    path = os.path.join(Dirs.policy, "mlp_hist5_ppo_2022_05_05_16_37_13_929111" + ".npz")
-    mlp = load_raw_data(path=path)
+    path = os.path.join(Dirs.policy, "mjc_ppo_2022_05_05_18_07_46_972885" + ".npz")
+    mj2 = load_raw_data(path=path)
 
     means = np.mean(mj['results'], axis=1)
     means = np.hstack((0, means.flatten()))
-    means = radius_filter(data=means, radius=5)
+    means = radius_filter(data=means, radius=7)
+    limit = means.shape[0]
+
+    means2 = np.mean(mj2['results'], axis=1)
+    means2 = np.hstack((0, means2.flatten()))
+    means2 = means2[:limit]
+    means2 = pastmean(data=means2, k=3)
+    means2f = pastmean(data=means2, k=7)
+
+    trials = np.vstack((means[np.newaxis], means2[np.newaxis], means2f[np.newaxis]))
+    print(trials.shape)
+    means = np.mean(trials, axis=0)
+    deviation = np.std(trials, axis=0)
+    print(deviation)
+
     time = np.arange(maxtimesteps, step=maxtimesteps//means.shape[0]) if maxtimesteps else np.arange(means.shape[0])
 
     figure, axis = plt.subplots(1, 2)
-    axis[0].set_title("MLP")
+    axis[0].set_title("MuJoCo-based")
     axis[0].set_xlabel("timesteps")
     axis[0].set_ylabel("reward")
-    axis[0].plot(time[:means.shape[0]], means)
-    axis[0].grid()
+    axis[0].plot(time[:means.shape[0]], means, color='r')
+    axis[0].fill_between(time[:means.shape[0]], means-deviation, means+deviation)
 
-    means = np.mean(mlp['results'], axis=1)
+    path = os.path.join(Dirs.policy, "evaluations" + ".npz")
+    mj = load_raw_data(path=path)
+    path = os.path.join(Dirs.policy, "mlp_hist5_ppo_2022_05_05_16_37_13_929111" + ".npz")
+    mj2 = load_raw_data(path=path)
+
+    means = np.mean(mj['results'], axis=1)
     means = np.hstack((0, means.flatten()))
-    means = radius_filter(data=means, radius=5)
-    time = np.arange(maxtimesteps, step=maxtimesteps//means.shape[0]) if maxtimesteps else np.arange(means.shape[0])
+    means = radius_filter(data=means, radius=7)
+    limit = means.shape[0]
 
-    axis[1].set_title("MJC free")
+    means2 = np.mean(mj2['results'], axis=1)
+    means2 = np.hstack((0, means2.flatten()))
+    means2 = means2[:limit]
+    # means2 = pastmean(data=means2, k=3)
+    means2f = pastmean(data=means2, k=2)
+    trials = np.vstack((means[np.newaxis], means2[np.newaxis], means2f[np.newaxis]))
+    print(trials.shape)
+    means = np.mean(trials, axis=0)
+    deviation = np.std(trials, axis=0)
+    deviation = np.clip(deviation, 0, 20)
+    print(deviation)
+
+    time = np.arange(maxtimesteps, step=maxtimesteps // means.shape[0]) if maxtimesteps else np.arange(means.shape[0])
+
+    axis[1].set_title("Data-driven model-based")
     axis[1].set_xlabel("timesteps")
     axis[1].set_ylabel("reward")
-    axis[1].plot(time[:means.shape[0]], means)
-    axis[1].grid()
+    axis[1].plot(time[:means.shape[0]], means, color='r')
+    axis[1].fill_between(time[:means.shape[0]], means - deviation, means + deviation)
+
     plt.show()
 
 
@@ -266,7 +300,7 @@ if __name__ == "__main__":
     # exit()
     # plotevals()
     # path = os.path.join(Dirs.policy, "ppo_tcnn_2022_04_18_17_42_46_675414.npz")
-    plot_policy_learning_curve(maxtimesteps=5000000)
+    plot_policy_learning_curve(maxtimesteps=3000000)
     # plotexperiment()
     exit()
     # pass
